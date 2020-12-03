@@ -2020,11 +2020,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       payloads: [],
-      msgId: ' '
+      msgId: ' ',
+      req: '',
+      res: ''
     };
   },
   mounted: function mounted() {
@@ -2061,7 +2073,8 @@ __webpack_require__.r(__webpack_exports__);
           connectorId: "11111",
           idTag: "567890",
           meterStart: "2222",
-          reservationId: "32434"
+          reservationId: "32434",
+          status: "1"
         }
       }).then(function (response) {
         _this3.payloads = response.data;
@@ -2069,10 +2082,27 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+      document.getElementById("enable").disabled = false;
+      document.getElementById("disable").disabled = true;
+      document.getElementById("userid").value = "1";
+      document.getElementById("tagid").value = "567890";
+      document.getElementById("status").value = "start";
+      document.getElementById("vehicle").value = "altroz";
+      document.getElementById("chargepin").value = "879";
+      document.getElementById("battery").value = "zczczc";
+      this.interval = setTimeout(function heartbeat() {
+        document.getElementById("request").innerHTML = "Active";
+        document.getElementById("response").innerHTML = "Yes";
+      }, 2000);
     },
     stopCharging: function stopCharging() {
       var _this4 = this;
 
+      document.getElementById("request").innerHTML = "";
+      document.getElementById("response").innerHTML = "";
+      document.getElementById("disable").disabled = false;
+      document.getElementById("enable").disabled = true;
+      document.getElementById("status").value = "stop";
       var msgId = Math.floor(100000 + Math.random() * 900000);
       axios.post('stopCharging', {
         MessageTypeId: "2",
@@ -43823,6 +43853,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
+                    attrs: { id: "disable" },
                     on: { click: _vm.startCharging }
                   },
                   [_vm._v("Start Charging")]
@@ -43832,6 +43863,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
+                    attrs: { id: "enable", disabled: "" },
                     on: { click: _vm.stopCharging }
                   },
                   [_vm._v("Stop Charging")]
@@ -43845,7 +43877,41 @@ var render = function() {
     _vm._v(" "),
     _vm._m(2),
     _vm._v(" "),
-    _vm._m(3)
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-6" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(3),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "ul",
+              { staticStyle: { height: "90px", "overflow-y": "scroll" } },
+              [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-6" }, [
+                    _c(
+                      "div",
+                      { staticClass: "req", attrs: { id: "request" } },
+                      [_c("h6", [_vm._v(_vm._s(_vm.req))])]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-6" }, [
+                    _c(
+                      "div",
+                      { staticClass: "res", attrs: { id: "response" } },
+                      [_c("h6", [_vm._v(_vm._s(_vm.res))])]
+                    )
+                  ])
+                ])
+              ]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(4)
+    ])
   ])
 }
 var staticRenderFns = [
@@ -43889,15 +43955,30 @@ var staticRenderFns = [
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "form-group" }, [
               _c("div", { staticClass: "input-group" }, [
+                _c("label", [_vm._v("User ID")]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "userid",
+                    type: "text",
+                    name: "TagID",
+                    disabled: "disabled"
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("div", { staticClass: "input-group" }, [
                 _c("label", [_vm._v("Tag ID")]),
                 _vm._v(" "),
                 _c("input", {
                   staticClass: "form-control",
                   attrs: {
-                    id: "email",
+                    id: "tagid",
                     type: "text",
                     name: "TagID",
-                    placeholder: "1323456667567567",
                     disabled: "disabled"
                   }
                 })
@@ -43906,32 +43987,14 @@ var staticRenderFns = [
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("div", { staticClass: "input-group" }, [
-                _c("label", [_vm._v("Vehicle Name")]),
+                _c("label", [_vm._v("Status")]),
                 _vm._v(" "),
                 _c("input", {
                   staticClass: "form-control",
                   attrs: {
-                    id: "email",
+                    id: "status",
                     type: "text",
                     name: "TagID",
-                    placeholder: "1323456667567567",
-                    disabled: "disabled"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("div", { staticClass: "input-group" }, [
-                _c("label", [_vm._v("Session Status")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "email",
-                    type: "text",
-                    name: "TagID",
-                    placeholder: "1323456667567567",
                     disabled: "disabled"
                   }
                 })
@@ -43946,15 +44009,14 @@ var staticRenderFns = [
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "form-group" }, [
               _c("div", { staticClass: "input-group" }, [
-                _c("label", [_vm._v("Tag ID")]),
+                _c("label", [_vm._v("Vehicle name")]),
                 _vm._v(" "),
                 _c("input", {
                   staticClass: "form-control",
                   attrs: {
-                    id: "email",
+                    id: "vehicle",
                     type: "text",
                     name: "TagID",
-                    placeholder: "1323456667567567",
                     disabled: "disabled"
                   }
                 })
@@ -43963,15 +44025,14 @@ var staticRenderFns = [
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("div", { staticClass: "input-group" }, [
-                _c("label", [_vm._v("Vehicle Name")]),
+                _c("label", [_vm._v("Charging PIN ID")]),
                 _vm._v(" "),
                 _c("input", {
                   staticClass: "form-control",
                   attrs: {
-                    id: "email",
+                    id: "chargepin",
                     type: "text",
                     name: "TagID",
-                    placeholder: "1323456667567567",
                     disabled: "disabled"
                   }
                 })
@@ -43980,15 +44041,14 @@ var staticRenderFns = [
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("div", { staticClass: "input-group" }, [
-                _c("label", [_vm._v("Abedf")]),
+                _c("label", [_vm._v("Battery")]),
                 _vm._v(" "),
                 _c("input", {
                   staticClass: "form-control",
                   attrs: {
-                    id: "email",
+                    id: "battery",
                     type: "text",
                     name: "TagID",
-                    placeholder: "1323456667567567",
                     disabled: "disabled"
                   }
                 })
@@ -44003,62 +44063,46 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-6" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _c("strong", [_vm._v("Payload ")])
-          ]),
+    return _c("div", { staticClass: "card-header" }, [
+      _c("strong", [_vm._v("Payload ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-6" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("strong", [_vm._v("Log ")]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c(
-              "ul",
-              { staticStyle: { height: "90px", "overflow-y": "scroll" } },
-              [
-                _c("li", [_vm._v("hujkj")]),
-                _vm._v(" "),
-                _c("li", [_vm._v("hujkj")]),
-                _vm._v(" "),
-                _c("li", [_vm._v("hujkj")])
-              ]
-            )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-6" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _c("strong", [_vm._v("Log ")]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                staticStyle: { "align-content": "right" },
-                attrs: { type: "submit" }
-              },
-              [
-                _vm._v(
-                  "\n                                   Clear\n                        "
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c(
-              "ul",
-              { staticStyle: { height: "90px", "overflow-y": "scroll" } },
-              [
-                _c("li", [_vm._v("hujkj")]),
-                _vm._v(" "),
-                _c("li", [_vm._v("hujkj")]),
-                _vm._v(" "),
-                _c("li", [_vm._v("hujkj")])
-              ]
-            )
-          ])
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              staticStyle: { "align-content": "right" },
+              attrs: { type: "submit" }
+            },
+            [
+              _vm._v(
+                "\r\n                                   Clear\r\n                        "
+              )
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "ul",
+            { staticStyle: { height: "90px", "overflow-y": "scroll" } },
+            [
+              _c("li", [_vm._v("hujkj")]),
+              _vm._v(" "),
+              _c("li", [_vm._v("hujkj")]),
+              _vm._v(" "),
+              _c("li", [_vm._v("hujkj")])
+            ]
+          )
         ])
       ])
     ])
@@ -56324,7 +56368,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "anyKey",
+  key: "",
   // cluster: process.env.MIX_PUSHER_APP_CLUSTER,
   // forceTLS: true,
   wsHost: window.location.hostname,
@@ -56425,8 +56469,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/larasocket/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/larasocket/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\chargeMod\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\chargeMod\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
