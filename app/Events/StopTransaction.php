@@ -9,19 +9,20 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use App\ChargingActivity;
 
 class StopTransaction
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
+    public $chargingActivity;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ChargingActivity $chargingActivity)
     {
-        //
+         $this->chargingActivity = $chargingActivity;
     }
 
     /**
@@ -40,20 +41,11 @@ class StopTransaction
         'configuration' => [
             'messageTypeId' => 3,
             'UniqueId' => $this->chargingActivity->UniqueId,
-            'data' => [
-                  'TransactionTd' => $this->chargingActivity->id,
-                  'IdTagInfo' =>[
-                     'name' => $this->chargingActivity->name,
-                     'model' => $this->chargingActivity->model,
-                     'charging_time' => $this->chargingActivity->charging_time,
-                     'charging_pin_id' => $this->chargingActivity->charging_pin_id,
+            'IdTagInfo' =>[
+                     'status' => $this->chargingActivity->status,
                     ], 
-                /*'meterStart' => $this->meterStart,
-                'reservationId' => $this->reservationId,
-                'timestamp' => $this->timestamp,*/
             ],
-        ]
-      ];
+        ];
     }
 }
 

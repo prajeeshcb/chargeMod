@@ -7,6 +7,7 @@ use App\Events\StartTransaction;
 use App\ChargingActivity;
 use Auth;
 use Session;
+use Carbon\Carbon;
 class StartTransactionController extends Controller
 {
 
@@ -54,7 +55,8 @@ class StartTransactionController extends Controller
     		$charging->vehicle_tag_id = $request['data']['idTag'];
     		$charging->meter_start_reading = $request['data']['meterStart'];
             $charging->reservation_id = $request['data']['reservationId'];
-    		$charging->started_at = date('Y-m-d H:i:s');
+            $charging->status = 1;// charging started
+    		$charging->started_at = Carbon::now();
     		$charging->save();
 
     		$transactionId = $charging->id;
