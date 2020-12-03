@@ -67,8 +67,21 @@ class StartTransactionController extends Controller
                 ->where('charging_activities.id', $transactionId)->first();
             $chargingActivity['UniqueId'] = $UniqueId;
             $chargingActivity['messageTypeId'] = 3;
+            $res= [
+                'messageTypeId' => $chargingActivity->messageTypeId,
+                'UniqueId' => $chargingActivity->UniqueId,
+                'data' => [
+                      'TransactionId' => $chargingActivity->id,
+                      'IdTagInfo' =>[
+                         'name' => $chargingActivity->name,
+                         'model' => $chargingActivity->model,
+                         'charging_time' => $chargingActivity->charging_time,
+                         'charging_pin_id' => $chargingActivity->charging_pin_id,
+                        ], 
+                    ]
+                ];
     		broadcast(new StartTransaction($chargingActivity))->toOthers();
-            return $chargingActivity;
+            return $res;
         }
 
 	}

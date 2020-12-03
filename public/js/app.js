@@ -2061,8 +2061,43 @@ __webpack_require__.r(__webpack_exports__);
         console.log(_this2.payloads);
       });
     },
-    startCharging: function startCharging() {
+    bootNotification: function bootNotification() {
       var _this3 = this;
+
+      var msgId = Math.floor(100000 + Math.random() * 900000);
+      axios.post('bootNotification', {
+        MessageTypeId: "2",
+        UniqueId: msgId,
+        Action: "BootNotification",
+        data: {
+          chargePointVendor: "Point1",
+          chargePointModel: "Model1",
+          chargePointSerialNumber: "CP1234",
+          chargeBoxSerialNumber: "CB1234",
+          firmwareVersion: "v2",
+          iccid: "1111",
+          imsi: "2222",
+          meterType: "meter_type1",
+          meterSerialNumber: "MTR1234"
+        }
+      }).then(function (response) {
+        _this3.payloads = response.data;
+        var res_data = response.data;
+
+        if (res_data.data.status == "Accepted") {
+          _this3.startCharging();
+        } else {
+          console.log('reject');
+          _this3.inter = setInterval(function () {
+            return _this3.bootNotification();
+          }, 1000);
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    startCharging: function startCharging() {
+      var _this4 = this;
 
       var msgId = Math.floor(100000 + Math.random() * 900000);
       axios.post('startCharging', {
@@ -2077,7 +2112,7 @@ __webpack_require__.r(__webpack_exports__);
           status: "1"
         }
       }).then(function (response) {
-        _this3.payloads = response.data;
+        _this4.payloads = response.data;
         console.log(response.data);
       })["catch"](function (error) {
         console.log(error);
@@ -2096,7 +2131,7 @@ __webpack_require__.r(__webpack_exports__);
       }, 2000);
     },
     stopCharging: function stopCharging() {
-      var _this4 = this;
+      var _this5 = this;
 
       document.getElementById("request").innerHTML = "";
       document.getElementById("response").innerHTML = "";
@@ -2126,7 +2161,7 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       }).then(function (response) {
-        _this4.payloads = response.data;
+        _this5.payloads = response.data;
         console.log(response.data);
       })["catch"](function (error) {
         console.log(error);
@@ -43854,7 +43889,7 @@ var render = function() {
                   {
                     staticClass: "btn btn-primary",
                     attrs: { id: "disable" },
-                    on: { click: _vm.startCharging }
+                    on: { click: _vm.bootNotification }
                   },
                   [_vm._v("Start Charging")]
                 ),
@@ -44085,7 +44120,7 @@ var staticRenderFns = [
             },
             [
               _vm._v(
-                "\r\n                                   Clear\r\n                        "
+                "\n                                   Clear\n                        "
               )
             ]
           )
@@ -56368,7 +56403,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "",
+  key: "anyKey",
   // cluster: process.env.MIX_PUSHER_APP_CLUSTER,
   // forceTLS: true,
   wsHost: window.location.hostname,
@@ -56469,8 +56504,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\chargeMod\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\chargeMod\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /opt/lampp/htdocs/larasocket/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/larasocket/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -26,6 +26,7 @@ Route::get('/connections', 'HomeController@connection');
 Route::get('/payloads', 'ConnectionController@fetchPayloads');
 Route::post('/startCharging', 'StartTransactionController@start');
 Route::post('/stopCharging', 'StopTransactionController@stop');
+Route::post('/bootNotification', 'BootNotificationController@bootNotification');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

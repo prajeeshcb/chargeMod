@@ -14,7 +14,7 @@
                             <button type="submit" class="btn btn-primary" >Authenticate</button>
                         </div>
                         <div class="col-3">
-                           <button v-on:click="startCharging" class="btn btn-primary" id="disable">Start Charging</button> 
+                           <button v-on:click="bootNotification" class="btn btn-primary" id="disable">Start Charging</button> 
                            <button v-on:click="stopCharging" class="btn btn-primary" id="enable" disabled >Stop Charging</button>
                         </div>
                         
@@ -148,6 +148,27 @@
                     console.log(this.payloads);
                 })
             },
+            bootNotification() {
+                var msgId = Math.floor(100000 + Math.random() * 900000);
+                axios.post('bootNotification', {MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v2",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})
+                .then((response) => {
+                    this.payloads = response.data;
+                    var res_data = response.data;
+                    
+                    if(res_data.data.status=="Accepted")
+                    {
+                        this.startCharging();
+                    }
+                    else 
+                    {
+                        console.log('reject');
+                        this.inter = setInterval(() => this.bootNotification(), 4000);
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+            },
             startCharging() {
                 
                 var msgId = Math.floor(100000 + Math.random() * 900000);
@@ -182,6 +203,7 @@
                  document.getElementById("disable").disabled =false;
                   document.getElementById("enable").disabled =true;
                 document.getElementById("status").value= "stop";
+
                 var msgId = Math.floor(100000 + Math.random() * 900000);
                 axios.post('stopCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
                 .then((response) => {

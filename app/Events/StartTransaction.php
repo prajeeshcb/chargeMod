@@ -57,9 +57,6 @@ class StartTransaction implements ShouldBroadcast
                      'charging_time' => $this->chargingActivity->charging_time,
                      'charging_pin_id' => $this->chargingActivity->charging_pin_id,
                     ], 
-                /*'meterStart' => $this->meterStart,
-                'reservationId' => $this->reservationId,
-                'timestamp' => $this->timestamp,*/
             ]
       ];
       return $res;
