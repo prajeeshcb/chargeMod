@@ -2116,11 +2116,11 @@ __webpack_require__.r(__webpack_exports__);
           transactionData: {
             timeStamp: "02-10-2020",
             stampledValue: {
-              context: other,
+              context: "other",
               format: "signedData",
               measurand: "Power offered",
               phase: "LI",
-              location: EV,
+              location: "EV",
               unit: "Kwh"
             }
           }
