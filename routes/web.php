@@ -29,7 +29,11 @@ Route::post('/startCharging', 'StartTransactionController@start');
 Route::post('/stopCharging', 'StopTransactionController@stop');
 Route::post('/bootNotification', 'BootNotificationController@bootNotification');
 Route::post('/meterValue', 'MeterValueController@meterValue');
+<<<<<<< HEAD
 Route::post('/heartbeats', 'HeartbeatController@heartBeats');
+=======
+Route::post('/heartBeat', 'ConnectionController@heartbeat');
+>>>>>>> a1b9ba74cb716d382685b16d5d1e14ac305671c2
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

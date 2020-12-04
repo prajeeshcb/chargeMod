@@ -88,6 +88,7 @@ class StartTransactionController extends Controller
     		broadcast(new StartTransaction($chargingActivity))->toOthers();
             return $res;
         }
+<<<<<<< HEAD
         // $data=new Heartbeat();
         //     $data->message=$request['data']['message'];
         //     $data->save();
@@ -100,6 +101,13 @@ class StartTransactionController extends Controller
         alert("HIIIIIIIII");
         return Heartbeat::all();
     }
+=======
+        /*$data=new Heartbeat();
+            $data->message=$request['data']['message'];
+            $data->save();
+            $beats= Heartbeat()::all();
+            return response()->json($beats);*/
+>>>>>>> a1b9ba74cb716d382685b16d5d1e14ac305671c2
 
 
 

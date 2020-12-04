@@ -38,14 +38,12 @@ class StopTransaction
     public function broadcastWith() 
     {
         return [
-        'configuration' => [
             'messageTypeId' => 3,
             'UniqueId' => $this->chargingActivity->UniqueId,
             'IdTagInfo' =>[
-                     'status' => $this->chargingActivity->status,
+                     'status' => "Accepted",
                     ], 
-            ],
-        ];
+            ];
     }
 }
 

@@ -38,10 +38,9 @@ class MeterValues
     public function broadcastWith() 
     {
         return [
-        'configuration' => [
             'messageTypeId' => 3,
-            'UniqueId' => $this->chargingActivity->UniqueId
-            ]
-        ];
+            'UniqueId' => $this->chargingActivity->UniqueId,
+            'data' => [ ]
+            ];
     }
 }
