@@ -53,10 +53,7 @@ class StopTransactionController extends Controller
 		                     'status' => "Accepted",
 		                    ], 
            			];
-            $json[] = Session::get('payload.data');
-            array_push($json,$res);
-            Session::put('payload.data', $json);
-            return (Session::get('payload.data'));
+          
     		broadcast(new StopTransaction($chargingActivity))->toOthers();
     		$request->session()->forget($transactionId);
             return $chargingActivity;

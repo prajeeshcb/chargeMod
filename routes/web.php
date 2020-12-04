@@ -25,6 +25,7 @@ Route::get('/authentication', 'HomeController@authentication');
 Route::get('/connections', 'HomeController@connection');
 Route::get('/payloads', 'ConnectionController@fetchPayloads');
 Route::post('/startCharging', 'StartTransactionController@start');
+
 Route::post('/stopCharging', 'StopTransactionController@stop');
 Route::post('/bootNotification', 'BootNotificationController@bootNotification');
 Route::post('/meterValue', 'MeterValueController@meterValue');

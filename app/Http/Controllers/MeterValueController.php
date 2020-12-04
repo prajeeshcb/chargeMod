@@ -64,9 +64,7 @@ class MeterValueController extends Controller
                    
                         ], 
                     ];
-            $json[] = Session::get('payload.data');
-            array_push($json,$res);
-            Session::put('payload.data', $json);
+       
     		broadcast(new MeterValues($chargingActivity))->toOthers(); 
             return json_encode($res);
 

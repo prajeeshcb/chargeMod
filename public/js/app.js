@@ -2042,6 +2042,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
+    this.fetchbeats();
     this.fetchPayloads();
     Echo.join('chat').listen('StartTransaction', function (event) {
       _this.payloads.push(event.payload);
@@ -2064,7 +2065,7 @@ __webpack_require__.r(__webpack_exports__);
       var msgId = Math.floor(100000 + Math.random() * 900000);
       axios.post('bootNotification', {
         MessageTypeId: "2",
-        UniqueId: msgId,
+        UniqueId: this.msgId,
         Action: "BootNotification",
         data: {
           chargePointVendor: "Point1",
@@ -2083,13 +2084,13 @@ __webpack_require__.r(__webpack_exports__);
         if (res_data.data.status == "Accepted") {
           _this3.startCharging();
         } else {
-          console.log('reject');
+          alert('Rejected');
           _this3.inter = setInterval(function () {
             return _this3.bootNotification();
           }, 6000);
         }
 
-        var req = '{MessageTypeId:"2",UniqueId:this.msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}';
+        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}';
 
         _this3.payloads.push({
           type: 'BootNotification request',
@@ -2230,12 +2231,6 @@ __webpack_require__.r(__webpack_exports__);
     stopCharging: function stopCharging() {
       var _this7 = this;
 
-      alert("Charging Completed");
-      document.getElementById("request").innerHTML = "";
-      document.getElementById("response").innerHTML = "";
-      document.getElementById("disable").disabled = false;
-      document.getElementById("enable").disabled = true;
-      document.getElementById("status").value = "stop";
       var msgId = Math.floor(100000 + Math.random() * 900000);
       axios.post('stopCharging', {
         MessageTypeId: "2",
@@ -2259,7 +2254,6 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       }).then(function (response) {
-        _this7.payloads = response.data;
         _this7.flag = 0;
         var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
 
@@ -2274,6 +2268,13 @@ __webpack_require__.r(__webpack_exports__);
           type: 'StopTransacion response',
           data: JSON.parse(JSON.stringify(response.data))
         });
+
+        alert("Charging Completed");
+        document.getElementById("request").innerHTML = "";
+        document.getElementById("response").innerHTML = "";
+        document.getElementById("disable").disabled = false;
+        document.getElementById("enable").disabled = true;
+        document.getElementById("status").value = "stop";
       })["catch"](function (error) {
         console.log(error);
       });
