@@ -177,6 +177,8 @@
                 .then((response) => {
                     this.payloads = response.data;
                     console.log(response.data);
+                    this.interval1 = setInterval(() => this.heartBeat(), 6000);
+                    this.interval2 = setInterval(() => this.meterValues(), 10000);
                 })
                 .catch((error) => {
                     console.log(error);
@@ -190,22 +192,10 @@
                 document.getElementById("vehicle").value= "altroz";
                 document.getElementById("chargepin").value= "879";
                 document.getElementById("battery").value= "zczczc";
-             
-                // this.interval = setTimeout(function heartbeat() {
-                //      document.getElementById("request").innerHTML= "Active";
-                //       document.getElementById("response").innerHTML= "Yes";
-                      
-                // },2000);
-                  axios.post('startCharging', {data:{message: "Active"}})
-                 .then((response) => {
-                    this.payloads = response.data;
-                    console.log(response.data);
-                })
-                 .catch((error) => {
-                    console.log(error);
-                })
 
-                this.interval = setTimeout(function meterValues(){
+               
+            },
+            meterValues() {
                     var msgId = Math.floor(100000 + Math.random() * 900000);
                     axios.post('meterValue', {MessageTypeId:"2",UniqueId:msgId, Action:"MeterValues",data:{connectorId: "1111", transactionId: "94", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
                     .then((response) => {
@@ -215,10 +205,17 @@
                     .catch((error) => {
                         console.log(error);
                     })
-                },10000);
-
-
-               
+            },
+            heartBeat() {
+                    var msgId = Math.floor(100000 + Math.random() * 900000);
+                    axios.post('heartBeat', {MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""})
+                    .then((response) => {
+                        this.payloads = response.data;
+                        console.log(response.data);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
             },
             stopCharging() {
                  alert("Charging Completed");
@@ -233,6 +230,10 @@
                 .then((response) => {
                     this.payloads = response.data;
                     console.log(response.data);
+                    //setTimeout(() => clearInterval(interval1), 1000);
+                    //setTimeout(() => clearInterval(interval2), 1000);
+                    setTimeout(function () { this.meterValues() }, 1000);
+                    setTimeout(function () { this.heartBeat() }, 1000)
                 })
                 .catch((error) => {
                     console.log(error);

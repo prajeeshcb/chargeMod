@@ -16,13 +16,14 @@ class StopTransactionController extends Controller
     public function stop(Request $request) {
     	if($request->MessageTypeId==2 ) 
         {
-        	$charging_activity = ChargingActivity::find(94);
+        	$transactionId = Session::get('transactionId');
+        	$charging_activity = ChargingActivity::find($transactionId );
 			$charging_activity->meter_end_reading = $request['data']['meterStop'];
 			$charging_activity->stopped_at = Carbon::now();
 			$charging_activity->status = 2; //charging stoped
 			$charging_activity->save();
 
-			$transactionId = Session::get('transactionId');
+			
 			//return $transactionId;
 
 			$transaction_data = new TransactionData();

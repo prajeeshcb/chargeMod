@@ -9,20 +9,20 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\ChargingActivity;
+use App\Message;
 
-class StopTransaction
+class HeartBeat
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $chargingActivity;
+    public $message;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(ChargingActivity $chargingActivity)
+    public function __construct(Message $message)
     {
-         $this->chargingActivity = $chargingActivity;
+        $this->message = $message;
     }
 
     /**
@@ -32,19 +32,15 @@ class StopTransaction
      */
     public function broadcastOn()
     {
-         return new PrivateChannel('chat');
+        return new PrivateChannel('chat');
     }
 
     public function broadcastWith() 
     {
         return [
             'messageTypeId' => 3,
-            'UniqueId' => $this->chargingActivity->UniqueId,
-            'IdTagInfo' =>[
-                     'status' => "Accepted",
-                    ], 
+            'UniqueId' => $this->message->UniqueId,
+            'data' => [ ]
             ];
     }
 }
-
-

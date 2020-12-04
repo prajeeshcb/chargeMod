@@ -58,14 +58,14 @@ class MeterValueController extends Controller
 			$chargingActivity['UniqueId'] = $UniqueId;
             $chargingActivity['messageTypeId'] = 3;
             $res= [
-                'messageTypeId' => $chargingActivity->messageTypeId,
+                'MessageTypeId' => $chargingActivity->messageTypeId,
                 'UniqueId' => $chargingActivity->UniqueId,
                 'data' => [
                    
                         ], 
                     ];
     		broadcast(new MeterValues($chargingActivity))->toOthers(); 
-            return $res;
+            return json_encode($res);
 
     	}
 	

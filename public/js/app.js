@@ -1908,8 +1908,6 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -2116,6 +2114,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }).then(function (response) {
         _this4.payloads = response.data;
         console.log(response.data);
+        _this4.interval1 = setInterval(function () {
+          return _this4.heartBeat();
+        }, 6000);
+        _this4.interval2 = setInterval(function () {
+          return _this4.meterValues();
+        }, 10000);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2126,34 +2130,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       document.getElementById("status").value = "start";
       document.getElementById("vehicle").value = "altroz";
       document.getElementById("chargepin").value = "879";
-      document.getElementById("battery").value = "zczczc"; // this.interval = setTimeout(function heartbeat() {
-      //      document.getElementById("request").innerHTML= "Active";
-      //       document.getElementById("response").innerHTML= "Yes";
-      // },2000);
+      document.getElementById("battery").value = "zczczc";
+    },
+    meterValues: function meterValues() {
+      var _this5 = this;
 
-      axios.post('startCharging', {
+      var msgId = Math.floor(100000 + Math.random() * 900000);
+      axios.post('meterValue', {
+        MessageTypeId: "2",
+        UniqueId: msgId,
+        Action: "MeterValues",
         data: {
-          message: "Active"
-        }
-      }).then(function (response) {
-        _this4.payloads = response.data;
-        console.log(response.data);
-      })["catch"](function (error) {
-        console.log(error);
-      });
-      this.interval = setTimeout(function meterValues() {
-        var _data,
-            _this5 = this;
-
-        var msgId = Math.floor(100000 + Math.random() * 900000);
-        axios.post('meterValue', {
-          MessageTypeId: "2",
-          UniqueId: msgId,
-          Action: "StopTransacion",
-          data: (_data = {
-            connectorId: "1111",
-            transactionId: "94"
-          }, _defineProperty(_data, "transactionId", "32434"), _defineProperty(_data, "meterValue", {
+          connectorId: "1111",
+          transactionId: "94",
+          meterValue: {
             timeStamp: "02-10-2020",
             stampledValue: {
               context: "other",
@@ -2163,17 +2153,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               location: "EV",
               unit: "Kwh"
             }
-          }), _data)
-        }).then(function (response) {
-          _this5.payloads = response.data;
-          console.log(response.data);
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }, 10000);
+          }
+        }
+      }).then(function (response) {
+        _this5.payloads = response.data;
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    heartBeat: function heartBeat() {
+      var _this6 = this;
+
+      var msgId = Math.floor(100000 + Math.random() * 900000);
+      axios.post('heartBeat', {
+        MessageTypeId: "2",
+        UniqueId: msgId,
+        Action: "HeartBeat",
+        data: ""
+      }).then(function (response) {
+        _this6.payloads = response.data;
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
     stopCharging: function stopCharging() {
-      var _this6 = this;
+      var _this7 = this;
 
       alert("Charging Completed");
       document.getElementById("request").innerHTML = "";
@@ -2204,8 +2210,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }
       }).then(function (response) {
-        _this6.payloads = response.data;
-        console.log(response.data);
+        _this7.payloads = response.data;
+        console.log(response.data); //setTimeout(() => clearInterval(interval1), 1000);
+        //setTimeout(() => clearInterval(interval2), 1000);
+
+        setTimeout(function () {
+          this.meterValues();
+        }, 1000);
+        setTimeout(function () {
+          this.heartBeat();
+        }, 1000);
       })["catch"](function (error) {
         console.log(error);
       });
