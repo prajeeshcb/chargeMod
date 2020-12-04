@@ -207,7 +207,7 @@
 
                 this.interval = setTimeout(function meterValues(){
                     var msgId = Math.floor(100000 + Math.random() * 900000);
-                    axios.post('MeterValues', {MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{connectorId: "1111", transactionId: "94", transactionId:"32434", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
+                    axios.post('meterValue', {MessageTypeId:"2",UniqueId:msgId, Action:"MeterValues",data:{connectorId: "1111", transactionId: "94", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
                     .then((response) => {
                         this.payloads = response.data;
                         console.log(response.data);
