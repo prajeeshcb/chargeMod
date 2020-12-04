@@ -8,6 +8,8 @@ use App\ChargingActivity;
 use Auth;
 use Session;
 use Carbon\Carbon;
+use DB;
+use App\Heartbeat;
 class StartTransactionController extends Controller
 {
 
@@ -86,6 +88,11 @@ class StartTransactionController extends Controller
     		broadcast(new StartTransaction($chargingActivity))->toOthers();
             return $res;
         }
+        $data=new Heartbeat();
+            $data->message=$request['data']['message'];
+            $data->save();
+            $beats= Heartbeat()::all();
+            return response()->json($beats);
 
 	}
 

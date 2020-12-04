@@ -191,11 +191,19 @@
                 document.getElementById("chargepin").value= "879";
                 document.getElementById("battery").value= "zczczc";
              
-                this.interval = setTimeout(function heartbeat() {
-                     document.getElementById("request").innerHTML= "Active";
-                      document.getElementById("response").innerHTML= "Yes";
+                // this.interval = setTimeout(function heartbeat() {
+                //      document.getElementById("request").innerHTML= "Active";
+                //       document.getElementById("response").innerHTML= "Yes";
                       
-                },2000);
+                // },2000);
+                  axios.post('startCharging', {data:{message: "Active"}})
+                 .then((response) => {
+                    this.payloads = response.data;
+                    console.log(response.data);
+                })
+                 .catch((error) => {
+                    console.log(error);
+                })
 
                 this.interval = setTimeout(function meterValues(){
                     var msgId = Math.floor(100000 + Math.random() * 900000);
@@ -213,6 +221,7 @@
                
             },
             stopCharging() {
+                 alert("Charging Completed");
                 document.getElementById("request").innerHTML= "";
                 document.getElementById("response").innerHTML= "";
                  document.getElementById("disable").disabled =false;

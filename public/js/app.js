@@ -2126,11 +2126,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       document.getElementById("status").value = "start";
       document.getElementById("vehicle").value = "altroz";
       document.getElementById("chargepin").value = "879";
-      document.getElementById("battery").value = "zczczc";
-      this.interval = setTimeout(function heartbeat() {
-        document.getElementById("request").innerHTML = "Active";
-        document.getElementById("response").innerHTML = "Yes";
-      }, 2000);
+      document.getElementById("battery").value = "zczczc"; // this.interval = setTimeout(function heartbeat() {
+      //      document.getElementById("request").innerHTML= "Active";
+      //       document.getElementById("response").innerHTML= "Yes";
+      // },2000);
+
+      axios.post('startCharging', {
+        data: {
+          message: "Active"
+        }
+      }).then(function (response) {
+        _this4.payloads = response.data;
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error);
+      });
       this.interval = setTimeout(function meterValues() {
         var _data,
             _this5 = this;
@@ -2165,6 +2175,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     stopCharging: function stopCharging() {
       var _this6 = this;
 
+      alert("Charging Completed");
       document.getElementById("request").innerHTML = "";
       document.getElementById("response").innerHTML = "";
       document.getElementById("disable").disabled = false;
@@ -44152,7 +44163,7 @@ var staticRenderFns = [
             },
             [
               _vm._v(
-                "\n                                   Clear\n                        "
+                "\r\n                                   Clear\r\n                        "
               )
             ]
           )
@@ -56435,7 +56446,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "anyKey",
+  key: "",
   // cluster: process.env.MIX_PUSHER_APP_CLUSTER,
   // forceTLS: true,
   wsHost: window.location.hostname,
@@ -56536,8 +56547,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/larasocket/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/larasocket/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\chargeMod\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\chargeMod\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
