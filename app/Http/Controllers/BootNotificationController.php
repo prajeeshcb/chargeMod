@@ -13,6 +13,7 @@ class BootNotificationController extends Controller
     {
     	if($request->MessageTypeId==2) 
         {
+			
     		$charge_point = ChargePoint::select('interval')
     						->where('charge_point_vendor', '=', $request['data']['chargePointVendor'])
     						->where('charge_point_model', '=', $request['data']['chargePointModel'])
@@ -55,9 +56,11 @@ class BootNotificationController extends Controller
                   		'interval' =>  $charge_point->interval
                		]
             	];
-            }
+			}
+			
             broadcast(new BootNotification($charge_point))->toOthers();
     		return json_encode($chargePoint);
-    	}
+		}
+		
     }
 }

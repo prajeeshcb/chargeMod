@@ -85,7 +85,8 @@
                         <div class="row">
                         <div class='col-6'>
                             <div id= "request" class="req">
-                                <h6>{{req }}</h6>
+                                <h6>{{req}}</h6>
+                                
                             </div>
                          </div>
                          <div class="col-6">
@@ -134,6 +135,7 @@
             console.log('mounted');
         },
         created() {
+            this.fetchbeats();
             this.fetchPayloads();
             Echo.join('chat')
                 .listen('StartTransaction',(event)=>{
@@ -150,7 +152,7 @@
             },
             bootNotification() {
                 var msgId = Math.floor(100000 + Math.random() * 900000);
-                axios.post('bootNotification', {MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})
+                axios.post('bootNotification', {MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234",interval:'2'}})
                 .then((response) => {
                     this.payloads = response.data;
                     var res_data = response.data;
@@ -161,7 +163,7 @@
                     }
                     else 
                     {
-                        console.log('reject');
+                      alert('Rejected');
                         this.inter = setInterval(() => this.bootNotification(), 6000);
                     }
                 })
@@ -181,6 +183,8 @@
                 .catch((error) => {
                     console.log(error);
                 })
+
+
                
                 document.getElementById("enable").disabled = false;
                 document.getElementById("disable").disabled = true;
@@ -190,20 +194,22 @@
                 document.getElementById("vehicle").value= "altroz";
                 document.getElementById("chargepin").value= "879";
                 document.getElementById("battery").value= "zczczc";
-             
-                // this.interval = setTimeout(function heartbeat() {
-                //      document.getElementById("request").innerHTML= "Active";
-                //       document.getElementById("response").innerHTML= "Yes";
-                      
-                // },2000);
-                  axios.post('startCharging', {data:{message: "Active"}})
-                 .then((response) => {
+                this.interval=setTimeout(function hearbeats(){
+                var msgId = Math.floor(100000 + Math.random() * 900000);
+                axios.post('heartbeats', {data:{message: "Active"}})
+                .then((response) => {
                     this.payloads = response.data;
                     console.log(response.data);
                 })
                  .catch((error) => {
                     console.log(error);
                 })
+                },10000);
+                // sessionStorage.setItem("beatrequest", "Active");
+                // document.getElementById("request").innerHTML = sessionStorage.getItem("beatrequest");
+                // sessionStorage.setItem("beatresponse", "OK");
+                // document.getElementById("response").innerHTML = sessionStorage.getItem("beatresponse");
+             
 
                 this.interval = setTimeout(function meterValues(){
                     var msgId = Math.floor(100000 + Math.random() * 900000);
@@ -220,6 +226,7 @@
 
                
             },
+           
             stopCharging() {
                  alert("Charging Completed");
                 document.getElementById("request").innerHTML= "";

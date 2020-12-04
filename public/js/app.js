@@ -2032,6 +2032,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2047,6 +2048,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     var _this = this;
 
+    this.fetchbeats();
     this.fetchPayloads();
     Echo.join('chat').listen('StartTransaction', function (event) {
       _this.payloads.push(event.payload);
@@ -2080,7 +2082,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           iccid: "1111",
           imsi: "2222",
           meterType: "meter_type1",
-          meterSerialNumber: "MTR1234"
+          meterSerialNumber: "MTR1234",
+          interval: '2'
         }
       }).then(function (response) {
         _this3.payloads = response.data;
@@ -2089,7 +2092,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (res_data.data.status == "Accepted") {
           _this3.startCharging();
         } else {
-          console.log('reject');
+          alert('Rejected');
           _this3.inter = setInterval(function () {
             return _this3.bootNotification();
           }, 6000);
@@ -2126,24 +2129,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       document.getElementById("status").value = "start";
       document.getElementById("vehicle").value = "altroz";
       document.getElementById("chargepin").value = "879";
-      document.getElementById("battery").value = "zczczc"; // this.interval = setTimeout(function heartbeat() {
-      //      document.getElementById("request").innerHTML= "Active";
-      //       document.getElementById("response").innerHTML= "Yes";
-      // },2000);
+      document.getElementById("battery").value = "zczczc";
+      this.interval = setTimeout(function hearbeats() {
+        var _this5 = this;
 
-      axios.post('startCharging', {
-        data: {
-          message: "Active"
-        }
-      }).then(function (response) {
-        _this4.payloads = response.data;
-        console.log(response.data);
-      })["catch"](function (error) {
-        console.log(error);
-      });
+        var msgId = Math.floor(100000 + Math.random() * 900000);
+        axios.post('heartbeats', {
+          data: {
+            message: "Active"
+          }
+        }).then(function (response) {
+          _this5.payloads = response.data;
+          console.log(response.data);
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }, 10000); // sessionStorage.setItem("beatrequest", "Active");
+      // document.getElementById("request").innerHTML = sessionStorage.getItem("beatrequest");
+      // sessionStorage.setItem("beatresponse", "OK");
+      // document.getElementById("response").innerHTML = sessionStorage.getItem("beatresponse");
+
       this.interval = setTimeout(function meterValues() {
         var _data,
-            _this5 = this;
+            _this6 = this;
 
         var msgId = Math.floor(100000 + Math.random() * 900000);
         axios.post('MeterValues', {
@@ -2165,7 +2173,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
           }), _data)
         }).then(function (response) {
-          _this5.payloads = response.data;
+          _this6.payloads = response.data;
           console.log(response.data);
         })["catch"](function (error) {
           console.log(error);
@@ -2173,7 +2181,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, 10000);
     },
     stopCharging: function stopCharging() {
-      var _this6 = this;
+      var _this7 = this;
 
       alert("Charging Completed");
       document.getElementById("request").innerHTML = "";
@@ -2204,7 +2212,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         }
       }).then(function (response) {
-        _this6.payloads = response.data;
+        _this7.payloads = response.data;
         console.log(response.data);
       })["catch"](function (error) {
         console.log(error);
