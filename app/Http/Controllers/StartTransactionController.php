@@ -60,7 +60,10 @@ class StartTransactionController extends Controller
     		$charging->save();
 
     		$transactionId = $charging->id;
-            $UniqueId = $request->UniqueId; 
+            $UniqueId = $request->UniqueId;
+
+            Session::put('transactionId', $transactionId);
+            Session::put('idTag', $request['data']['idTag']);
 
             $chargingActivity = ChargingActivity::leftJoin('vehicles', 'vehicles.id', '=', 'charging_activities.vehicle_tag_id')
                 ->select('charging_activities.id as id', 'vehicles.name', 'vehicles.model', 'vehicles.charging_time', 'vehicles.charging_pin_id', 'vehicles.id as tagId', 'charging_activities.vehicle_tag_id')

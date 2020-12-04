@@ -150,7 +150,7 @@
             },
             bootNotification() {
                 var msgId = Math.floor(100000 + Math.random() * 900000);
-                axios.post('bootNotification', {MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v2",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})
+                axios.post('bootNotification', {MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})
                 .then((response) => {
                     this.payloads = response.data;
                     var res_data = response.data;
@@ -162,13 +162,14 @@
                     else 
                     {
                         console.log('reject');
-                        this.inter = setInterval(() => this.bootNotification(), 4000);
+                        this.inter = setInterval(() => this.bootNotification(), 6000);
                     }
                 })
                 .catch((error) => {
                     console.log(error);
                 })
             },
+            
             startCharging() {
                 
                 var msgId = Math.floor(100000 + Math.random() * 900000);
@@ -190,11 +191,25 @@
                 document.getElementById("chargepin").value= "879";
                 document.getElementById("battery").value= "zczczc";
              
-                  this.interval = setTimeout(function heartbeat(){
+                this.interval = setTimeout(function heartbeat() {
                      document.getElementById("request").innerHTML= "Active";
                       document.getElementById("response").innerHTML= "Yes";
                       
                 },2000);
+
+                this.interval = setTimeout(function meterValues(){
+                    var msgId = Math.floor(100000 + Math.random() * 900000);
+                    axios.post('MeterValues', {MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{connectorId: "1111", transactionId: "94", transactionId:"32434", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
+                    .then((response) => {
+                        this.payloads = response.data;
+                        console.log(response.data);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
+                },10000);
+
+
                
             },
             stopCharging() {

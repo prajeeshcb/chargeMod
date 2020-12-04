@@ -3,27 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Events\StopTransaction;
-use App\ChargingActivity;
-use App\TransactionData;
-use Auth;
-use Session;
-use Carbon\Carbon;
 
-class StopTransactionController extends Controller
+class MeterValueController extends Controller
 {
-    
-    public function stop(Request $request) {
+    public function meterValue(Request $request) {
     	if($request->MessageTypeId==2 ) 
         {
-        	$charging_activity = ChargingActivity::find(94);
-			$charging_activity->meter_end_reading = $request['data']['meterStop'];
+        	/*$charging_activity = ChargingActivity::find(94);
+			$charging_activity->meter_start_reading = $request['data']['meterStop'];
 			$charging_activity->stopped_at = Carbon::now();
-			$charging_activity->status = 2; //charging stoped
-			$charging_activity->save();
+			$charging_activity->status = 1; //charging stoped
+			$charging_activity->save();*/
 
 			$transactionId = Session::get('transactionId');
-			//return $transactionId;
 
 			$transaction_data = new TransactionData();
 			$transaction_data->transaction_id = $transactionId;
@@ -41,15 +33,16 @@ class StopTransactionController extends Controller
 			$UniqueId = $request->UniqueId;
 			$chargingActivity['UniqueId'] = $UniqueId;
             $chargingActivity['messageTypeId'] = 3;
-            if($chargingActivity['status'] == 2)
-            {
-            	$chargingActivity['status'] = 'Accepted';	
-            }
-    		broadcast(new StopTransaction($chargingActivity))->toOthers();
-    		$request->session()->forget($transactionId);
-            return $chargingActivity;
+            $res= [
+                'messageTypeId' => $chargingActivity->messageTypeId,
+                'UniqueId' => $chargingActivity->UniqueId,
+                'data' => [
+                   
+                        ], 
+                    ]
+                ];
+    		broadcast(new MeterValues($chargingActivity))->toOthers(); 
+            return $res;
 
-
-        }
     }
 }

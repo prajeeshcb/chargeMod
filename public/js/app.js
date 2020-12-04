@@ -1908,6 +1908,8 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2074,7 +2076,7 @@ __webpack_require__.r(__webpack_exports__);
           chargePointModel: "Model1",
           chargePointSerialNumber: "CP1234",
           chargeBoxSerialNumber: "CB1234",
-          firmwareVersion: "v2",
+          firmwareVersion: "v1",
           iccid: "1111",
           imsi: "2222",
           meterType: "meter_type1",
@@ -2090,7 +2092,7 @@ __webpack_require__.r(__webpack_exports__);
           console.log('reject');
           _this3.inter = setInterval(function () {
             return _this3.bootNotification();
-          }, 1000);
+          }, 6000);
         }
       })["catch"](function (error) {
         console.log(error);
@@ -2129,9 +2131,39 @@ __webpack_require__.r(__webpack_exports__);
         document.getElementById("request").innerHTML = "Active";
         document.getElementById("response").innerHTML = "Yes";
       }, 2000);
+      this.interval = setTimeout(function meterValues() {
+        var _data,
+            _this5 = this;
+
+        var msgId = Math.floor(100000 + Math.random() * 900000);
+        axios.post('MeterValues', {
+          MessageTypeId: "2",
+          UniqueId: msgId,
+          Action: "StopTransacion",
+          data: (_data = {
+            connectorId: "1111",
+            transactionId: "94"
+          }, _defineProperty(_data, "transactionId", "32434"), _defineProperty(_data, "meterValue", {
+            timeStamp: "02-10-2020",
+            stampledValue: {
+              context: "other",
+              format: "signedData",
+              measurand: "Power offered",
+              phase: "LI",
+              location: "EV",
+              unit: "Kwh"
+            }
+          }), _data)
+        }).then(function (response) {
+          _this5.payloads = response.data;
+          console.log(response.data);
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }, 10000);
     },
     stopCharging: function stopCharging() {
-      var _this5 = this;
+      var _this6 = this;
 
       document.getElementById("request").innerHTML = "";
       document.getElementById("response").innerHTML = "";
@@ -2161,7 +2193,7 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       }).then(function (response) {
-        _this5.payloads = response.data;
+        _this6.payloads = response.data;
         console.log(response.data);
       })["catch"](function (error) {
         console.log(error);
