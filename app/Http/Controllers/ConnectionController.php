@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Events\HeartBeat;
 use App\Message;
+use Session;
 
 class ConnectionController extends Controller
 {
     public function fetchPayloads() {
-    	$data = "jjj";
-    	return json_encode($data);
+    	$json[] = Session::get('payload.data');
+    	return $json;
     }
 
     public function heartbeat(Request $request) {
@@ -28,6 +29,9 @@ class ConnectionController extends Controller
                    
                         ], 
                     ];
+            $json[] = Session::get('payload.data');
+            array_push($json,$res);
+            Session::put('payload.data', $json);
         	broadcast(new HeartBeat($message))->toOthers();
     		return json_encode($res);
         }

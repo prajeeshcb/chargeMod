@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Events\BootNotification;
+use Session;
 use Carbon\Carbon;
 use App\ChargePoint;
 
@@ -13,6 +14,7 @@ class BootNotificationController extends Controller
     {
     	if($request->MessageTypeId==2) 
         {
+        	$json=[];
     		$charge_point = ChargePoint::select('interval')
     						->where('charge_point_vendor', '=', $request['data']['chargePointVendor'])
     						->where('charge_point_model', '=', $request['data']['chargePointModel'])
@@ -32,7 +34,7 @@ class BootNotificationController extends Controller
     			$charge_point->UniqueId = $request->UniqueId;
             	$charge_point->MessageTypeId = 3;
     			$charge_point->status = "Rejected";
-    			$chargePoint = [
+    			$res = [
             		'MessageTypeId' => $charge_point->MessageTypeId,
             		'UniqueId' => $charge_point->UniqueId,
             		'data' => [
@@ -46,7 +48,7 @@ class BootNotificationController extends Controller
     			$charge_point->UniqueId = $request->UniqueId;
             	$charge_point->MessageTypeId = 3;
             	$charge_point->status = "Accepted";
-            	$chargePoint = [
+            	$res = [
             		'MessageTypeId' => $charge_point->MessageTypeId,
             		'UniqueId' => $charge_point->UniqueId,
             		'data' => [
@@ -56,8 +58,11 @@ class BootNotificationController extends Controller
                		]
             	];
             }
+            array_push($json,$res);
+            Session::put('payload.data', $json);
+            //return $json;
             broadcast(new BootNotification($charge_point))->toOthers();
-    		return json_encode($chargePoint);
+    		return json_encode($res);
     	}
     }
 }

@@ -80,17 +80,13 @@
                     <strong>Payload </strong>
                 </div>
                  <div class="card-body">
-                    <ul style="height:90px; overflow-y:scroll">
+                    <ul style="height:170px; overflow-x:scroll">
                         
                         <div class="row">
-                        <div class='col-6'>
+                        <div class='col-12' v-for="(payload, index) in payloads" :key="index">
                             <div id= "request" class="req">
-                                <h6>{{req }}</h6>
-                            </div>
-                         </div>
-                         <div class="col-6">
-                            <div id="response" class="res">
-                                <h6>{{res }}</h6>
+                                <b>{{payload.type}}</b>
+                                <label>{{payload.data}}</label>
                             </div>
                          </div>
                         </div>
@@ -127,7 +123,8 @@
                 payloads:[],
                 msgId: ' ',
                 req:'',
-                res:''
+                res:'',
+                flag:0
             }
         },
         mounted() {
@@ -144,17 +141,17 @@
         methods :{
             fetchPayloads() {
                axios.get('payloads').then(response => {
-                    this.payloads = response.data;
+                    this.payloads_1 = response.data;
                     console.log(this.payloads);
                 })
             },
+
             bootNotification() {
                 var msgId = Math.floor(100000 + Math.random() * 900000);
                 axios.post('bootNotification', {MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})
+
                 .then((response) => {
-                    this.payloads = response.data;
-                    var res_data = response.data;
-                    
+                    var res_data = response.data; 
                     if(res_data.data.status=="Accepted")
                     {
                         this.startCharging();
@@ -164,6 +161,20 @@
                         console.log('reject');
                         this.inter = setInterval(() => this.bootNotification(), 6000);
                     }
+
+                    var req = '{MessageTypeId:"2",UniqueId:this.msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}';
+
+                    this.payloads.push ({
+                        type: 'BootNotification request',
+                        data:req
+                    });
+
+                    console.log(JSON.parse(JSON.stringify(response.data)));
+
+                    this.payloads.push ({
+                        type: 'BootNotification response',
+                        data:JSON.parse(JSON.stringify(response.data))
+                    });
                 })
                 .catch((error) => {
                     console.log(error);
@@ -174,11 +185,26 @@
                 
                 var msgId = Math.floor(100000 + Math.random() * 900000);
                 axios.post('startCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StartTransacion",data:{connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}})
+               
                 .then((response) => {
-                    this.payloads = response.data;
-                    console.log(response.data);
+                    var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StartTransacion",data:{connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}}';
+
+                    this.payloads.push ({
+                        type: 'StartTransacion request',
+                        data:req
+                    });
+
+                    console.log(JSON.parse(JSON.stringify(response.data)));
+
+                    this.payloads.push ({
+                        type: 'StartTransacion response',
+                        data:JSON.parse(JSON.stringify(response.data))
+                    });
+                    
+                    this.flag = 1;
                     this.interval1 = setInterval(() => this.heartBeat(), 6000);
                     this.interval2 = setInterval(() => this.meterValues(), 10000);
+
                 })
                 .catch((error) => {
                     console.log(error);
@@ -196,26 +222,54 @@
                
             },
             meterValues() {
+                if(this.flag == 1) {
                     var msgId = Math.floor(100000 + Math.random() * 900000);
                     axios.post('meterValue', {MessageTypeId:"2",UniqueId:msgId, Action:"MeterValues",data:{connectorId: "1111", transactionId: "94", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
+                    
                     .then((response) => {
-                        this.payloads = response.data;
-                        console.log(response.data);
+                        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"MeterValues",data:{connectorId: "1111", transactionId: "94", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
+
+                        this.payloads.push ({
+                            type: 'MeterValues request',
+                            data:req
+                        });
+
+                        console.log(JSON.parse(JSON.stringify(response.data)));
+
+                        this.payloads.push ({
+                            type: 'MeterValues response',
+                            data:JSON.parse(JSON.stringify(response.data))
+                        });
                     })
                     .catch((error) => {
                         console.log(error);
                     })
+                }
             },
             heartBeat() {
+                if(this.flag == 1) {
                     var msgId = Math.floor(100000 + Math.random() * 900000);
                     axios.post('heartBeat', {MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""})
+                    
                     .then((response) => {
-                        this.payloads = response.data;
-                        console.log(response.data);
+                        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""}';
+
+                        this.payloads.push ({
+                            type: 'HeartBeat request',
+                            data:req
+                        });
+
+                        console.log(JSON.parse(JSON.stringify(response.data)));
+
+                        this.payloads.push ({
+                            type: 'HeartBeat response',
+                            data:JSON.parse(JSON.stringify(response.data))
+                        });
                     })
                     .catch((error) => {
                         console.log(error);
                     })
+                }
             },
             stopCharging() {
                  alert("Charging Completed");
@@ -227,13 +281,24 @@
 
                 var msgId = Math.floor(100000 + Math.random() * 900000);
                 axios.post('stopCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
+                
                 .then((response) => {
                     this.payloads = response.data;
-                    console.log(response.data);
-                    //setTimeout(() => clearInterval(interval1), 1000);
-                    //setTimeout(() => clearInterval(interval2), 1000);
-                    setTimeout(function () { this.meterValues() }, 1000);
-                    setTimeout(function () { this.heartBeat() }, 1000)
+                    this.flag = 0;
+                    var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
+
+                    this.payloads.push ({
+                        type: 'StopTransacion request',
+                        data:req
+                    });
+
+                    console.log(JSON.parse(JSON.stringify(response.data)));
+
+                    this.payloads.push ({
+                        type: 'StopTransacion response',
+                        data:JSON.parse(JSON.stringify(response.data))
+                    });
+                    
                 })
                 .catch((error) => {
                     console.log(error);

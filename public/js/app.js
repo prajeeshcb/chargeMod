@@ -2026,17 +2026,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       payloads: [],
       msgId: ' ',
       req: '',
-      res: ''
+      res: '',
+      flag: 0
     };
   },
   mounted: function mounted() {
@@ -2057,7 +2054,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.get('payloads').then(function (response) {
-        _this2.payloads = response.data;
+        _this2.payloads_1 = response.data;
         console.log(_this2.payloads);
       });
     },
@@ -2081,7 +2078,6 @@ __webpack_require__.r(__webpack_exports__);
           meterSerialNumber: "MTR1234"
         }
       }).then(function (response) {
-        _this3.payloads = response.data;
         var res_data = response.data;
 
         if (res_data.data.status == "Accepted") {
@@ -2092,6 +2088,20 @@ __webpack_require__.r(__webpack_exports__);
             return _this3.bootNotification();
           }, 6000);
         }
+
+        var req = '{MessageTypeId:"2",UniqueId:this.msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}';
+
+        _this3.payloads.push({
+          type: 'BootNotification request',
+          data: req
+        });
+
+        console.log(JSON.parse(JSON.stringify(response.data)));
+
+        _this3.payloads.push({
+          type: 'BootNotification response',
+          data: JSON.parse(JSON.stringify(response.data))
+        });
       })["catch"](function (error) {
         console.log(error);
       });
@@ -2112,8 +2122,21 @@ __webpack_require__.r(__webpack_exports__);
           status: "1"
         }
       }).then(function (response) {
-        _this4.payloads = response.data;
-        console.log(response.data);
+        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StartTransacion",data:{connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}}';
+
+        _this4.payloads.push({
+          type: 'StartTransacion request',
+          data: req
+        });
+
+        console.log(JSON.parse(JSON.stringify(response.data)));
+
+        _this4.payloads.push({
+          type: 'StartTransacion response',
+          data: JSON.parse(JSON.stringify(response.data))
+        });
+
+        _this4.flag = 1;
         _this4.interval1 = setInterval(function () {
           return _this4.heartBeat();
         }, 6000);
@@ -2135,48 +2158,74 @@ __webpack_require__.r(__webpack_exports__);
     meterValues: function meterValues() {
       var _this5 = this;
 
-      var msgId = Math.floor(100000 + Math.random() * 900000);
-      axios.post('meterValue', {
-        MessageTypeId: "2",
-        UniqueId: msgId,
-        Action: "MeterValues",
-        data: {
-          connectorId: "1111",
-          transactionId: "94",
-          meterValue: {
-            timeStamp: "02-10-2020",
-            stampledValue: {
-              context: "other",
-              format: "signedData",
-              measurand: "Power offered",
-              phase: "LI",
-              location: "EV",
-              unit: "Kwh"
+      if (this.flag == 1) {
+        var msgId = Math.floor(100000 + Math.random() * 900000);
+        axios.post('meterValue', {
+          MessageTypeId: "2",
+          UniqueId: msgId,
+          Action: "MeterValues",
+          data: {
+            connectorId: "1111",
+            transactionId: "94",
+            meterValue: {
+              timeStamp: "02-10-2020",
+              stampledValue: {
+                context: "other",
+                format: "signedData",
+                measurand: "Power offered",
+                phase: "LI",
+                location: "EV",
+                unit: "Kwh"
+              }
             }
           }
-        }
-      }).then(function (response) {
-        _this5.payloads = response.data;
-        console.log(response.data);
-      })["catch"](function (error) {
-        console.log(error);
-      });
+        }).then(function (response) {
+          var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"MeterValues",data:{connectorId: "1111", transactionId: "94", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
+
+          _this5.payloads.push({
+            type: 'MeterValues request',
+            data: req
+          });
+
+          console.log(JSON.parse(JSON.stringify(response.data)));
+
+          _this5.payloads.push({
+            type: 'MeterValues response',
+            data: JSON.parse(JSON.stringify(response.data))
+          });
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
     },
     heartBeat: function heartBeat() {
       var _this6 = this;
 
-      var msgId = Math.floor(100000 + Math.random() * 900000);
-      axios.post('heartBeat', {
-        MessageTypeId: "2",
-        UniqueId: msgId,
-        Action: "HeartBeat",
-        data: ""
-      }).then(function (response) {
-        _this6.payloads = response.data;
-        console.log(response.data);
-      })["catch"](function (error) {
-        console.log(error);
-      });
+      if (this.flag == 1) {
+        var msgId = Math.floor(100000 + Math.random() * 900000);
+        axios.post('heartBeat', {
+          MessageTypeId: "2",
+          UniqueId: msgId,
+          Action: "HeartBeat",
+          data: ""
+        }).then(function (response) {
+          var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""}';
+
+          _this6.payloads.push({
+            type: 'HeartBeat request',
+            data: req
+          });
+
+          console.log(JSON.parse(JSON.stringify(response.data)));
+
+          _this6.payloads.push({
+            type: 'HeartBeat response',
+            data: JSON.parse(JSON.stringify(response.data))
+          });
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
     },
     stopCharging: function stopCharging() {
       var _this7 = this;
@@ -2211,15 +2260,20 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         _this7.payloads = response.data;
-        console.log(response.data); //setTimeout(() => clearInterval(interval1), 1000);
-        //setTimeout(() => clearInterval(interval2), 1000);
+        _this7.flag = 0;
+        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
 
-        setTimeout(function () {
-          this.meterValues();
-        }, 1000);
-        setTimeout(function () {
-          this.heartBeat();
-        }, 1000);
+        _this7.payloads.push({
+          type: 'StopTransacion request',
+          data: req
+        });
+
+        console.log(JSON.parse(JSON.stringify(response.data)));
+
+        _this7.payloads.push({
+          type: 'StopTransacion response',
+          data: JSON.parse(JSON.stringify(response.data))
+        });
       })["catch"](function (error) {
         console.log(error);
       });
@@ -43977,25 +44031,26 @@ var render = function() {
           _c("div", { staticClass: "card-body" }, [
             _c(
               "ul",
-              { staticStyle: { height: "90px", "overflow-y": "scroll" } },
+              { staticStyle: { height: "170px", "overflow-x": "scroll" } },
               [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-6" }, [
-                    _c(
-                      "div",
-                      { staticClass: "req", attrs: { id: "request" } },
-                      [_c("h6", [_vm._v(_vm._s(_vm.req))])]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-6" }, [
-                    _c(
-                      "div",
-                      { staticClass: "res", attrs: { id: "response" } },
-                      [_c("h6", [_vm._v(_vm._s(_vm.res))])]
-                    )
-                  ])
-                ])
+                _c(
+                  "div",
+                  { staticClass: "row" },
+                  _vm._l(_vm.payloads, function(payload, index) {
+                    return _c("div", { key: index, staticClass: "col-12" }, [
+                      _c(
+                        "div",
+                        { staticClass: "req", attrs: { id: "request" } },
+                        [
+                          _c("b", [_vm._v(_vm._s(payload.type))]),
+                          _vm._v(" "),
+                          _c("label", [_vm._v(_vm._s(payload.data))])
+                        ]
+                      )
+                    ])
+                  }),
+                  0
+                )
               ]
             )
           ])
