@@ -2062,6 +2062,7 @@ __webpack_require__.r(__webpack_exports__);
     bootNotification: function bootNotification() {
       var _this3 = this;
 
+      this.payloads = [];
       var msgId = Math.floor(100000 + Math.random() * 900000);
       axios.post('bootNotification', {
         MessageTypeId: "2",
@@ -2231,6 +2232,10 @@ __webpack_require__.r(__webpack_exports__);
     stopCharging: function stopCharging() {
       var _this7 = this;
 
+      alert("Charging Completed");
+      document.getElementById("disable").disabled = false;
+      document.getElementById("enable").disabled = true;
+      document.getElementById("status").value = "stop";
       var msgId = Math.floor(100000 + Math.random() * 900000);
       axios.post('stopCharging', {
         MessageTypeId: "2",
@@ -2268,13 +2273,6 @@ __webpack_require__.r(__webpack_exports__);
           type: 'StopTransacion response',
           data: JSON.parse(JSON.stringify(response.data))
         });
-
-        alert("Charging Completed");
-        document.getElementById("request").innerHTML = "";
-        document.getElementById("response").innerHTML = "";
-        document.getElementById("disable").disabled = false;
-        document.getElementById("enable").disabled = true;
-        document.getElementById("status").value = "stop";
       })["catch"](function (error) {
         console.log(error);
       });

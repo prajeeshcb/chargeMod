@@ -35,6 +35,7 @@ class HeartBeat
         return new PrivateChannel('chat');
     }
 
+
     public function broadcastWith() 
     {
         return [

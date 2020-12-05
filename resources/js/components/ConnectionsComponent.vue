@@ -276,7 +276,11 @@
             },
            
             stopCharging() {
-                 
+                
+                alert("Charging Completed");
+                document.getElementById("disable").disabled =false;
+                document.getElementById("enable").disabled =true;
+                document.getElementById("status").value= "stop";
 
                 var msgId = Math.floor(100000 + Math.random() * 900000);
                 axios.post('stopCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
@@ -297,12 +301,7 @@
                         data:JSON.parse(JSON.stringify(response.data))
                     });
 
-                    alert("Charging Completed");
-                document.getElementById("request").innerHTML= "";
-                document.getElementById("response").innerHTML= "";
-                 document.getElementById("disable").disabled =false;
-                  document.getElementById("enable").disabled =true;
-                document.getElementById("status").value= "stop";
+                    
                     
                 })
                 .catch((error) => {
