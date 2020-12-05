@@ -276,6 +276,7 @@
             },
            
             stopCharging() {
+                
                 alert("Charging Completed");
                 document.getElementById("disable").disabled =false;
                 document.getElementById("enable").disabled =true;
@@ -301,6 +302,8 @@
                     });
                 document.getElementById("request").innerHTML= "";
                 document.getElementById("response").innerHTML= "";
+
+                    
                     
                 })
                 .catch((error) => {
