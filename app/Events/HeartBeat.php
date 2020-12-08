@@ -10,7 +10,6 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use App\Message;
-
 class HeartBeat
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
@@ -44,4 +43,5 @@ class HeartBeat
             'data' => [ ]
             ];
     }
+
 }

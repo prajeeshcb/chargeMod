@@ -184,7 +184,7 @@
             },
             
             startCharging() {
-                
+                this.payloads.length= 0;
                 var msgId = Math.floor(100000 + Math.random() * 900000);
                 axios.post('startCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StartTransacion",data:{connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}})
                
@@ -253,7 +253,7 @@
             heartBeat() {
                 if(this.flag == 1) {
                     var msgId = Math.floor(100000 + Math.random() * 900000);
-                    axios.post('heartBeat', {MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""})
+                    axios.post('heartBeat', {MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:"Active"})
                     
                     .then((response) => {
                         var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""}';
@@ -301,6 +301,8 @@
                         type: 'StopTransacion response',
                         data:JSON.parse(JSON.stringify(response.data))
                     });
+                document.getElementById("request").innerHTML= "";
+                document.getElementById("response").innerHTML= "";
 
                     
                     

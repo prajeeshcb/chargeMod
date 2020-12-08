@@ -2110,6 +2110,7 @@ __webpack_require__.r(__webpack_exports__);
     startCharging: function startCharging() {
       var _this4 = this;
 
+      this.payloads.length = 0;
       var msgId = Math.floor(100000 + Math.random() * 900000);
       axios.post('startCharging', {
         MessageTypeId: "2",
@@ -2208,7 +2209,7 @@ __webpack_require__.r(__webpack_exports__);
           MessageTypeId: "2",
           UniqueId: msgId,
           Action: "HeartBeat",
-          data: ""
+          data: "Active"
         }).then(function (response) {
           var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""}';
 
@@ -2272,6 +2273,9 @@ __webpack_require__.r(__webpack_exports__);
           type: 'StopTransacion response',
           data: JSON.parse(JSON.stringify(response.data))
         });
+
+        document.getElementById("request").innerHTML = "";
+        document.getElementById("response").innerHTML = "";
       })["catch"](function (error) {
         console.log(error);
       });
@@ -44230,7 +44234,7 @@ var staticRenderFns = [
             },
             [
               _vm._v(
-                "\n                                   Clear\n                        "
+                "\r\n                                   Clear\r\n                        "
               )
             ]
           )
@@ -56713,7 +56717,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "anyKey",
+  key: "",
   // cluster: process.env.MIX_PUSHER_APP_CLUSTER,
   // forceTLS: true,
   wsHost: window.location.hostname,
@@ -56867,8 +56871,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/larasocket/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/larasocket/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\chargeMod\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\chargeMod\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
