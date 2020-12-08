@@ -13,10 +13,11 @@ use App\Events\WebsocketDemoEvent;
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
 	broadcast(new WebsocketDemoEvent('some data'));
     return view('welcome');
-});
+});*/
+Route::get('/server', 'ServerController@index');
 Route::get('/chats', 'ChatController@index');
 Route::get('/messages', 'ChatController@fetchMessages');
 Route::post('/messages', 'ChatController@sendMessages');
