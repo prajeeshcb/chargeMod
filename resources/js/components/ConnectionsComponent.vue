@@ -131,7 +131,6 @@
             console.log('mounted');
         },
         created() {
-            this.fetchbeats();
             this.fetchPayloads();
             Echo.join('chat')
                 .listen('StartTransaction',(event)=>{

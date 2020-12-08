@@ -2042,7 +2042,6 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.fetchbeats();
     this.fetchPayloads();
     Echo.join('chat').listen('StartTransaction', function (event) {
       _this.payloads.push(event.payload);
@@ -44234,7 +44233,7 @@ var staticRenderFns = [
             },
             [
               _vm._v(
-                "\r\n                                   Clear\r\n                        "
+                "\n                                   Clear\n                        "
               )
             ]
           )
@@ -56654,7 +56653,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 //Vue.component('connections', require('./components/ConnectionComponent.vue'));
 
 Vue.component('chats', __webpack_require__(/*! ./components/ConnectionsComponent.vue */ "./resources/js/components/ConnectionsComponent.vue")["default"]);
-Vue.component('server_info', __webpack_require__(/*! ./components/ServerComponent.vue */ "./resources/js/components/ServerComponent.vue"));
+Vue.component('serverview', __webpack_require__(/*! ./components/ServerComponent.vue */ "./resources/js/components/ServerComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -56717,7 +56716,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "",
+  key: "anyKey",
   // cluster: process.env.MIX_PUSHER_APP_CLUSTER,
   // forceTLS: true,
   wsHost: window.location.hostname,
@@ -56871,8 +56870,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\chargeMod\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\chargeMod\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /opt/lampp/htdocs/larasocket/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /opt/lampp/htdocs/larasocket/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
