@@ -155,7 +155,11 @@
             
             //     var msgId = Math.floor(100000 + Math.random() * 900000);
             //     axios.post('bootNotification', {MessageTypeId:"2",UniqueId:this.msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})
-
+            bootNotification() {
+            
+                var msgId = Math.floor(100000 + Math.random() * 900000);
+                axios.post('bootNotification', {MessageTypeId:"2",UniqueId:this.msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})
+            },
             //     .then((response) => {
             //         var res_data = response.data; 
             //         if(res_data.data.status=="Accepted")

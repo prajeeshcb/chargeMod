@@ -2065,6 +2065,25 @@ __webpack_require__.r(__webpack_exports__);
     // bootNotification() {
     //     var msgId = Math.floor(100000 + Math.random() * 900000);
     //     axios.post('bootNotification', {MessageTypeId:"2",UniqueId:this.msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})
+    bootNotification: function bootNotification() {
+      var msgId = Math.floor(100000 + Math.random() * 900000);
+      axios.post('bootNotification', {
+        MessageTypeId: "2",
+        UniqueId: this.msgId,
+        Action: "BootNotification",
+        data: {
+          chargePointVendor: "Point1",
+          chargePointModel: "Model1",
+          chargePointSerialNumber: "CP1234",
+          chargeBoxSerialNumber: "CB1234",
+          firmwareVersion: "v1",
+          iccid: "1111",
+          imsi: "2222",
+          meterType: "meter_type1",
+          meterSerialNumber: "MTR1234"
+        }
+      });
+    },
     //     .then((response) => {
     //         var res_data = response.data; 
     //         if(res_data.data.status=="Accepted")
@@ -44268,6 +44287,205 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ServerComponent.vue?vue&type=template&id=2317885f&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ServerComponent.vue?vue&type=template&id=2317885f& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _c("div", { staticClass: "row " }, [
+        _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "card" }, [
+            _c(
+              "div",
+              {
+                staticClass: "card-header",
+                staticStyle: { "text-align": "center" }
+              },
+              [_c("h2", [_vm._v("Server Monitoring")])]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("div", { staticClass: "card card-primary" }, [
+                    _c("div", { staticClass: "card-header" }, [
+                      _c("span", { staticClass: "sub-headings" }, [
+                        _vm._v("Charge Points")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-body" }, [
+                      _c(
+                        "ul",
+                        { staticClass: "list-unstyled charge-point-list" },
+                        [
+                          _c("li", [_vm._v("Charge Point1")]),
+                          _vm._v(" "),
+                          _c("li", [_vm._v("Charge Point2")]),
+                          _vm._v(" "),
+                          _c("li", [_vm._v("Charge Point3")]),
+                          _vm._v(" "),
+                          _c("li", [_vm._v("Charge Point4")]),
+                          _vm._v(" "),
+                          _c("li", [_vm._v("Charge Point5")])
+                        ]
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-9" }, [
+                  _c("div", { staticClass: "card" }, [
+                    _c("div", { staticClass: "card-header" }, [
+                      _c("span", { staticClass: "sub-headings" }, [
+                        _vm._v("  Charge Point Info")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-6" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("div", { staticClass: "input-group" }, [
+                              _c("label", [_vm._v("URL")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                staticClass: "form-control",
+                                attrs: {
+                                  id: "vehicle",
+                                  type: "text",
+                                  name: "URL",
+                                  disabled: "disabled"
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("div", { staticClass: "input-group" }, [
+                              _c("label", [_vm._v("Tag Id")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                staticClass: "form-control",
+                                attrs: {
+                                  id: "vehicle",
+                                  type: "text",
+                                  name: "URL",
+                                  disabled: "disabled"
+                                }
+                              })
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-6" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("div", { staticClass: "input-group" }, [
+                              _c("label", [_vm._v("Status")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                staticClass: "form-control",
+                                attrs: {
+                                  id: "vehicle",
+                                  type: "text",
+                                  name: "URL",
+                                  disabled: "disabled"
+                                }
+                              })
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("div", { staticClass: "input-group" }, [
+                              _c("label", [_vm._v("Current Meter Reading")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                staticClass: "form-control",
+                                attrs: {
+                                  id: "vehicle",
+                                  type: "text",
+                                  name: "URL",
+                                  disabled: "disabled"
+                                }
+                              })
+                            ])
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c(
+                          "span",
+                          { staticStyle: { "text-align": "center" } },
+                          [
+                            _c(
+                              "h5",
+                              { staticStyle: { "font-weight": "bold" } },
+                              [_vm._v("Payload")]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "ul",
+                          {
+                            staticStyle: {
+                              height: "170px",
+                              "overflow-x": "scroll",
+                              border: "2px solid #6c757d",
+                              "border-radius": "5px"
+                            }
+                          },
+                          [
+                            _c("li", [
+                              _vm._v(
+                                '\r\n                                                {MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}\r\n                                            '
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("li", [
+                              _vm._v(
+                                '\r\n                                                {MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}\r\n                                            '
+                              )
+                            ])
+                          ]
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
 /*!********************************************************************!*\
   !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
@@ -56460,6 +56678,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 //Vue.component('connections', require('./components/ConnectionComponent.vue'));
 
 Vue.component('chats', __webpack_require__(/*! ./components/ConnectionsComponent.vue */ "./resources/js/components/ConnectionsComponent.vue")["default"]);
+Vue.component('serverview', __webpack_require__(/*! ./components/ServerComponent.vue */ "./resources/js/components/ServerComponent.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -56600,6 +56819,59 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ConnectionsComponent_vue_vue_type_template_id_4c10a7da___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ConnectionsComponent_vue_vue_type_template_id_4c10a7da___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/ServerComponent.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/ServerComponent.vue ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ServerComponent_vue_vue_type_template_id_2317885f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ServerComponent.vue?vue&type=template&id=2317885f& */ "./resources/js/components/ServerComponent.vue?vue&type=template&id=2317885f&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _ServerComponent_vue_vue_type_template_id_2317885f___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ServerComponent_vue_vue_type_template_id_2317885f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ServerComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ServerComponent.vue?vue&type=template&id=2317885f&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/ServerComponent.vue?vue&type=template&id=2317885f& ***!
+  \************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ServerComponent_vue_vue_type_template_id_2317885f___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ServerComponent.vue?vue&type=template&id=2317885f& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ServerComponent.vue?vue&type=template&id=2317885f&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ServerComponent_vue_vue_type_template_id_2317885f___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ServerComponent_vue_vue_type_template_id_2317885f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

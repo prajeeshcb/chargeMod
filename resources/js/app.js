@@ -21,6 +21,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 //Vue.component('connections', require('./components/ConnectionComponent.vue'));
 Vue.component('chats', require('./components/ConnectionsComponent.vue').default);
+Vue.component('serverview', require('./components/ServerComponent.vue').default);
 
 
 /**
