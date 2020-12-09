@@ -15,7 +15,7 @@ use App\Events\WebsocketDemoEvent;
 
 Route::get('/', function () {
 	broadcast(new WebsocketDemoEvent('some data'));
-    return view('welcome');
+    return view('chats');
 });
 Route::get('/chats', 'ChatController@index');
 Route::get('/messages', 'ChatController@fetchMessages');
@@ -30,6 +30,7 @@ Route::post('/stopCharging', 'StopTransactionController@stop');
 Route::post('/bootNotification', 'BootNotificationController@bootNotification');
 Route::post('/meterValue', 'MeterValueController@meterValue');
 Route::post('/heartBeat', 'ConnectionController@heartbeat');
-Auth::routes();
+Route::get('/userdetails', 'StartTransactionController@user');
+// Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

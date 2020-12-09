@@ -2033,7 +2033,9 @@ __webpack_require__.r(__webpack_exports__);
       msgId: ' ',
       req: '',
       res: '',
-      flag: 0
+      flag: 0,
+      status: '',
+      users: ''
     };
   },
   mounted: function mounted() {
@@ -2042,7 +2044,8 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.fetchbeats();
+    // this.checktagID();
+    // this.fetchbeats();
     this.fetchPayloads();
     Echo.join('chat').listen('StartTransaction', function (event) {
       _this.payloads.push(event.payload);
@@ -2059,56 +2062,59 @@ __webpack_require__.r(__webpack_exports__);
         console.log(_this2.payloads);
       });
     },
-    bootNotification: function bootNotification() {
-      var _this3 = this;
-
-      var msgId = Math.floor(100000 + Math.random() * 900000);
-      axios.post('bootNotification', {
-        MessageTypeId: "2",
-        UniqueId: this.msgId,
-        Action: "BootNotification",
-        data: {
-          chargePointVendor: "Point1",
-          chargePointModel: "Model1",
-          chargePointSerialNumber: "CP1234",
-          chargeBoxSerialNumber: "CB1234",
-          firmwareVersion: "v1",
-          iccid: "1111",
-          imsi: "2222",
-          meterType: "meter_type1",
-          meterSerialNumber: "MTR1234"
-        }
-      }).then(function (response) {
-        var res_data = response.data;
-
-        if (res_data.data.status == "Accepted") {
-          _this3.startCharging();
-        } else {
-          alert('Rejected');
-          _this3.inter = setInterval(function () {
-            return _this3.bootNotification();
-          }, 6000);
-        }
-
-        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}';
-
-        _this3.payloads.push({
-          type: 'BootNotification request',
-          data: req
-        });
-
-        console.log(JSON.parse(JSON.stringify(response.data)));
-
-        _this3.payloads.push({
-          type: 'BootNotification response',
-          data: JSON.parse(JSON.stringify(response.data))
-        });
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
+    // bootNotification() {
+    //     var msgId = Math.floor(100000 + Math.random() * 900000);
+    //     axios.post('bootNotification', {MessageTypeId:"2",UniqueId:this.msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})
+    //     .then((response) => {
+    //         var res_data = response.data; 
+    //         if(res_data.data.status=="Accepted")
+    //         {
+    //             this.startCharging();
+    //         }
+    //         else 
+    //         {
+    //           alert('Rejected');
+    //             this.inter = setInterval(() => this.bootNotification(), 6000);
+    //         }
+    //         var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}';
+    //         this.payloads.push ({
+    //             type: 'BootNotification request',
+    //             data:req
+    //         });
+    //         console.log(JSON.parse(JSON.stringify(response.data)));
+    //         this.payloads.push ({
+    //             type: 'BootNotification response',
+    //             data:JSON.parse(JSON.stringify(response.data))
+    //         });
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //     })
+    // },
+    //     checktagID()
+    //     {
+    //           axios.get('userdetails').then(response => {
+    //              var userdetails = response.data;
+    //              console.log(userdetails[4].status);
+    //            for(users in userdetails)
+    //            {
+    //               if(users.data.status === "1")
+    //                 {
+    //                     alert("A user is charging with the same TagId");
+    //                 }
+    //             else 
+    //                 {
+    //                     this.startCharging();
+    //                 }
+    //             }
+    //         })
+    //         .catch((error) => {
+    //           console.log(error);
+    //       })
+    //    this.startCharging();
+    //     },
     startCharging: function startCharging() {
-      var _this4 = this;
+      var _this3 = this;
 
       this.payloads.length = 0;
       var msgId = Math.floor(100000 + Math.random() * 900000);
@@ -2117,6 +2123,7 @@ __webpack_require__.r(__webpack_exports__);
         UniqueId: msgId,
         Action: "StartTransacion",
         data: {
+          user_id: "12",
           connectorId: "11111",
           idTag: "567890",
           meterStart: "2222",
@@ -2126,24 +2133,24 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StartTransacion",data:{connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}}';
 
-        _this4.payloads.push({
+        _this3.payloads.push({
           type: 'StartTransacion request',
           data: req
         });
 
         console.log(JSON.parse(JSON.stringify(response.data)));
 
-        _this4.payloads.push({
+        _this3.payloads.push({
           type: 'StartTransacion response',
           data: JSON.parse(JSON.stringify(response.data))
         });
 
-        _this4.flag = 1;
-        _this4.interval1 = setInterval(function () {
-          return _this4.heartBeat();
+        _this3.flag = 1;
+        _this3.interval1 = setInterval(function () {
+          return _this3.heartBeat();
         }, 6000);
-        _this4.interval2 = setInterval(function () {
-          return _this4.meterValues();
+        _this3.interval2 = setInterval(function () {
+          return _this3.meterValues();
         }, 10000);
       })["catch"](function (error) {
         console.log(error);
@@ -2158,7 +2165,7 @@ __webpack_require__.r(__webpack_exports__);
       document.getElementById("battery").value = "zczczc";
     },
     meterValues: function meterValues() {
-      var _this5 = this;
+      var _this4 = this;
 
       if (this.flag == 1) {
         var msgId = Math.floor(100000 + Math.random() * 900000);
@@ -2184,14 +2191,14 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (response) {
           var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"MeterValues",data:{connectorId: "1111", transactionId: "94", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
 
-          _this5.payloads.push({
+          _this4.payloads.push({
             type: 'MeterValues request',
             data: req
           });
 
           console.log(JSON.parse(JSON.stringify(response.data)));
 
-          _this5.payloads.push({
+          _this4.payloads.push({
             type: 'MeterValues response',
             data: JSON.parse(JSON.stringify(response.data))
           });
@@ -2201,7 +2208,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     heartBeat: function heartBeat() {
-      var _this6 = this;
+      var _this5 = this;
 
       if (this.flag == 1) {
         var msgId = Math.floor(100000 + Math.random() * 900000);
@@ -2209,18 +2216,18 @@ __webpack_require__.r(__webpack_exports__);
           MessageTypeId: "2",
           UniqueId: msgId,
           Action: "HeartBeat",
-          data: "Active"
+          data: ""
         }).then(function (response) {
           var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""}';
 
-          _this6.payloads.push({
+          _this5.payloads.push({
             type: 'HeartBeat request',
             data: req
           });
 
           console.log(JSON.parse(JSON.stringify(response.data)));
 
-          _this6.payloads.push({
+          _this5.payloads.push({
             type: 'HeartBeat response',
             data: JSON.parse(JSON.stringify(response.data))
           });
@@ -2230,12 +2237,13 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     stopCharging: function stopCharging() {
-      var _this7 = this;
+      var _this6 = this;
 
       alert("Charging Completed");
       document.getElementById("disable").disabled = false;
       document.getElementById("enable").disabled = true;
       document.getElementById("status").value = "stop";
+      document.getElementById("tagid").value = "";
       var msgId = Math.floor(100000 + Math.random() * 900000);
       axios.post('stopCharging', {
         MessageTypeId: "2",
@@ -2259,23 +2267,20 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       }).then(function (response) {
-        _this7.flag = 0;
+        _this6.flag = 0;
         var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
 
-        _this7.payloads.push({
+        _this6.payloads.push({
           type: 'StopTransacion request',
           data: req
         });
 
         console.log(JSON.parse(JSON.stringify(response.data)));
 
-        _this7.payloads.push({
+        _this6.payloads.push({
           type: 'StopTransacion response',
           data: JSON.parse(JSON.stringify(response.data))
         });
-
-        document.getElementById("request").innerHTML = "";
-        document.getElementById("response").innerHTML = "";
       })["catch"](function (error) {
         console.log(error);
       });
@@ -44002,7 +44007,7 @@ var render = function() {
                   {
                     staticClass: "btn btn-primary",
                     attrs: { id: "disable" },
-                    on: { click: _vm.bootNotification }
+                    on: { click: _vm.startCharging }
                   },
                   [_vm._v("Start Charging")]
                 ),

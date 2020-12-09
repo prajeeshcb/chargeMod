@@ -51,7 +51,8 @@ class StartTransactionController extends Controller
         if($request->MessageTypeId==2) 
         {
     		$charging = new ChargingActivity();
-    		$charging->user_id = Auth::user()->id;
+            // $charging->user_id = Auth::user()->id;
+            $charging->user_id=$request['data']['user_id'];
             $charging->station_id = 1;
     		$charging->connector_id = $request['data']['connectorId'];
     		$charging->vehicle_tag_id = $request['data']['idTag'];
@@ -95,7 +96,13 @@ class StartTransactionController extends Controller
             $beats= Heartbeat()::all();
             return response()->json($beats);*/
 
-	}
+    }
+    public function user() 
+    {
+      
+        $users = DB::select('select * from charging_activities where vehicle_tag_id="567890"');
+        return $users;
+    }
 
 
     
