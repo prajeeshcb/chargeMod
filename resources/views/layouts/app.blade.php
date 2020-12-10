@@ -26,7 +26,7 @@
         <nav class="navbar  navbar-expand-md navbar-dark bg-black shadow-sm" style="background-color: black; color: white;">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}" style="font-size: 25px;">
-                    <strong>{{ config('app.name', 'ChargeMod') }}</strong>
+                    <strong>Chargemod</strong>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -42,13 +42,13 @@
                     <ul class="navbar-nav ml-auto" style="font-size: 16px; font-weight: bold; color: white;">
                         <!-- Authentication Links -->
                         @guest
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
+                            </li> -->
                             @if (Route::has('register'))
-                                <li class="nav-item">
+                                <!-- <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
+                                </li> -->
                             @endif
                         @else
                             <li class="nav-item dropdown">
