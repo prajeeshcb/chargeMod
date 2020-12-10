@@ -75,7 +75,7 @@ class StartTransactionController extends Controller
             $chargingActivity['messageTypeId'] = 3;
             $res= [
                 'messageTypeId' => $chargingActivity->messageTypeId,
-                'UniqueId' => $chargingActivity->UniqueId,
+                'UniqueId' =>874414,
                 'data' => [
                       'TransactionId' => $chargingActivity->id,
                       'IdTagInfo' =>[

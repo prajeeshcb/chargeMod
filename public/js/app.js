@@ -2136,44 +2136,32 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       this.payloads.length = 0;
-      var msgId = Math.floor(100000 + Math.random() * 900000);
-      axios.post('startCharging', {
-        MessageTypeId: "2",
-        UniqueId: msgId,
-        Action: "StartTransacion",
-        data: {
-          user_id: "12",
-          connectorId: "11111",
-          idTag: "567890",
-          meterStart: "2222",
-          reservationId: "32434",
-          status: "1"
-        }
-      }).then(function (response) {
-        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StartTransacion",data:{connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}}';
+      var msgId = Math.floor(100000 + Math.random() * 900000); // axios.post('startCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StartTransacion",data:{user_id:"12",connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}})
+      // .then((response) => {
 
-        _this3.payloads.push({
-          type: 'StartTransacion request',
-          data: req
-        });
-
-        console.log(JSON.parse(JSON.stringify(response.data)));
-
-        _this3.payloads.push({
-          type: 'StartTransacion response',
-          data: JSON.parse(JSON.stringify(response.data))
-        });
-
-        _this3.flag = 1;
-        _this3.interval1 = setInterval(function () {
-          return _this3.heartBeat();
-        }, 6000);
-        _this3.interval2 = setInterval(function () {
-          return _this3.meterValues();
-        }, 10000);
-      })["catch"](function (error) {
-        console.log(error);
+      var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StartTransacion",data:{connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}}';
+      this.payloads.push({
+        type: 'StartTransacion request',
+        data: req
       });
+      var res = '{MessageTypeId:"3",UniqueId:"874414",data:{TransactionId: "1",IdTagInfo:{name:"asas",model:"ddss342",charging_time:"45min",charging_pin_id:"438"}}}'; // console.log(JSON.parse(JSON.stringify(response.data)));
+
+      this.payloads.push({
+        type: 'StartTransacion response',
+        data: res
+      });
+      this.flag = 1;
+      this.interval1 = setInterval(function () {
+        return _this3.heartBeat();
+      }, 6000);
+      this.interval2 = setInterval(function () {
+        return _this3.meterValues();
+      }, 10000); //  }
+      // )
+      // .catch((error) => {
+      //     console.log(error);
+      // })
+
       document.getElementById("enable").disabled = false;
       document.getElementById("disable").disabled = true;
       document.getElementById("userid").value = "1";

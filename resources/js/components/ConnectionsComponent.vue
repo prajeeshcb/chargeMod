@@ -218,31 +218,32 @@
             startCharging() {
                 this.payloads.length=0;
                 var msgId = Math.floor(100000 + Math.random() * 900000);
-                axios.post('startCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StartTransacion",data:{user_id:"12",connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}})
+                // axios.post('startCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StartTransacion",data:{user_id:"12",connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}})
                
-                .then((response) => {
+                // .then((response) => {
                     var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StartTransacion",data:{connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}}';
 
                     this.payloads.push ({
                         type: 'StartTransacion request',
                         data:req
                     });
-
-                    console.log(JSON.parse(JSON.stringify(response.data)));
+                    var res='{MessageTypeId:"3",UniqueId:"874414",data:{TransactionId: "1",IdTagInfo:{name:"asas",model:"ddss342",charging_time:"45min",charging_pin_id:"438"}}}';
+                    // console.log(JSON.parse(JSON.stringify(response.data)));
 
                     this.payloads.push ({
                         type: 'StartTransacion response',
-                        data:JSON.parse(JSON.stringify(response.data))
+                        data:res
                     });
                     
                     this.flag = 1;
                     this.interval1 = setInterval(() => this.heartBeat(), 6000);
                     this.interval2 = setInterval(() => this.meterValues(), 10000);
 
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
+                //  }
+                // )
+                // .catch((error) => {
+                //     console.log(error);
+                // })
 
 
                
