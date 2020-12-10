@@ -261,34 +261,34 @@
             meterValues() {
                 if(this.flag == 1) {
                     var msgId = Math.floor(100000 + Math.random() * 900000);
-                    axios.post('meterValue', {MessageTypeId:"2",UniqueId:msgId, Action:"MeterValues",data:{connectorId: "1111", transactionId: "94", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
+                    // axios.post('meterValue', {MessageTypeId:"2",UniqueId:msgId, Action:"MeterValues",data:{connectorId: "1111", transactionId: "94", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
                     
-                    .then((response) => {
-                        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"MeterValues",data:{connectorId: "1111", transactionId: "94", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
+                    //  .then((response) => {
+                      var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"MeterValues",data:{connectorId: "1111", transactionId: "94", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
 
                         this.payloads.push ({
                             type: 'MeterValues request',
                             data:req
                         });
 
-                        console.log(JSON.parse(JSON.stringify(response.data)));
-
+                        // console.log(JSON.parse(JSON.stringify(response.data)));
+                        var res='{MessagetypeId:"3",UniqueId:"484143",data:[]}'
                         this.payloads.push ({
                             type: 'MeterValues response',
-                            data:JSON.parse(JSON.stringify(response.data))
+                            data:res
                         });
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    })
-                }
+                    // })
+                    // .catch((error) => {
+                    //     console.log(error);
+                    // })
+                 }
             },
             heartBeat() {
                 if(this.flag == 1) {
                     var msgId = Math.floor(100000 + Math.random() * 900000);
-                    axios.post('heartBeat', {MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""})
+                    // axios.post('heartBeat', {MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""})
                     
-                    .then((response) => {
+                    // .then((response) => {
                         var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""}';
 
                         this.payloads.push ({
@@ -296,16 +296,16 @@
                             data:req
                         });
 
-                        console.log(JSON.parse(JSON.stringify(response.data)));
-
+                        // console.log(JSON.parse(JSON.stringify(response.data)));
+                        var res= '{MessagetypeId:"3",UniqueId:"157434",data:[]}';
                         this.payloads.push ({
                             type: 'HeartBeat response',
-                            data:JSON.parse(JSON.stringify(response.data))
+                            data:res
                         });
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    })
+                    // })
+                    // .catch((error) => {
+                    //     console.log(error);
+                    // })
                 }
             },
            

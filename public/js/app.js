@@ -2172,79 +2172,49 @@ __webpack_require__.r(__webpack_exports__);
       document.getElementById("battery").value = "zczczc";
     },
     meterValues: function meterValues() {
-      var _this4 = this;
-
       if (this.flag == 1) {
-        var msgId = Math.floor(100000 + Math.random() * 900000);
-        axios.post('meterValue', {
-          MessageTypeId: "2",
-          UniqueId: msgId,
-          Action: "MeterValues",
-          data: {
-            connectorId: "1111",
-            transactionId: "94",
-            meterValue: {
-              timeStamp: "02-10-2020",
-              stampledValue: {
-                context: "other",
-                format: "signedData",
-                measurand: "Power offered",
-                phase: "LI",
-                location: "EV",
-                unit: "Kwh"
-              }
-            }
-          }
-        }).then(function (response) {
-          var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"MeterValues",data:{connectorId: "1111", transactionId: "94", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
+        var msgId = Math.floor(100000 + Math.random() * 900000); // axios.post('meterValue', {MessageTypeId:"2",UniqueId:msgId, Action:"MeterValues",data:{connectorId: "1111", transactionId: "94", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
+        //  .then((response) => {
 
-          _this4.payloads.push({
-            type: 'MeterValues request',
-            data: req
-          });
+        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"MeterValues",data:{connectorId: "1111", transactionId: "94", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
+        this.payloads.push({
+          type: 'MeterValues request',
+          data: req
+        }); // console.log(JSON.parse(JSON.stringify(response.data)));
 
-          console.log(JSON.parse(JSON.stringify(response.data)));
-
-          _this4.payloads.push({
-            type: 'MeterValues response',
-            data: JSON.parse(JSON.stringify(response.data))
-          });
-        })["catch"](function (error) {
-          console.log(error);
-        });
+        var res = '{MessagetypeId:"3",UniqueId:"484143",data:[]}';
+        this.payloads.push({
+          type: 'MeterValues response',
+          data: res
+        }); // })
+        // .catch((error) => {
+        //     console.log(error);
+        // })
       }
     },
     heartBeat: function heartBeat() {
-      var _this5 = this;
-
       if (this.flag == 1) {
-        var msgId = Math.floor(100000 + Math.random() * 900000);
-        axios.post('heartBeat', {
-          MessageTypeId: "2",
-          UniqueId: msgId,
-          Action: "HeartBeat",
-          data: ""
-        }).then(function (response) {
-          var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""}';
+        var msgId = Math.floor(100000 + Math.random() * 900000); // axios.post('heartBeat', {MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""})
+        // .then((response) => {
 
-          _this5.payloads.push({
-            type: 'HeartBeat request',
-            data: req
-          });
+        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""}';
+        this.payloads.push({
+          type: 'HeartBeat request',
+          data: req
+        }); // console.log(JSON.parse(JSON.stringify(response.data)));
 
-          console.log(JSON.parse(JSON.stringify(response.data)));
-
-          _this5.payloads.push({
-            type: 'HeartBeat response',
-            data: JSON.parse(JSON.stringify(response.data))
-          });
-        })["catch"](function (error) {
-          console.log(error);
-        });
+        var res = '{MessagetypeId:"3",UniqueId:"157434",data:[]}';
+        this.payloads.push({
+          type: 'HeartBeat response',
+          data: res
+        }); // })
+        // .catch((error) => {
+        //     console.log(error);
+        // })
       }
     },
     stopCharging: function stopCharging() {
-      var _this6 = this;
+      var _this4 = this;
 
       alert("Charging Completed");
       document.getElementById("disable").disabled = false;
@@ -2274,17 +2244,17 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       }).then(function (response) {
-        _this6.flag = 0;
+        _this4.flag = 0;
         var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
 
-        _this6.payloads.push({
+        _this4.payloads.push({
           type: 'StopTransacion request',
           data: req
         });
 
         console.log(JSON.parse(JSON.stringify(response.data)));
 
-        _this6.payloads.push({
+        _this4.payloads.push({
           type: 'StopTransacion response',
           data: JSON.parse(JSON.stringify(response.data))
         });
