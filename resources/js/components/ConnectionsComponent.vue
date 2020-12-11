@@ -15,6 +15,13 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <button v-on:click="bootNotification()" class="btn btn-primary" id="start" >Boot</button> 
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
                 <div class="card-body">
                     <div class="form-group row">
                         <label for="IdTag" class="col-1 col-form-label text-md-right">ID Tag</label>
@@ -176,8 +183,10 @@
                     {
                         document.getElementById("auth").disabled = false;
                         document.getElementById("start").disabled=true;
+
                         document.getElementById("disconnect").disabled=false;
 
+                        alert("Enter your Tag Id");
                     }
                     else 
                     {
@@ -209,7 +218,9 @@
                 this.payloads.length=0;
                 if(this.IdTag == "")
                 {
+
                      alert("Please Enter a valid Tag ID");
+
                 }
                 else
                 {
@@ -340,7 +351,7 @@
            
             stopCharging() {
                 
-                alert("Charging Completed");
+                alert("Do you want to stop charging");
               document.getElementById("disable").disabled =false;
                 document.getElementById("enable").disabled =true;
                 document.getElementById("status").value= "stop";
