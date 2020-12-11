@@ -2214,53 +2214,29 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     stopCharging: function stopCharging() {
-      var _this4 = this;
-
       alert("Charging Completed");
       document.getElementById("disable").disabled = false;
       document.getElementById("enable").disabled = true;
       document.getElementById("status").value = "stop";
       document.getElementById("tagid").value = "";
-      var msgId = Math.floor(100000 + Math.random() * 900000);
-      axios.post('stopCharging', {
-        MessageTypeId: "2",
-        UniqueId: msgId,
-        Action: "StopTransacion",
-        data: {
-          idTag: "567890",
-          meterStop: "3333",
-          transactionId: "32434",
-          reason: "Emergency stop",
-          transactionData: {
-            timeStamp: "02-10-2020",
-            stampledValue: {
-              context: "other",
-              format: "signedData",
-              measurand: "Power offered",
-              phase: "LI",
-              location: "EV",
-              unit: "Kwh"
-            }
-          }
-        }
-      }).then(function (response) {
-        _this4.flag = 0;
-        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
+      var msgId = Math.floor(100000 + Math.random() * 900000); // axios.post('stopCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
+      // .then((response) => {
 
-        _this4.payloads.push({
-          type: 'StopTransacion request',
-          data: req
-        });
+      this.flag = 0;
+      var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
+      this.payloads.push({
+        type: 'StopTransacion request',
+        data: req
+      }); // console.log(JSON.parse(JSON.stringify(response.data)));
 
-        console.log(JSON.parse(JSON.stringify(response.data)));
-
-        _this4.payloads.push({
-          type: 'StopTransacion response',
-          data: JSON.parse(JSON.stringify(response.data))
-        });
-      })["catch"](function (error) {
-        console.log(error);
-      });
+      var res = '{"Status:"Accepted",UniqueId:"260772","MessageTypeId:"3"}';
+      this.payloads.push({
+        type: 'StopTransacion response',
+        data: res
+      }); // })
+      // .catch((error) => {
+      //     console.log(error);
+      // })
     }
   }
 });

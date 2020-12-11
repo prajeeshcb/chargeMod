@@ -317,9 +317,9 @@
                 document.getElementById("status").value= "stop";
                 document.getElementById("tagid").value= "";
                 var msgId = Math.floor(100000 + Math.random() * 900000);
-                axios.post('stopCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
+                // axios.post('stopCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
                 
-                .then((response) => {
+                // .then((response) => {
                     this.flag = 0;
                     var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
 
@@ -328,19 +328,19 @@
                         data:req
                     });
 
-                    console.log(JSON.parse(JSON.stringify(response.data)));
-
+                    // console.log(JSON.parse(JSON.stringify(response.data)));
+                    var res='{"Status:"Accepted",UniqueId:"260772","MessageTypeId:"3"}';
                     this.payloads.push ({
                         type: 'StopTransacion response',
-                        data:JSON.parse(JSON.stringify(response.data))
+                        data:res
                     });
 
                     
                     
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
+                // })
+                // .catch((error) => {
+                //     console.log(error);
+                // })
                
                  
                
