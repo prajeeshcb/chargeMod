@@ -14,19 +14,19 @@ class BootNotificationController extends Controller
     {
     	if($request->MessageTypeId==2) 
         {
-
+		
     		$charge_point = ChargePoint::select('interval')
     						->where('charge_point_vendor', '=', $request['data']['chargePointVendor'])
-    						/*->where('charge_point_model', '=', $request['data']['chargePointModel'])
+    						->where('charge_point_model', '=', $request['data']['chargePointModel'])
     						->where('charge_point_serialnumber', '=', $request['data']['chargePointSerialNumber'])
     						->where('charge_box_serial_number', '=', $request['data']['chargeBoxSerialNumber'])
     						->where('firmware_version', '=', $request['data']['firmwareVersion'])
     						->where('iccid', '=', $request['data']['iccid'])  
     						->where('imsi', '=', $request['data']['imsi'])  
     						->where('meter_type', '=', $request['data']['meterType'])
-    						->where('meter_serial_number', '=', $request['data']['meterSerialNumber'])*/
+    						->where('meter_serial_number', '=', $request['data']['meterSerialNumber'])
     						->first();
-    		
+						
     		if($charge_point === null) {
 
     			$charge_point = new ChargePoint();

@@ -3,18 +3,25 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
+                <button v-on:click="bootNotification()" class="btn btn-primary" id="start" >Boot</button> 
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
                 <div class="card-body">
                     <div class="form-group row">
                         <label for="IdTag" class="col-1 col-form-label text-md-right">ID Tag</label>
 
                         <div class="col-3">
-                            <input id="IdTag" type="text" class="form-control" name="IdTag" required autocomplete="Id Tag" autofocus>
+                            <input id="IdTag" type="text" class="form-control" name="IdTag" v-model="IdTag" required autocomplete="Id Tag" autofocus>
                         </div>
                         <div class="col-2">
-                            <button type="submit" class="btn btn-primary" >Authenticate</button>
+                            <button type="submit" v-on:click="Authenticate()" class="btn btn-primary" id="auth" disabled>Authenticate</button>
                         </div>
                         <div class="col-3">
-                           <button v-on:click="startCharging" class="btn btn-primary" id="disable">Start Charging</button> 
+                           <button v-on:click="startCharging" class="btn btn-primary" id="disable"  disabled>Start Charging</button> 
                            <button v-on:click="stopCharging" class="btn btn-primary" id="enable" disabled >Stop Charging</button>
                         </div>
                         
@@ -127,7 +134,8 @@
                 res:'',
                 flag:0 ,
                 status:'',
-                users:''
+                users:'',
+                IdTag:''
             }
         },
         mounted() {
@@ -136,7 +144,7 @@
         created() {
             // this.checktagID();
             // this.fetchbeats();
-            this.fetchPayloads();
+            // this.fetchPayloads();
             Echo.join('chat')
                 .listen('StartTransaction',(event)=>{
                     this.payloads.push(event.payload);
@@ -150,47 +158,62 @@
                     console.log(this.payloads);
                 })
             },
-
-            // bootNotification() {
-            
-            //     var msgId = Math.floor(100000 + Math.random() * 900000);
-            //     axios.post('bootNotification', {MessageTypeId:"2",UniqueId:this.msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})
             bootNotification() {
-            
+                this.payloads.length=0;
                 var msgId = Math.floor(100000 + Math.random() * 900000);
+                document.getElementById("disable").enabled = true;
                 axios.post('bootNotification', {MessageTypeId:"2",UniqueId:this.msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})
+            
+                .then((response) => {
+                    var res_data = response.data; 
+                
+                    if(res_data.data.status=="Accepted")
+                    {
+                        document.getElementById("auth").disabled = false;
+                        document.getElementById("start").disabled=true;
+                        alert("Enter your Tag Id");
+                    }
+                    else 
+                    {
+                      alert('Rejected');
+                        this.inter = setInterval(() => this.bootNotification(), 6000);
+                    }
+
+                    var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}';
+
+                    this.payloads.push ({
+                        type: 'BootNotification request',
+                        data:req
+                    });
+                 
+                    // console.log(JSON.parse(JSON.stringify(response.data)));
+
+                    this.payloads.push ({
+                        type: 'BootNotification response',
+                        data:JSON.parse(JSON.stringify(response.data))
+                    });
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                
+                  
             },
-            //     .then((response) => {
-            //         var res_data = response.data; 
-            //         if(res_data.data.status=="Accepted")
-            //         {
-            //             this.startCharging();
-            //         }
-            //         else 
-            //         {
-            //           alert('Rejected');
-            //             this.inter = setInterval(() => this.bootNotification(), 6000);
-            //         }
-
-            //         var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}';
-
-            //         this.payloads.push ({
-            //             type: 'BootNotification request',
-            //             data:req
-            //         });
-
-            //         console.log(JSON.parse(JSON.stringify(response.data)));
-
-            //         this.payloads.push ({
-            //             type: 'BootNotification response',
-            //             data:JSON.parse(JSON.stringify(response.data))
-            //         });
-            //     })
-            //     .catch((error) => {
-            //         console.log(error);
-            //     })
-            // },
-        //     checktagID()
+            Authenticate(){
+                this.payloads.length=0;
+                if(this.IdTag == "")
+                {
+                     alert("Please enter a valid Tag ID");
+                }
+                else
+                {
+                   
+                    alert("Successfully authenticated.You can now start charging");
+                    document.getElementById("disable").disabled=false;
+                    document.getElementById("auth").disabled=true;
+                }
+            },
+            // checktagID()
         //     {
         //           axios.get('userdetails').then(response => {
         //              var userdetails = response.data;
@@ -250,7 +273,7 @@
                 document.getElementById("enable").disabled = false;
                 document.getElementById("disable").disabled = true;
                 document.getElementById("userid").value= "1";
-                document.getElementById("tagid").value= "567890";
+                document.getElementById("tagid").value= this.IdTag;
                 document.getElementById("status").value= "start";
                 document.getElementById("vehicle").value= "altroz";
                 document.getElementById("chargepin").value= "879";
@@ -311,11 +334,11 @@
            
             stopCharging() {
                 
-                alert("Charging Completed");
-                document.getElementById("disable").disabled =false;
+                alert("Do you want to stop charging");
+              document.getElementById("disable").disabled =false;
                 document.getElementById("enable").disabled =true;
                 document.getElementById("status").value= "stop";
-                document.getElementById("tagid").value= "";
+                document.getElementById("tagid").value= this.IdTag;
                 var msgId = Math.floor(100000 + Math.random() * 900000);
                 // axios.post('stopCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
                 

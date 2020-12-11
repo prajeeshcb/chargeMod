@@ -2026,6 +2026,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2035,7 +2042,8 @@ __webpack_require__.r(__webpack_exports__);
       res: '',
       flag: 0,
       status: '',
-      users: ''
+      users: '',
+      IdTag: ''
     };
   },
   mounted: function mounted() {
@@ -2046,7 +2054,7 @@ __webpack_require__.r(__webpack_exports__);
 
     // this.checktagID();
     // this.fetchbeats();
-    this.fetchPayloads();
+    // this.fetchPayloads();
     Echo.join('chat').listen('StartTransaction', function (event) {
       _this.payloads.push(event.payload);
 
@@ -2062,11 +2070,12 @@ __webpack_require__.r(__webpack_exports__);
         console.log(_this2.payloads);
       });
     },
-    // bootNotification() {
-    //     var msgId = Math.floor(100000 + Math.random() * 900000);
-    //     axios.post('bootNotification', {MessageTypeId:"2",UniqueId:this.msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})
     bootNotification: function bootNotification() {
+      var _this3 = this;
+
+      this.payloads.length = 0;
       var msgId = Math.floor(100000 + Math.random() * 900000);
+      document.getElementById("disable").enabled = true;
       axios.post('bootNotification', {
         MessageTypeId: "2",
         UniqueId: this.msgId,
@@ -2082,35 +2091,48 @@ __webpack_require__.r(__webpack_exports__);
           meterType: "meter_type1",
           meterSerialNumber: "MTR1234"
         }
+      }).then(function (response) {
+        var res_data = response.data;
+
+        if (res_data.data.status == "Accepted") {
+          document.getElementById("auth").disabled = false;
+          document.getElementById("start").disabled = true;
+          alert("Enter your Tag Id");
+        } else {
+          alert('Rejected');
+          _this3.inter = setInterval(function () {
+            return _this3.bootNotification();
+          }, 6000);
+        }
+
+        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}';
+
+        _this3.payloads.push({
+          type: 'BootNotification request',
+          data: req
+        }); // console.log(JSON.parse(JSON.stringify(response.data)));
+
+
+        _this3.payloads.push({
+          type: 'BootNotification response',
+          data: JSON.parse(JSON.stringify(response.data))
+        });
+      })["catch"](function (error) {
+        console.log(error);
       });
     },
-    //     .then((response) => {
-    //         var res_data = response.data; 
-    //         if(res_data.data.status=="Accepted")
-    //         {
-    //             this.startCharging();
-    //         }
-    //         else 
-    //         {
-    //           alert('Rejected');
-    //             this.inter = setInterval(() => this.bootNotification(), 6000);
-    //         }
-    //         var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}';
-    //         this.payloads.push ({
-    //             type: 'BootNotification request',
-    //             data:req
-    //         });
-    //         console.log(JSON.parse(JSON.stringify(response.data)));
-    //         this.payloads.push ({
-    //             type: 'BootNotification response',
-    //             data:JSON.parse(JSON.stringify(response.data))
-    //         });
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //     })
-    // },
-    //     checktagID()
+    Authenticate: function Authenticate() {
+      this.payloads.length = 0;
+
+      if (this.IdTag == "") {
+        alert("Please enter a valid Tag ID");
+      } else {
+        alert("Successfully authenticated.You can now start charging");
+        document.getElementById("disable").disabled = false;
+        document.getElementById("auth").disabled = true;
+      }
+    },
+    // checktagID()
     //     {
     //           axios.get('userdetails').then(response => {
     //              var userdetails = response.data;
@@ -2133,7 +2155,7 @@ __webpack_require__.r(__webpack_exports__);
     //    this.startCharging();
     //     },
     startCharging: function startCharging() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.payloads.length = 0;
       var msgId = Math.floor(100000 + Math.random() * 900000); // axios.post('startCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StartTransacion",data:{user_id:"12",connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}})
@@ -2152,10 +2174,10 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.flag = 1;
       this.interval1 = setInterval(function () {
-        return _this3.heartBeat();
+        return _this4.heartBeat();
       }, 6000);
       this.interval2 = setInterval(function () {
-        return _this3.meterValues();
+        return _this4.meterValues();
       }, 10000); //  }
       // )
       // .catch((error) => {
@@ -2165,7 +2187,7 @@ __webpack_require__.r(__webpack_exports__);
       document.getElementById("enable").disabled = false;
       document.getElementById("disable").disabled = true;
       document.getElementById("userid").value = "1";
-      document.getElementById("tagid").value = "567890";
+      document.getElementById("tagid").value = this.IdTag;
       document.getElementById("status").value = "start";
       document.getElementById("vehicle").value = "altroz";
       document.getElementById("chargepin").value = "879";
@@ -2214,11 +2236,11 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     stopCharging: function stopCharging() {
-      alert("Charging Completed");
+      alert("Do you want to stop charging");
       document.getElementById("disable").disabled = false;
       document.getElementById("enable").disabled = true;
       document.getElementById("status").value = "stop";
-      document.getElementById("tagid").value = "";
+      document.getElementById("tagid").value = this.IdTag;
       var msgId = Math.floor(100000 + Math.random() * 900000); // axios.post('stopCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
       // .then((response) => {
 
@@ -43939,6 +43961,26 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12" }, [
         _c("div", { staticClass: "card" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { id: "start" },
+              on: {
+                click: function($event) {
+                  return _vm.bootNotification()
+                }
+              }
+            },
+            [_vm._v("Boot")]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12" }, [
+        _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "form-group row" }, [
               _c(
@@ -43950,16 +43992,59 @@ var render = function() {
                 [_vm._v("ID Tag")]
               ),
               _vm._v(" "),
-              _vm._m(0),
+              _c("div", { staticClass: "col-3" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.IdTag,
+                      expression: "IdTag"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "IdTag",
+                    type: "text",
+                    name: "IdTag",
+                    required: "",
+                    autocomplete: "Id Tag",
+                    autofocus: ""
+                  },
+                  domProps: { value: _vm.IdTag },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.IdTag = $event.target.value
+                    }
+                  }
+                })
+              ]),
               _vm._v(" "),
-              _vm._m(1),
+              _c("div", { staticClass: "col-2" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "submit", id: "auth", disabled: "" },
+                    on: {
+                      click: function($event) {
+                        return _vm.Authenticate()
+                      }
+                    }
+                  },
+                  [_vm._v("Authenticate")]
+                )
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-3" }, [
                 _c(
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { id: "disable" },
+                    attrs: { id: "disable", disabled: "" },
                     on: { click: _vm.startCharging }
                   },
                   [_vm._v("Start Charging")]
@@ -43981,12 +44066,12 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(2),
+    _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-6" }, [
         _c("div", { staticClass: "card" }, [
-          _vm._m(3),
+          _vm._m(1),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c(
@@ -44017,41 +44102,11 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(4)
+      _vm._m(2)
     ])
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-3" }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          id: "IdTag",
-          type: "text",
-          name: "IdTag",
-          required: "",
-          autocomplete: "Id Tag",
-          autofocus: ""
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("Authenticate")]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
