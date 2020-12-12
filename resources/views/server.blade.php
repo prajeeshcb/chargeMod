@@ -21,9 +21,11 @@
                                         <label>Charging Station</label>
                                         <div class="input-group">
                                             <select name="station" id="station" class="form-control">
-                                                <option value="{{$co->id}}">Select Station</option>
+                                                <option value="">Select Station</option>
                                                 @foreach($stations as $station)
-                                                    <option>{{ $station['station_Name']}}</option>
+                                                <option>
+                                                    {{ $station['station_Name']}}
+                                                </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -105,4 +107,3 @@
 </div>
 @endsection
 
-@section()
