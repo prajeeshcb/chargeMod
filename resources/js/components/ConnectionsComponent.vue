@@ -1,17 +1,6 @@
 <template>
 <span>
-    <div class="row">
-            <div class="card">
-                <div class="col-6">
-                    <button v-on:click="bootNotification()" class="btn btn-primary" id="start" >Boot</button> 
-                </div>
-            </div>
-            <div class="card">
-                 <div class="col-6">
-                    <button class="btn btn-primary" id="disconnect" disabled>Disconnect</button>
-                </div>
-            </div>
-    </div>
+    
     <div class="row">
         <div class="col-12">
             <div class="card">
