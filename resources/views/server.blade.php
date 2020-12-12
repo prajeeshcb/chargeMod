@@ -17,6 +17,18 @@
                                     <span class="sub-headings">Charge Points</span>
                                 </div>
                                 <div class="card-body">
+                                    <div class="form-group">
+                                        <label>Charging Station</label>
+                                        <div class="input-group">
+                                            <select name="station" id="station" class="form-control">
+                                                <option value="{{$co->id}}">Select Station</option>
+                                                @foreach($stations as $station)
+                                                    <option>{{ $station['station_Name']}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <label>Charge Points</label>
                                     <ul class="list-unstyled charge-point-list">
                                         <li>Charge Point1</li>
                                         <li>Charge Point2</li>
@@ -92,3 +104,5 @@
     
 </div>
 @endsection
+
+@section()

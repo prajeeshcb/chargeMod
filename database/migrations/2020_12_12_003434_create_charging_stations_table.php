@@ -14,7 +14,7 @@ class CreateChargingStationsTable extends Migration
     public function up()
     {
         Schema::create('charging_stations', function (Blueprint $table) {
-            $table->increments('connector_Id');
+            $table->increments('station_Id');
             $table->string('station_Name');
             $table->string('station_State');
             $table->string('station_District');
