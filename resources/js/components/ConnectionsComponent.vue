@@ -163,27 +163,24 @@
                 this.payloads.length=0;
                 var msgId = Math.floor(100000 + Math.random() * 900000);
                 document.getElementById("disable").enabled = true;
-                axios.post('bootNotification', {MessageTypeId:"2",UniqueId:this.msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})
+                // axios.post('bootNotification', {MessageTypeId:"2",UniqueId:this.msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})
             
-                .then((response) => {
-                    var res_data = response.data; 
+                // .then((response) => {
+                    // var res_data = response.data; 
                 
-                    if(res_data.data.status=="Accepted")
-                    {
+                    // if(res_data.data.status=="Accepted")
+                    // {
                         document.getElementById("auth").disabled = false;
                         document.getElementById("start").disabled=true;
-
-                        document.getElementById("disconnect").disabled=false;
-
                         alert("Enter your Tag Id");
-                    }
-                    else 
-                    {
-                      alert('Rejected');
-                        this.inter = setInterval(() => this.bootNotification(), 6000);
-                    }
+                    // }
+                    // else 
+                    // {
+                    //   alert('Rejected');
+                    //     this.inter = setInterval(() => this.bootNotification(), 6000);
+                    // }
 
-                    var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}';
+                    var req = '{MessageTypeId:"2",UniqueId:"msgId", Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}';
 
                     this.payloads.push ({
                         type: 'BootNotification request',
@@ -191,15 +188,15 @@
                     });
                  
                     // console.log(JSON.parse(JSON.stringify(response.data)));
-
+                    var res={MessageTypeId:"3",UniqueId:"msgId",data:{status:"Accepted",currenTime:"2020-12-12T02:58:57.8892785Z",interval:"0"}};
                     this.payloads.push ({
                         type: 'BootNotification response',
-                        data:JSON.parse(JSON.stringify(response.data))
+                        data:res
                     });
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
+                // })
+                // .catch((error) => {
+                //     console.log(error);
+                // })
                 
                   
             },
@@ -207,13 +204,22 @@
                 this.payloads.length=0;
                 if(this.IdTag == "")
                 {
-
-                     alert("Please Enter a valid Tag ID");
-
+                     alert("Please enter a valid Tag ID");
                 }
                 else
                 {
-                   
+                    // this.payloads.legnth=0;
+                    var req='{MessageTypeId:"2",UniqueId:"msgId",idTag:3438}';
+
+                    this.payloads.push ({
+                        type: 'Authorize request',
+                        data:req
+                    });
+                    var res='{MessageTypeId:"3",Uniqueid:"msgId",IdTagInfo:{status:"Accepted",expiryDate:"2021-3-8T3.00",parentIdTag:3438}}';
+                    this.payloads.push ({
+                        type: 'Authorize response',
+                        data:res
+                    });
                     alert("Successfully authenticated.You can now start charging");
                     document.getElementById("disable").disabled=false;
                     document.getElementById("auth").disabled=true;

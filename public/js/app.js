@@ -2072,63 +2072,63 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     bootNotification: function bootNotification() {
-      var _this3 = this;
-
       this.payloads.length = 0;
       var msgId = Math.floor(100000 + Math.random() * 900000);
-      document.getElementById("disable").enabled = true;
-      axios.post('bootNotification', {
-        MessageTypeId: "2",
-        UniqueId: this.msgId,
-        Action: "BootNotification",
+      document.getElementById("disable").enabled = true; // axios.post('bootNotification', {MessageTypeId:"2",UniqueId:this.msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})
+      // .then((response) => {
+      // var res_data = response.data; 
+      // if(res_data.data.status=="Accepted")
+      // {
+
+      document.getElementById("auth").disabled = false;
+      document.getElementById("start").disabled = true;
+      alert("Enter your Tag Id"); // }
+      // else 
+      // {
+      //   alert('Rejected');
+      //     this.inter = setInterval(() => this.bootNotification(), 6000);
+      // }
+
+      var req = '{MessageTypeId:"2",UniqueId:"msgId", Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}';
+      this.payloads.push({
+        type: 'BootNotification request',
+        data: req
+      }); // console.log(JSON.parse(JSON.stringify(response.data)));
+
+      var res = {
+        MessageTypeId: "3",
+        UniqueId: "msgId",
         data: {
-          chargePointVendor: "Point1",
-          chargePointModel: "Model1",
-          chargePointSerialNumber: "CP1234",
-          chargeBoxSerialNumber: "CB1234",
-          firmwareVersion: "v1",
-          iccid: "1111",
-          imsi: "2222",
-          meterType: "meter_type1",
-          meterSerialNumber: "MTR1234"
+          status: "Accepted",
+          currenTime: "2020-12-12T02:58:57.8892785Z",
+          interval: "0"
         }
-      }).then(function (response) {
-        var res_data = response.data;
-
-        if (res_data.data.status == "Accepted") {
-          document.getElementById("auth").disabled = false;
-          document.getElementById("start").disabled = true;
-          document.getElementById("disconnect").disabled = false;
-          alert("Enter your Tag Id");
-        } else {
-          alert('Rejected');
-          _this3.inter = setInterval(function () {
-            return _this3.bootNotification();
-          }, 6000);
-        }
-
-        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}';
-
-        _this3.payloads.push({
-          type: 'BootNotification request',
-          data: req
-        }); // console.log(JSON.parse(JSON.stringify(response.data)));
-
-
-        _this3.payloads.push({
-          type: 'BootNotification response',
-          data: JSON.parse(JSON.stringify(response.data))
-        });
-      })["catch"](function (error) {
-        console.log(error);
-      });
+      };
+      this.payloads.push({
+        type: 'BootNotification response',
+        data: res
+      }); // })
+      // .catch((error) => {
+      //     console.log(error);
+      // })
     },
     Authenticate: function Authenticate() {
       this.payloads.length = 0;
 
       if (this.IdTag == "") {
-        alert("Please Enter a valid Tag ID");
+        alert("Please enter a valid Tag ID");
       } else {
+        // this.payloads.legnth=0;
+        var req = '{MessageTypeId:"2",UniqueId:"msgId",idTag:3438}';
+        this.payloads.push({
+          type: 'Authorize request',
+          data: req
+        });
+        var res = '{MessageTypeId:"3",Uniqueid:"msgId",IdTagInfo:{status:"Accepted",expiryDate:"2021-3-8T3.00",parentIdTag:3438}}';
+        this.payloads.push({
+          type: 'Authorize response',
+          data: res
+        });
         alert("Successfully authenticated.You can now start charging");
         document.getElementById("disable").disabled = false;
         document.getElementById("auth").disabled = true;
@@ -2157,7 +2157,7 @@ __webpack_require__.r(__webpack_exports__);
     //    this.startCharging();
     //     },
     startCharging: function startCharging() {
-      var _this4 = this;
+      var _this3 = this;
 
       this.payloads.length = 0;
       var msgId = Math.floor(100000 + Math.random() * 900000); // axios.post('startCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StartTransacion",data:{user_id:"12",connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}})
@@ -2176,10 +2176,10 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.flag = 1;
       this.interval1 = setInterval(function () {
-        return _this4.heartBeat();
+        return _this3.heartBeat();
       }, 6000);
       this.interval2 = setInterval(function () {
-        return _this4.meterValues();
+        return _this3.meterValues();
       }, 10000); //  }
       // )
       // .catch((error) => {
@@ -44249,7 +44249,7 @@ var staticRenderFns = [
             },
             [
               _vm._v(
-                "\n                                   Clear\n                        "
+                "\r\n                                   Clear\r\n                        "
               )
             ]
           )
@@ -56557,7 +56557,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "anyKey",
+  key: "",
   // cluster: process.env.MIX_PUSHER_APP_CLUSTER,
   // forceTLS: true,
   wsHost: window.location.hostname,
@@ -56711,8 +56711,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /opt/lampp/htdocs/larasocket/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /opt/lampp/htdocs/larasocket/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\chargeMod\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\chargeMod\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
