@@ -2033,6 +2033,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2081,6 +2082,7 @@ __webpack_require__.r(__webpack_exports__);
 
       document.getElementById("auth").disabled = false;
       document.getElementById("start").disabled = true;
+      document.getElementById("disconnect").disabled = false;
       alert("Enter your Tag Id"); // }
       // else 
       // {
@@ -44292,184 +44294,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div")
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", [
-      _c("div", { staticClass: "row " }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "card" }, [
-            _c(
-              "div",
-              {
-                staticClass: "card-header",
-                staticStyle: { "text-align": "center" }
-              },
-              [_c("h2", [_vm._v("Server Monitoring")])]
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-3" }, [
-                  _c("div", { staticClass: "card card-primary" }, [
-                    _c("div", { staticClass: "card-header" }, [
-                      _c("span", { staticClass: "sub-headings" }, [
-                        _vm._v("Charge Points")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card-body" }, [
-                      _c(
-                        "ul",
-                        { staticClass: "list-unstyled charge-point-list" },
-                        [
-                          _c("li", [_vm._v("Charge Point1")]),
-                          _vm._v(" "),
-                          _c("li", [_vm._v("Charge Point2")]),
-                          _vm._v(" "),
-                          _c("li", [_vm._v("Charge Point3")]),
-                          _vm._v(" "),
-                          _c("li", [_vm._v("Charge Point4")]),
-                          _vm._v(" "),
-                          _c("li", [_vm._v("Charge Point5")])
-                        ]
-                      )
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-9" }, [
-                  _c("div", { staticClass: "card" }, [
-                    _c("div", { staticClass: "card-header" }, [
-                      _c("span", { staticClass: "sub-headings" }, [
-                        _vm._v("  Charge Point Info")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card-body" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-6" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("div", { staticClass: "input-group" }, [
-                              _c("label", [_vm._v("URL")]),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "form-control",
-                                attrs: {
-                                  id: "vehicle",
-                                  type: "text",
-                                  name: "URL",
-                                  disabled: "disabled"
-                                }
-                              })
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("div", { staticClass: "input-group" }, [
-                              _c("label", [_vm._v("Tag Id")]),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "form-control",
-                                attrs: {
-                                  id: "vehicle",
-                                  type: "text",
-                                  name: "URL",
-                                  disabled: "disabled"
-                                }
-                              })
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-6" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("div", { staticClass: "input-group" }, [
-                              _c("label", [_vm._v("Status")]),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "form-control",
-                                attrs: {
-                                  id: "vehicle",
-                                  type: "text",
-                                  name: "URL",
-                                  disabled: "disabled"
-                                }
-                              })
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("div", { staticClass: "input-group" }, [
-                              _c("label", [_vm._v("Current Meter Reading")]),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "form-control",
-                                attrs: {
-                                  id: "vehicle",
-                                  type: "text",
-                                  name: "URL",
-                                  disabled: "disabled"
-                                }
-                              })
-                            ])
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "row" }, [
-                        _c(
-                          "span",
-                          { staticStyle: { "text-align": "center" } },
-                          [
-                            _c(
-                              "h5",
-                              { staticStyle: { "font-weight": "bold" } },
-                              [_vm._v("Payload")]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "ul",
-                          {
-                            staticStyle: {
-                              height: "170px",
-                              "overflow-x": "scroll",
-                              border: "2px solid #6c757d",
-                              "border-radius": "5px"
-                            }
-                          },
-                          [
-                            _c("li", [
-                              _vm._v(
-                                '\r\n                                                {MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}\r\n                                            '
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("li", [
-                              _vm._v(
-                                '\r\n                                                {MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}\r\n                                            '
-                              )
-                            ])
-                          ]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

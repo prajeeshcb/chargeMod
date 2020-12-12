@@ -23,15 +23,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('chats');
+        return view('server');
     }
 
-    public function authentication()
+   /* public function authentication()
     {
         return view('profile');
     }
     public function connection()
     {
         return view('chats');
-    }
+    }*/
 }

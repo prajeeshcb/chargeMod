@@ -1,5 +1,6 @@
 <template>
 <span>
+    
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -171,6 +172,8 @@
                     // {
                         document.getElementById("auth").disabled = false;
                         document.getElementById("start").disabled=true;
+
+                        document.getElementById("disconnect").disabled=false;
                         alert("Enter your Tag Id");
                     // }
                     // else 
@@ -204,7 +207,6 @@
                 if(this.IdTag == "")
                 {
                      alert("Please enter a valid Tag ID");
-
                 }
                 else
                 {
@@ -385,4 +387,3 @@
     }
     
 </script>
-
