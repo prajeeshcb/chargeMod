@@ -172,8 +172,6 @@
                     // {
                         document.getElementById("auth").disabled = false;
                         document.getElementById("start").disabled=true;
-
-                        document.getElementById("disconnect").disabled=false;
                         alert("Enter your Tag Id");
                     // }
                     // else 
