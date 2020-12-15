@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use File;
+use App\ChargingStation;
 class HomeController extends Controller
 {
     /**
@@ -23,7 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('server');
+        $stations = ChargingStation::get();
+        return view('server', compact('stations'));
     }
     public function JSONauthreq(){
         $data = json_encode(['{"MessageTypeId":"2","UniqueId":"456378","Action":"Authorize","idTag":"567890"}']);
