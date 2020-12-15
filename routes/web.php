@@ -35,5 +35,7 @@ Route::post('/heartBeat', 'ConnectionController@heartbeat');
 Route::get('/userdetails', 'StartTransactionController@user');
 Auth::routes();
 
+
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/server', 'ServerController@index');
+Route::get('/charge_points/{station}', 'ServerController@ChargePoints');
+Route::get('/charge_point/info/{station}/{cp}', 'ServerController@ChargePointInfo');

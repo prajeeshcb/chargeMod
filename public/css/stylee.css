@@ -1,11 +1,21 @@
 .sub-headings{
-	font-size: 20px;
+	font-size: 15px;
 	font-weight: bold;
 	padding-left: 10px;
 	padding-top: 15px;
 }
 .charge-point-list >li{
-	padding: 5px;
-	font-size: 15px;
-	font-weight:1em;
+	font-size: 0.9rem;
+	font-weight: 400;
+	line-height: 1.6;
+	color: #000;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	border-radius: 0.25rem;
+	padding: 0.375rem 0.75rem;
+}
+.charge-point-list> li:hover{
+	background-color: #C0C0C0;
+
 }
