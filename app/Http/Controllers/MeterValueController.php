@@ -7,6 +7,7 @@ use App\Events\MeterValues;
 use Session;
 use App\TransactionData;
 use App\ChargingActivity;
+use File;
 class MeterValueController extends Controller
 {
     public function meterValue(Request $request) 
@@ -70,5 +71,23 @@ class MeterValueController extends Controller
 
     	}
 	
+	}
+	public function JSONmeterreq()
+	{
+		$data = json_encode(['{"MessageTypeId":"2","UniqueId":"342337","Action":"MeterValue","data":{"connectorId":"1111","meterValue":{"stampledValue":{"context":"other","format":"signedData","location":"EV","measurand":"Power offered","phase":"LI","unit":"Kwh"},"timeStamp":"02-10-2020",},"transactionId":"32434",}}']);
+        $file = time() .rand(). '_file.json';
+        $destinationPath=public_path()."/upload/";
+        if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
+        File::put($destinationPath.$file,$data);
+        return response()->download($destinationPath.$file);
+	}
+	public function JSONmeterres()
+	{
+		$data = json_encode(['{"MessageTypeId":"3","UniqueId":"342337","data":[]}']);
+        $file = time() .rand(). '_file.json';
+        $destinationPath=public_path()."/upload/";
+        if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
+        File::put($destinationPath.$file,$data);
+        return response()->download($destinationPath.$file);
 	}
 }

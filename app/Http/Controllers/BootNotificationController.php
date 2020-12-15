@@ -7,7 +7,7 @@ use App\Events\BootNotification;
 use Session;
 use Carbon\Carbon;
 use App\ChargePoint;
-
+use File;
 class BootNotificationController extends Controller
 {
     public function bootNotification(Request $request) 
@@ -64,5 +64,23 @@ class BootNotificationController extends Controller
     		return $res;
 		}
 		
+    }
+    public function JSONbootreq()
+    {
+        $data = json_encode(['{"MessageTypeId":"2","UniqueId":"746832","Action":"BootNotification","data":{"chargePointVendor":"Point1","chargePointModel":"Model1","chargePointSerialNumber":"CP1234","chargeBoxSerialNumber":"CB1234","firmwareVersion":"v1","iccid":"1111","imsi":"2222","meterType":"metertype1","meterSerialNumber":"MTR1234"}}']);
+        $file = time() .rand(). '_file.json';
+        $destinationPath=public_path()."/upload/";
+        if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
+        File::put($destinationPath.$file,$data);
+        return response()->download($destinationPath.$file);
+    }
+    public function JSONbootres()
+    {
+        $data = json_encode(['{"MessageTypeId":"3","UniqueId":"746832","data":{"status":"Accepted","currenTime":"2020-12-12T02:58:57.8892785Z","interval":"2"}}']);
+        $file = time() .rand(). '_file.json';
+        $destinationPath=public_path()."/upload/";
+        if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
+        File::put($destinationPath.$file,$data);
+        return response()->download($destinationPath.$file);
     }
 }

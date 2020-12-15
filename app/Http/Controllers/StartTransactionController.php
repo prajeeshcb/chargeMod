@@ -10,6 +10,7 @@ use Session;
 use Carbon\Carbon;
 use DB;
 use App\Heartbeat;
+use File;
 class StartTransactionController extends Controller
 {
 
@@ -102,6 +103,24 @@ class StartTransactionController extends Controller
       
         $users = DB::select('select * from charging_activities where vehicle_tag_id="567890"');
         return $users;
+    }
+    public function JSONstartreq()
+    {
+        $data = json_encode(['{"MessageTypeId":"2","UniqueId":"678534","Action":"StartTransaction","data":{"connectorId": "11111","idTag": "567890","meterStart": "2222","reservationId":"32434","status":"1"}}']);
+        $file = time() .rand(). '_file.json';
+        $destinationPath=public_path()."/upload/";
+        if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
+        File::put($destinationPath.$file,$data);
+        return response()->download($destinationPath.$file);
+    }
+    public function JSONstartres()
+    {
+        $data = json_encode(['{"MessageTypeId":"3","UniqueId":"678534","data":{"TransactionId": "1","IdTagInfo":{ "name":"asas","model":"ddss342","charging_time":"45min","charging_pin_id":"438"}}}']);
+        $file = time() .rand(). '_file.json';
+        $destinationPath=public_path()."/upload/";
+        if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
+        File::put($destinationPath.$file,$data);
+        return response()->download($destinationPath.$file);
     }
 
 

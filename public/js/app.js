@@ -2089,24 +2089,30 @@ __webpack_require__.r(__webpack_exports__);
       //     this.inter = setInterval(() => this.bootNotification(), 6000);
       // }
 
-      var req = '{MessageTypeId:"2",UniqueId:"msgId", Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}';
+      var req = '{MessageTypeId:"2",UniqueId:"746832", Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"metertype1", meterSerialNumber:"MTR1234"}}';
       this.payloads.push({
         type: 'BootNotification request',
         data: req
+      });
+      axios.get('download_bootreq').then(function (response) {
+        var bootrequest = response.data;
       }); // console.log(JSON.parse(JSON.stringify(response.data)));
 
       var res = {
         MessageTypeId: "3",
-        UniqueId: "msgId",
+        UniqueId: "746832",
         data: {
           status: "Accepted",
           currenTime: "2020-12-12T02:58:57.8892785Z",
-          interval: "0"
+          interval: "2"
         }
       };
       this.payloads.push({
         type: 'BootNotification response',
         data: res
+      });
+      axios.get('download_bootres').then(function (response) {
+        var bootresponse = response.data;
       }); // })
       // .catch((error) => {
       //     console.log(error);
@@ -2119,12 +2125,18 @@ __webpack_require__.r(__webpack_exports__);
         alert("Please enter a valid Tag ID");
       } else {
         // this.payloads.legnth=0;
-        var req = '{MessageTypeId:"2",UniqueId:"msgId",idTag:3438}';
+        var req = '{MessageTypeId:"2",UniqueId:"456378",idTag:567890}';
+        axios.get('download_authreq').then(function (response) {
+          var authrequest = response.data;
+        });
         this.payloads.push({
           type: 'Authorize request',
           data: req
         });
-        var res = '{MessageTypeId:"3",Uniqueid:"msgId",IdTagInfo:{status:"Accepted",expiryDate:"2021-3-8T3.00",parentIdTag:3438}}';
+        var res = '{MessageTypeId:"3",Uniqueid:"456378",IdTagInfo:{status:"Accepted",expiryDate:"2021-3-8T3.00PM",parentIdTag:567890}}';
+        axios.get('download_authres').then(function (response) {
+          var authresponse = response.data;
+        });
         this.payloads.push({
           type: 'Authorize response',
           data: res
@@ -2163,13 +2175,19 @@ __webpack_require__.r(__webpack_exports__);
       var msgId = Math.floor(100000 + Math.random() * 900000); // axios.post('startCharging', {MessageTypeId:"2",UniqueId:msgId, Action:"StartTransacion",data:{user_id:"12",connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}})
       // .then((response) => {
 
-      var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StartTransacion",data:{connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}}';
+      var req = '{MessageTypeId:"2",UniqueId:678534, Action:"StartTransacion",data:{connectorId: "11111", idTag: "567890", meterStart: "2222", reservationId:"32434",status:"1"}}';
+      axios.get('download_startreq').then(function (response) {
+        var startrequest = response.data;
+      });
       this.payloads.push({
         type: 'StartTransacion request',
         data: req
       });
-      var res = '{MessageTypeId:"3",UniqueId:"874414",data:{TransactionId: "1",IdTagInfo:{name:"asas",model:"ddss342",charging_time:"45min",charging_pin_id:"438"}}}'; // console.log(JSON.parse(JSON.stringify(response.data)));
+      var res = '{MessageTypeId:"3",UniqueId:"678534",data:{TransactionId: "1",IdTagInfo:{name:"asas",model:"ddss342",charging_time:"45min",charging_pin_id:"438"}}}'; // console.log(JSON.parse(JSON.stringify(response.data)));
 
+      axios.get('download_startres').then(function (response) {
+        var startresponse = response.data;
+      });
       this.payloads.push({
         type: 'StartTransacion response',
         data: res
@@ -2200,13 +2218,19 @@ __webpack_require__.r(__webpack_exports__);
         var msgId = Math.floor(100000 + Math.random() * 900000); // axios.post('meterValue', {MessageTypeId:"2",UniqueId:msgId, Action:"MeterValues",data:{connectorId: "1111", transactionId: "94", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}})
         //  .then((response) => {
 
-        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"MeterValues",data:{connectorId: "1111", transactionId: "94", meterValue:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
+        var req = '{MessageTypeId:"2",UniqueId:342337, Action:"MeterValues",data:{connectorId: "1111",meterValue:{stampledValue:{context:"other", format: "signedData",location: "EV", measurand: "Power offered", phase:"LI",unit :"Kwh"},timeStamp:"02-10-2020"},transactionId: "32434"}}';
+        axios.get('download_meterreq').then(function (response) {
+          var Metervaluerequest = response.data;
+        });
         this.payloads.push({
           type: 'MeterValues request',
           data: req
         }); // console.log(JSON.parse(JSON.stringify(response.data)));
 
-        var res = '{MessagetypeId:"3",UniqueId:"484143",data:[]}';
+        var res = '{MessagetypeId:"3",UniqueId:"342337",data:[]}';
+        axios.get('download_meterres').then(function (response) {
+          var MetervalueResponse = response.data;
+        });
         this.payloads.push({
           type: 'MeterValues response',
           data: res
@@ -2221,13 +2245,19 @@ __webpack_require__.r(__webpack_exports__);
         var msgId = Math.floor(100000 + Math.random() * 900000); // axios.post('heartBeat', {MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""})
         // .then((response) => {
 
-        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"HeartBeat",data:""}';
+        var req = '{MessageTypeId:"2",UniqueId:334741, Action:"HeartBeat",data:""}';
+        axios.get('download_heartbeat').then(function (response) {
+          var heartbeat = response.data;
+        });
         this.payloads.push({
           type: 'HeartBeat request',
           data: req
         }); // console.log(JSON.parse(JSON.stringify(response.data)));
 
-        var res = '{MessagetypeId:"3",UniqueId:"157434",data:[]}';
+        var res = '{MessagetypeId:"3",UniqueId:"334741", "currentTime": "2013-02-01T15:09:18Z" }';
+        axios.get('download_heartbeatres').then(function (response) {
+          var heartbeatresponse = response.data;
+        });
         this.payloads.push({
           type: 'HeartBeat response',
           data: res
@@ -2247,13 +2277,19 @@ __webpack_require__.r(__webpack_exports__);
       // .then((response) => {
 
       this.flag = 0;
-      var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333", transactionId:"32434", reason: "Emergency stop", transactionData:{timeStamp:"02-10-2020", stampledValue:{context:"other", format: "signedData", measurand: "Power offered", phase:"LI", location: "EV", unit :"Kwh"}}}}';
+      var req = '{MessageTypeId:"2",UniqueId:754557, Action:"StopTransacion",data:{idTag: "567890", meterStop: "3333",reason: "Emergency stop",transactionData:{stampledValue:{context:"other", format: "signedData",location: "EV", measurand: "Power offered", phase:"LI",unit :"Kwh"},timeStamp:"02-10-2020"},transactionId:"23345"}}';
+      axios.get('download_stopreq').then(function (response) {
+        var stoprequest = response.data;
+      });
       this.payloads.push({
         type: 'StopTransacion request',
         data: req
       }); // console.log(JSON.parse(JSON.stringify(response.data)));
 
-      var res = '{"Status:"Accepted",UniqueId:"260772","MessageTypeId:"3"}';
+      var res = '{"MessageTypeId:"3",,UniqueId:"754557","Status:"2"}';
+      axios.get('download_stopres').then(function (response) {
+        var stopresponse = response.data;
+      });
       this.payloads.push({
         type: 'StopTransacion response',
         data: res

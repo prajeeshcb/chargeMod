@@ -9,7 +9,7 @@ use App\TransactionData;
 use Auth;
 use Session;
 use Carbon\Carbon;
-
+use File;
 class StopTransactionController extends Controller
 {
     
@@ -60,5 +60,23 @@ class StopTransactionController extends Controller
 
 
         }
-    }
+	}
+	public function JSONstopreq()
+	{
+		$data = json_encode(['{"MessageTypeId":"2","UniqueId":"754557","Action":"StopTransaction","data":{"idTag": "567890","meterStop":"3333","reason":"Emergency stop","transactionData":{"stampledValue":{"context":"other","format":"signedData","location":"EV","measurand":"Power offered","phase":"LI","unit":"Kwh"},"timeStamp":"02-10-2020"},"transactionId":"23345"}}']);
+        $file = time() .rand(). '_file.json';
+        $destinationPath=public_path()."/upload/";
+        if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
+        File::put($destinationPath.$file,$data);
+        return response()->download($destinationPath.$file);
+	}
+	public function JSONstopres()
+	{
+		$data = json_encode(['{"MessageTypeId":"3","UniqueId":"754557","data":{"status":"2"}}']);
+        $file = time() .rand(). '_file.json';
+        $destinationPath=public_path()."/upload/";
+        if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
+        File::put($destinationPath.$file,$data);
+        return response()->download($destinationPath.$file);
+	}
 }
