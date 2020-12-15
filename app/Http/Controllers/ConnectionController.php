@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Events\HeartBeat;
 use App\Message;
 use Session;
-
+use File;
 class ConnectionController extends Controller
 {
     /*public function fetchPayloads() {
@@ -35,5 +35,23 @@ class ConnectionController extends Controller
         }
 
 
+    }
+    public function JSONheartbeat()
+    {
+        $data = json_encode(['{"MessageTypeId":"2","UniqueId":"334741","Action":"Heartbeat","data":[]']);
+        $file = time() .rand(). '_file.json';
+        $destinationPath=public_path()."/upload/";
+        if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
+        File::put($destinationPath.$file,$data);
+        return response()->download($destinationPath.$file);
+    }
+    public function JSONheartbeatres()
+    {
+        $data = json_encode(['{"MessageTypeId":"3","UniqueId":"334741","currentTime": "2013-02-01T15:09:18Z"']);
+        $file = time() .rand(). '_file.json';
+        $destinationPath=public_path()."/upload/";
+        if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
+        File::put($destinationPath.$file,$data);
+        return response()->download($destinationPath.$file);
     }
 }
