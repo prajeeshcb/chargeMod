@@ -47,7 +47,7 @@ Route::get('download_stopres', array('as'=> 'file.download', 'uses' => 'StopTran
 Route::get('download_meterreq', array('as'=> 'file.download', 'uses' => 'MeterValueController@JSONmeterreq'));
 Route::get('download_meterres', array('as'=> 'file.download', 'uses' => 'MeterValueController@JSONmeterres'));
 Route::get('download_heartbeat', array('as'=> 'file.download', 'uses' => 'ConnectionController@JSONheartbeat'));
-Route::get('download_heartbeatres', array('as'=> 'file.download', 'uses' => 'MeterValueController@JSONheartbeatres'));
+Route::get('download_heartbeatres', array('as'=> 'file.download', 'uses' => 'ConnectionController@JSONheartbeatres'));
 
 Route::get('download_remotestartreq', array('as'=> 'file.download', 'uses' => 'ServerController@JSONstartreq'));
 Route::get('download_remotestartres', array('as'=> 'file.download', 'uses' => 'ServerController@JSONstartres'));

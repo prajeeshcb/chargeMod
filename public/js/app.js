@@ -2308,6 +2308,148 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ServerActionComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ServerActionComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      payloads: [],
+      msgId: ' ',
+      req: '',
+      res: '',
+      flag: 0,
+      status: '',
+      users: '',
+      IdTag: ''
+    };
+  },
+  mounted: function mounted() {
+    console.log('mounted');
+  },
+  created: function created() {
+    var _this = this;
+
+    Echo.join('chat').listen('StartTransaction', function (event) {
+      _this.payloads.push(event.payload);
+
+      console.log("hhh");
+    });
+  },
+  methods: {
+    RemotestartCharging: function RemotestartCharging() {
+      var _this2 = this;
+
+      this.payloads.length = 0;
+
+      if (this.IdTag == "") {
+        alert("Please enter a valid Tag ID");
+      } else {
+        var msgId = Math.floor(100000 + Math.random() * 900000);
+        axios.post('remoteStartCharging', {
+          MessageTypeId: "2",
+          UniqueId: msgId,
+          Action: "RemoteStartTransacion",
+          data: {
+            connectorId: "11111",
+            idTag: "567890"
+          }
+        }).then(function (response) {
+          document.getElementById("start").disabled = true;
+          document.getElementById("stop").disabled = false;
+          var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"RemoteStartTransacion",data:{connectorId: "11111", idTag: "567890"}}';
+          axios.get('download_remotestartreq').then(function (response) {
+            var remotestart_request = response.data;
+          });
+          var res_data = response.data;
+          var transactionId = res_data.data.transactionId;
+          console.log(res_data.data.transactionId);
+          document.getElementById("transaction_id").value = transactionId;
+
+          _this2.payloads.push({
+            type: 'RemoteStartTransacion request',
+            data: req
+          });
+
+          axios.get('download_remotestartres').then(function (response) {
+            var remotestart_response = response.data;
+          });
+        });
+      }
+    },
+    RemotestopCharging: function RemotestopCharging() {
+      var _this3 = this;
+
+      var msgId = Math.floor(100000 + Math.random() * 900000);
+      var transactionId = document.getElementById("transaction_id").value;
+      console.log(transactionId);
+      axios.post('remoteStopCharging', {
+        MessageTypeId: "2",
+        UniqueId: msgId,
+        Action: "RemoteStopTransacion",
+        data: {
+          transactionId: transactionId
+        }
+      }).then(function (response) {
+        document.getElementById("start").disabled = false;
+        document.getElementById("stop").disabled = true;
+        var req = '{MessageTypeId:"2",UniqueId:msgId, Action:"RemoteStopTransacion",data:{transactionId: transactionId}}';
+        axios.get('download_remotestopreq').then(function (response) {
+          var remotestop_request = response.data;
+        });
+
+        _this3.payloads.push({
+          type: 'RemoteStopTransacion request',
+          data: req
+        });
+
+        axios.get('download_remotestopres').then(function (response) {
+          var remotestop_response = response.data;
+        });
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/bootstrap/dist/js/bootstrap.js":
 /*!*****************************************************!*\
   !*** ./node_modules/bootstrap/dist/js/bootstrap.js ***!
@@ -44319,6 +44461,133 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ServerActionComponent.vue?vue&type=template&id=7e5e6249&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ServerActionComponent.vue?vue&type=template&id=7e5e6249& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-6" }, [
+      _c("h5", [_vm._v("Actions")]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("label", [_vm._v("IdTag")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.IdTag,
+            expression: "IdTag"
+          }
+        ],
+        staticClass: "form-control",
+        attrs: {
+          id: "IdTag",
+          type: "text",
+          name: "IdTag",
+          required: "",
+          autocomplete: "Id Tag",
+          autofocus: ""
+        },
+        domProps: { value: _vm.IdTag },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.IdTag = $event.target.value
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          staticStyle: { width: "220px" },
+          attrs: { id: "start" },
+          on: { click: _vm.RemotestartCharging }
+        },
+        [_vm._v("Start Charging")]
+      ),
+      _vm._v(" "),
+      _c("br"),
+      _c("br"),
+      _vm._v(" "),
+      _c("input", {
+        attrs: { type: "hidden", id: "transaction_id", value: "0" }
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary",
+          staticStyle: { width: "220px" },
+          attrs: { id: "stop", disabled: "" },
+          on: { click: _vm.RemotestopCharging }
+        },
+        [_vm._v("Stop Charging")]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-6" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "ul",
+        {
+          staticStyle: {
+            height: "170px",
+            "overflow-x": "scroll",
+            border: "2px solid #6c757d",
+            "border-radius": "5px"
+          }
+        },
+        _vm._l(_vm.payloads, function(payload, index) {
+          return _c("div", { key: index, staticClass: "col-12" }, [
+            _c("div", { staticClass: "req", attrs: { id: "request" } }, [
+              _c("b", [_vm._v(_vm._s(payload.type))]),
+              _vm._v(" "),
+              _c("label", [_vm._v(_vm._s(payload.data))])
+            ])
+          ])
+        }),
+        0
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticStyle: { "text-align": "center" } }, [
+      _c("h5", { staticStyle: { "font-weight": "bold" } }, [_vm._v("Payload")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
 /*!********************************************************************!*\
   !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
@@ -56662,9 +56931,67 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./resources/js/components/ServerActionComponent.vue ***!
   \***********************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/vue-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\xampp\\htdocs\\chargeMod\\resources\\js\\components\\ServerActionComponent.vue'");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ServerActionComponent_vue_vue_type_template_id_7e5e6249___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ServerActionComponent.vue?vue&type=template&id=7e5e6249& */ "./resources/js/components/ServerActionComponent.vue?vue&type=template&id=7e5e6249&");
+/* harmony import */ var _ServerActionComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ServerActionComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ServerActionComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ServerActionComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ServerActionComponent_vue_vue_type_template_id_7e5e6249___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ServerActionComponent_vue_vue_type_template_id_7e5e6249___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/ServerActionComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/ServerActionComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/ServerActionComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ServerActionComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ServerActionComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ServerActionComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ServerActionComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/ServerActionComponent.vue?vue&type=template&id=7e5e6249&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/ServerActionComponent.vue?vue&type=template&id=7e5e6249& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ServerActionComponent_vue_vue_type_template_id_7e5e6249___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ServerActionComponent.vue?vue&type=template&id=7e5e6249& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ServerActionComponent.vue?vue&type=template&id=7e5e6249&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ServerActionComponent_vue_vue_type_template_id_7e5e6249___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ServerActionComponent_vue_vue_type_template_id_7e5e6249___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
