@@ -59,4 +59,7 @@ Route::get('/charge_points/{station}', 'ServerController@ChargePoints');
 Route::get('/charge_point/info/{station}/{cp}', 'ServerController@ChargePointInfo');
 Route::get('/server', 'ServerController@index');
 
+Route::post('/remoteStartCharging', 'ServerController@remoteStart');
+Route::post('/remoteStopCharging', 'ServerController@remoteStop');
+
 

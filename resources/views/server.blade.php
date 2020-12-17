@@ -88,29 +88,9 @@
                                         </div>
                                     </div>
                                     <hr>
-                                    <div class=row>
-                                        <div class="col-6">
-                                            <h5>Actions</h5>
-                                            <br>
-                                            <button v-on:click="stopCharging" class="btn btn-primary" style="width: 220px;">Start Charging</button>
-                                            <br><br>
-                                            <button v-on:click="stopCharging" class="btn btn-primary" style="width: 220px;">Stop Charging</button>
-                                        </div>
-                                        <div class="col-6">
-                                            <span style="text-align: center;">
-                                                <h5 style="font-weight: bold;">Payload</h5>
-                                            </span>
-                                            <ul style="height:170px; overflow-x:scroll;border: 2px solid #6c757d;
-      border-radius: 5px;">
-                                                <li>
-                                                    {MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}
-                                                </li>
-                                                <li>
-                                                    {MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    
+                                    <serveraction></serveraction>
+                                    
 
                                 </div>
 

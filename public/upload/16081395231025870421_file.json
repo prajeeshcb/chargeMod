@@ -1,0 +1,1 @@
+["{\"MessageTypeId\":\"2\",\"UniqueId\":\"342337\",\"Action\":\"MeterValue\",\"data\":{\"connectorId\":\"1111\",\"meterValue\":{\"stampledValue\":{\"context\":\"other\",\"format\":\"signedData\",\"location\":\"EV\",\"measurand\":\"Power offered\",\"phase\":\"LI\",\"unit\":\"Kwh\"},\"timeStamp\":\"02-10-2020\",},\"transactionId\":\"32434\",}}"]
