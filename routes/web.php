@@ -48,16 +48,26 @@ Route::get('download_meterreq', array('as'=> 'file.download', 'uses' => 'MeterVa
 Route::get('download_meterres', array('as'=> 'file.download', 'uses' => 'MeterValueController@JSONmeterres'));
 Route::get('download_heartbeat', array('as'=> 'file.download', 'uses' => 'ConnectionController@JSONheartbeat'));
 Route::get('download_heartbeatres', array('as'=> 'file.download', 'uses' => 'MeterValueController@JSONheartbeatres'));
+
+Route::get('download_remotestartreq', array('as'=> 'file.download', 'uses' => 'ServerController@JSONstartreq'));
+Route::get('download_remotestartres', array('as'=> 'file.download', 'uses' => 'ServerController@JSONstartres'));
+Route::get('download_remotestopreq', array('as'=> 'file.download', 'uses' => 'ServerController@JSONstopreq'));
+Route::get('download_remotestopres', array('as'=> 'file.download', 'uses' => 'ServerController@JSONstopres'));
+
+
+
 //Json files end
 
 
 Auth::routes();
 
+
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/charge_points/{station}', 'ServerController@ChargePoints');
+Route::get('/charge_point/info/{station}/{cp}', 'ServerController@ChargePointInfo');
 Route::get('/server', 'ServerController@index');
 
-
-
-
+Route::post('/remoteStartCharging', 'ServerController@remoteStart');
+Route::post('/remoteStopCharging', 'ServerController@remoteStop');
 
 

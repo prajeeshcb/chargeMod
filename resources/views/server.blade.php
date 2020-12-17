@@ -23,7 +23,7 @@
                                             <select name="station" id="station" class="form-control">
                                                 <option value="">Select Station</option>
                                                 @foreach($stations as $station)
-                                                <option>
+                                                <option value="{{ $station['station_Id']}}">
                                                     {{ $station['station_Name']}}
                                                 </option>
                                                 @endforeach
@@ -31,13 +31,14 @@
                                         </div>
                                     </div>
                                     <label>Charge Points</label>
-                                    <ul class="list-unstyled charge-point-list">
-                                        <li>Charge Point1</li>
+                                    <ul class="list-unstyled charge-point-list" id="cp-list">
+                                        <!-- <li>Charge Point1</li>
                                         <li>Charge Point2</li>
                                         <li>Charge Point3</li>
                                         <li>Charge Point4</li>
-                                        <li>Charge Point5</li>
+                                        <li>Charge Point5</li> -->
                                     </ul>
+                                    <button class="btn btn-primary submit-btn">Submit</button>
                                 </div>
                             </div>
                         </div>
@@ -52,46 +53,45 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <label>URL</label>
-                                                    <input id="vehicle" type="text" class="form-control" name="URL"  disabled="disabled">
+                                                    <label class="col-6">Station</label>
+                                                    <input id="charging_station" type="text" class="form-control col-6" name="URL"  disabled="disabled">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <label>Tag Id</label>
-                                                    <input id="vehicle" type="text" class="form-control" name="URL"  disabled="disabled">
+                                                    <label class="col-6">Connector Type</label>
+                                                    <input id="connector_type" type="text" class="form-control col-6" name="URL"  disabled="disabled">
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <label class="col-6">Current Meter Reading</label>
+                                                    <input id="meter_reading" type="text" class="form-control col-6" name="URL"  disabled="disabled">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <label>Status</label>
-                                                    <input id="vehicle" type="text" class="form-control" name="URL"  disabled="disabled">
+                                                    <label class="col-6">Charge Point</label>
+                                                    <input id="charge_point" type="text" class="form-control col-6" name="URL"  disabled="disabled">
                                                 </div>
+                                                
                                             </div>
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <label>Current Meter Reading</label>
-                                                    <input id="vehicle" type="text" class="form-control" name="URL"  disabled="disabled">
+                                                    <label class="col-6">Status</label>
+                                                    <input id="status" type="text" class="form-control col-6" name="URL"  disabled="disabled">
                                                 </div>
+                                                
                                             </div>
                                         </div>
                                     </div>
-                                    <div class=row>
-                                        <span style="text-align: center;">
-                                            <h5 style="font-weight: bold;">Payload</h5>
-                                        </span>
-                                        <ul style="height:170px; overflow-x:scroll;border: 2px solid #6c757d;
-  border-radius: 5px;">
-                                            <li>
-                                                {MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}
-                                            </li>
-                                            <li>
-                                                {MessageTypeId:"2",UniqueId:msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}}
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <hr>
+                                    
+                                    <serveraction></serveraction>
+                                    
 
                                 </div>
 
@@ -107,5 +107,76 @@
 
 </div>
 
+@endsection
+
+@section('script')
+<script type="text/javascript">
+$(function() {
+   $('#station').change(function(){
+       var station = $(this).val();
+       //alert(station_id);
+       var html="";
+       if(station!='')
+       {
+            $.ajax({
+                type:'GET',
+                url:'{{URL::to("/charge_points")}}/'+station,
+                success:function(data)
+                {
+                   if(data!='')
+                   {
+                     $.each(data,function(i,value){
+                     
+                       html +='<li><input type="radio" name="cp" value="'+value.id+'">'+value.charge_point_vendor+'-'+value.connector_Name+'</a></li>';
+                      
+                      });
+
+                   }
+
+                   $('#cp-list').html(html);
+                }
+            });
+       }
+       /*else
+       {
+          html +='<option value="">please select</option>';
+          $('#product').html(html);
+       }*/
+     });
+   $('.submit-btn').click(function() {
+        var station =  $('#station').find(":selected").val();
+        var cp = $("input[name='cp']:checked").val();
+        if(station!='' && cp!='')
+        {
+            $.ajax({
+                type:'GET',
+                url:'{{URL::to("/charge_point/info")}}/'+station+'/'+cp,
+                success:function(data)
+                {
+                   if(data!='')
+                   {
+                        document.getElementById("charging_station").value= data['station_Name'];
+                        document.getElementById("connector_type").value= data['connector_Name'];
+                        document.getElementById("meter_reading").value= "1333";
+                        document.getElementById("charge_point").value= data['charge_point_vendor'];
+                        if(data['status'] == 1) {
+                            document.getElementById("status").value= "Unlock";
+                        }
+                        if(data['status']==2) {
+                            document.getElementById("status").value= "Lock";
+                        }
+
+                   }
+                }
+            });
+
+        }
+        else 
+        {
+            alert('Please Select station and charge point')
+        }
+    });
+});
+</script>
 @endsection
 
