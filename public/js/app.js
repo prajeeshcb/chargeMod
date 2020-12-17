@@ -2034,6 +2034,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2072,6 +2076,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     bootNotification: function bootNotification() {
+      // this.$emit('Messagefromchild',arg1,arg2);
       this.payloads.length = 0;
       var msgId = Math.floor(100000 + Math.random() * 900000);
       document.getElementById("disable").enabled = true; // axios.post('bootNotification', {MessageTypeId:"2",UniqueId:this.msgId, Action:"BootNotification",data:{chargePointVendor: "Point1", chargePointModel: "Model1", chargePointSerialNumber: "CP1234",chargeBoxSerialNumber: "CB1234" , firmwareVersion: "v1",iccid:"1111",imsi:"2222", meterType:"meter_type1", meterSerialNumber:"MTR1234"}})

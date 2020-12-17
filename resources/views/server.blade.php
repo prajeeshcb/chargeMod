@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="container">
+
     <!-- <serverview :user="{{ auth()->user() }}"></serverview> -->
     <span>
     <div class="row ">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header" style="text-align: center;"><h2>Server Monitoring</h2> </div>
-
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-3">
@@ -41,6 +41,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="col-md-9">
                             <div class="card">
                                 <div class="card-header">
@@ -103,7 +104,8 @@
         </div>
     </div>
 </span>
-    
+
 </div>
+
 @endsection
 

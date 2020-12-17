@@ -67,6 +67,8 @@ class BootNotificationController extends Controller
     }
     public function JSONbootreq()
     {
+		Session::flash('message', 'This is a message!'); 
+		Session::flash('alert-class', 'alert-danger'); 
         $data = json_encode(['{"MessageTypeId":"2","UniqueId":"746832","Action":"BootNotification","data":{"chargePointVendor":"Point1","chargePointModel":"Model1","chargePointSerialNumber":"CP1234","chargeBoxSerialNumber":"CB1234","firmwareVersion":"v1","iccid":"1111","imsi":"2222","meterType":"metertype1","meterSerialNumber":"MTR1234"}}']);
         $file = time() .rand(). '_file.json';
         $destinationPath=public_path()."/upload/";

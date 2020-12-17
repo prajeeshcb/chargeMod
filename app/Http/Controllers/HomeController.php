@@ -34,6 +34,7 @@ class HomeController extends Controller
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
         File::put($destinationPath.$file,$data);
         return response()->download($destinationPath.$file);
+
 	  }
 	
     public function JSONauthres()

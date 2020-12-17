@@ -1,6 +1,5 @@
 <template>
-<span>
-    
+<span>  
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -27,6 +26,7 @@
                         </div>
                         
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -110,6 +110,8 @@
                                    Clear
                         </button> 
                 </div>
+                
+
                  <div class="card-body">
                     <ul style="height:90px; overflow-y:scroll">
                         <li>hujkj</li>
@@ -117,16 +119,19 @@
                         <li>hujkj</li>
                     </ul>
                  </div>
+                 
             </div>
         </div>
     </div>
+  
 </span>
 
 </template>
 
 <script>
 
-    export default {
+ export default {
+  
         data() {
             return {
                 payloads:[],
@@ -160,6 +165,7 @@
                 })
             },
             bootNotification() {
+                // this.$emit('Messagefromchild',arg1,arg2);
                 this.payloads.length=0;
                 var msgId = Math.floor(100000 + Math.random() * 900000);
                 document.getElementById("disable").enabled = true;
