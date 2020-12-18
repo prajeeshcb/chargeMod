@@ -72,7 +72,7 @@ class StopTransactionController extends Controller
 	}
 	public function JSONstopres()
 	{
-		$data = json_encode(['{"MessageTypeId":"3","UniqueId":"754557","data":{"status":"2"}}']);
+		$data = json_encode(['{"MessageTypeId":"3","UniqueId":"754557","Action":"StopTransactionResponse",data":{"status":"2"}}']);
         $file = time() .rand(). '_file.json';
         $destinationPath=public_path()."/upload/";
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }

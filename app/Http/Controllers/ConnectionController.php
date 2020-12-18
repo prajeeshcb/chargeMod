@@ -47,7 +47,7 @@ class ConnectionController extends Controller
     }
     public function JSONheartbeatres()
     {
-        $data = json_encode(['{"MessageTypeId":"3","UniqueId":"334741","currentTime": "2013-02-01T15:09:18Z"']);
+        $data = json_encode(['{"MessageTypeId":"3","UniqueId":"334741","Action":"HeartbeatResponse","currentTime": "2013-02-01T15:09:18Z"']);
         $file = time() .rand(). '_file.json';
         $destinationPath=public_path()."/upload/";
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }

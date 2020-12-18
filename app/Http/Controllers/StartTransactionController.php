@@ -115,7 +115,7 @@ class StartTransactionController extends Controller
     }
     public function JSONstartres()
     {
-        $data = json_encode(['{"MessageTypeId":"3","UniqueId":"678534","data":{"TransactionId": "1","IdTagInfo":{ "name":"asas","model":"ddss342","charging_time":"45min","charging_pin_id":"438"}}}']);
+        $data = json_encode(['{"MessageTypeId":"3","UniqueId":"678534","Action":"StartTransactionResponse",data":{"TransactionId": "1","IdTagInfo":{ "name":"asas","model":"ddss342","charging_time":"45min","charging_pin_id":"438"}}}']);
         $file = time() .rand(). '_file.json';
         $destinationPath=public_path()."/upload/";
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }

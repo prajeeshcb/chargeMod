@@ -74,7 +74,7 @@ class MeterValueController extends Controller
 	}
 	public function JSONmeterreq()
 	{
-		$data = json_encode(['{"MessageTypeId":"2","UniqueId":"342337","Action":"MeterValue","data":{"connectorId":"1111","meterValue":{"stampledValue":{"context":"other","format":"signedData","location":"EV","measurand":"Power offered","phase":"LI","unit":"Kwh"},"timeStamp":"02-10-2020",},"transactionId":"32434",}}']);
+		$data = json_encode(['{"MessageTypeId":"2","UniqueId":"342337","Action":"MeterValues","data":{"connectorId":"1111","meterValue":{"stampledValue":{"context":"other","format":"signedData","location":"EV","measurand":"Power offered","phase":"LI","unit":"Kwh"},"timeStamp":"02-10-2020",},"transactionId":"32434",}}']);
         $file = time() .rand(). '_file.json';
         $destinationPath=public_path()."/upload/";
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
@@ -83,7 +83,7 @@ class MeterValueController extends Controller
 	}
 	public function JSONmeterres()
 	{
-		$data = json_encode(['{"MessageTypeId":"3","UniqueId":"342337","data":[]}']);
+		$data = json_encode(['{"MessageTypeId":"3","UniqueId":"342337","Action":"MeterValuesResponse","data":[]}']);
         $file = time() .rand(). '_file.json';
         $destinationPath=public_path()."/upload/";
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
