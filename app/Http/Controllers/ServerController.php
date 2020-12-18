@@ -109,7 +109,7 @@ class ServerController extends Controller
     }
     public function JSONstartreq()
     {
-        $data = json_encode(['{MessageTypeId:2,UniqueId:466879,Action:RemoteStartTransacion,connectorId:11111,idTag:567890,chargingProfile:{chargingProfileId:2546,transactionId:456,stackLevel:18,chargingProfilePurpose:TxProfile,chargingProfileKind:Absolute,recurrencyKind:Daily,validFrom:8-12-201511.30AM,validTo:8-12-201511.30AM,chargingSchedule:{duration:40min,startSchedule:17-12-202010.30AM,chargingRateUnit:W,chargingSchedulePeriod{startPeriod:10,limit:9.1,numberPhases:2},minChargingRate:10.1}}}']);
+        $data = json_encode(['{"MessageTypeId":"2","UniqueId":"466879","Action":"RemoteStartTransacion","connectorId":"11111","idTag":"567890","chargingProfile":{"chargingProfileId":"2546","transactionId":"456","stackLevel":"18","chargingProfilePurpose":"TxProfile","chargingProfileKind":"Absolute","recurrencyKind":"Daily","validFrom":"8-12-201511.30AM","validTo":"8-12-201511.30AM","chargingSchedule":{"duration":"40min","startSchedule":"17-12-202010.30AM","chargingRateUnit":"W",chargingSchedulePeriod{"startPeriod":"10","limit":"9.1","numberPhases":"2"},"minChargingRate":"10.1"}}}']);
         $file = time() .rand(). '_file.json';
         $destinationPath=public_path()."/upload/";
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
@@ -118,7 +118,7 @@ class ServerController extends Controller
     }
     public function JSONstartres()
     {
-        $data = json_encode(['{MessageTypeId:3,UniqueId:466879,status:Accepted}']);
+        $data = json_encode(['{"MessageTypeId":"3","UniqueId":"466879","status":"Accepted"}']);
         $file = time() .rand(). '_file.json';
         $destinationPath=public_path()."/upload/";
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
@@ -127,7 +127,7 @@ class ServerController extends Controller
     }
     public function JSONstopreq()
     {
-        $data = json_encode(['{MessageTypeId:2,UniqueId:567699,Action:RemoteStopTransaction,transcationId:456}']);
+        $data = json_encode(['{"MessageTypeId":"2","UniqueId":"567699","Action":"RemoteStopTransaction","transcationId":"456"}']);
         $file = time() .rand(). '_file.json';
         $destinationPath=public_path()."/upload/";
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
@@ -136,7 +136,7 @@ class ServerController extends Controller
     }
     public function JSONstopres()
     {
-        $data = json_encode(['{MessageTypeId:3,UniqueId:567699,status:Accepted}']);
+        $data = json_encode(['{"MessageTypeId":"3","UniqueId":"567699","status":"Accepted"}']);
         $file = time() .rand(). '_file.json';
         $destinationPath=public_path()."/upload/";
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
