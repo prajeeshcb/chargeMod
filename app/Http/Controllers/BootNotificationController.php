@@ -78,7 +78,7 @@ class BootNotificationController extends Controller
     }
     public function JSONbootres()
     {
-        $data = json_encode(['{"MessageTypeId":"3","UniqueId":"746832","data":{"status":"Accepted","currenTime":"2020-12-12T02:58:57.8892785Z","interval":"2"}}']);
+        $data = json_encode(['{"MessageTypeId":"3","UniqueId":"746832","Action":"BootNotificationResponse","data":{"status":"Accepted","currenTime":"2020-12-12T02:58:57.8892785Z","interval":"2"}}']);
         $file = time() .rand(). '_file.json';
         $destinationPath=public_path()."/upload/";
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }

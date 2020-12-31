@@ -2086,8 +2086,7 @@ __webpack_require__.r(__webpack_exports__);
       // {
 
       document.getElementById("auth").disabled = false;
-      document.getElementById("start").disabled = true;
-      alert("Enter your Tag Id"); // }
+      document.getElementById("start").disabled = true; // }
       // else 
       // {
       //   alert('Rejected');

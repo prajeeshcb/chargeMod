@@ -118,7 +118,7 @@ class ServerController extends Controller
     }
     public function JSONstartres()
     {
-        $data = json_encode(['{"MessageTypeId":"3","UniqueId":"466879","status":"Accepted"}']);
+        $data = json_encode(['{"MessageTypeId":"3","UniqueId":"466879","Action":"RemoteStartTransactionResponse","status":"Accepted"}']);
         $file = time() .rand(). '_file.json';
         $destinationPath=public_path()."/upload/";
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
@@ -136,7 +136,7 @@ class ServerController extends Controller
     }
     public function JSONstopres()
     {
-        $data = json_encode(['{"MessageTypeId":"3","UniqueId":"567699","status":"Accepted"}']);
+        $data = json_encode(['{"MessageTypeId":"3","UniqueId":"567699","Action":"RemoteStopTransactionResponse","status":"Accepted"}']);
         $file = time() .rand(). '_file.json';
         $destinationPath=public_path()."/upload/";
         if (!is_dir($destinationPath)) {  mkdir($destinationPath,0777,true);  }
