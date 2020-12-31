@@ -31,6 +31,6 @@ class WebsocketDemoEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('DemoChannel');
+        //return new PrivateChannel('DemoChannel');
     }
 }

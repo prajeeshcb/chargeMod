@@ -57,7 +57,10 @@ Route::get('download_remotestopres', array('as'=> 'file.download', 'uses' => 'Se
 
 
 //Json files end
-
+Route::get('/login', function () {
+//    return view('welcome');
+    return redirect()->route('login');
+});
 
 Auth::routes();
 

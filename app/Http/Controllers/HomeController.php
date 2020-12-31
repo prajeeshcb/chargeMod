@@ -24,8 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $stations = ChargingStation::get();
-        return view('server', compact('stations'));
+        return view('home');
     }
     public function JSONauthreq(){
         $data = json_encode(['{"MessageTypeId":"2","UniqueId":"456378","Action":"Authorize","idTag":"567890"}']);

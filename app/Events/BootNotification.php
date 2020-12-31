@@ -31,7 +31,8 @@ class BootNotification
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('chat');
+        //return new PrivateChannel('chat');
+        return new PrivateChannel('charge_point.'.$this->charge_point->id);
     }
 
     public function broadcastWith() 

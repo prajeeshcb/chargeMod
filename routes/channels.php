@@ -13,11 +13,15 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
+/*Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
-});
+});*/
 
-/*Broadcast::channel('chat', function ($user, $id) {
+/*Broadcast::channel('App.ChargePoint.{id}', function ($chargepoint, $id) {
+    return (int) $chargepoint->id === (int) $id;
+});
+*/
+Broadcast::channel('chat', function ($user, $id) {
     return $user;
 });
 Broadcast::channel('charging', function ($user, $id) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\ChargePoint;
 use App\ChargingActivity;
+use App\ChargingStation;
 use Carbon\Carbon;
 use App\Events\RemoteStartTransaction;
 use App\Events\RemoteStopTransaction;
@@ -13,7 +14,8 @@ use File;
 class ServerController extends Controller
 {
     public function index() {
-    	return view('server');
+    	$stations = ChargingStation::get();
+        return view('server', compact('stations'));
     }
 
     public function ChargePoints($station) {
