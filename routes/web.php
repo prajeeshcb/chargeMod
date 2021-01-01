@@ -74,3 +74,8 @@ Route::post('/remoteStartCharging', 'ServerController@remoteStart');
 Route::post('/remoteStopCharging', 'ServerController@remoteStop');
 
 
+Route::get('/connector','ConnectorTypeController@create');
+Route::post('saveconnector','ConnectorTypeController@store');
+
+
+
