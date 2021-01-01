@@ -73,9 +73,11 @@ Route::get('/server', 'ServerController@index');
 Route::post('/remoteStartCharging', 'ServerController@remoteStart');
 Route::post('/remoteStopCharging', 'ServerController@remoteStop');
 
-
+Route::get('/connectorindex','ConnectorTypeController@index');
 Route::get('/connector','ConnectorTypeController@create');
 Route::post('saveconnector','ConnectorTypeController@store');
-
+Route::get('/connector/edit/{id}','ConnectorTypeController@edit');
+Route::post('/connector/update/{id}','ConnectorTypeController@update');
+Route::get('/connector/delete/{id}','ConnectorTypeController@destroy');
 
 
