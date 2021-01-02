@@ -8,11 +8,14 @@
 @csrf
 <div class="card">
 <table class="table table-bordered">
+ <thead class="thead-dark">
     <tr>
         <th>No</th>
         <th>Types</th>
         <th>Remarks</th>
+        <th colspan="2">Actions</th>
     </tr>
+ </thead>
     @foreach($data as $key => $value)
     <tr>
         <td>{{$value->id}}</td>
@@ -27,7 +30,7 @@
 <div class='row'>
     <div class="col-10"></div>
     <div class="col-2">
-        <a href="/connector">Add New Connector</a>
+        <a href="/addconnector">Add New Connector</a>
     </div>
 </div>
 @endsection

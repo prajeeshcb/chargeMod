@@ -25,10 +25,10 @@ class ConnectorTypeController extends Controller
         $data->Type=$request->Type;
         $data->Remarks=$request->Remarks;
         $data->save();
-        return redirect('/connectorindex');
+        return redirect('/connector');
 
     }
-    public function edit($id)
+    public function show($id)
     {
         $data=ConnectorType::find($id);
         return view('pages/connector/edit',compact('data'));
@@ -41,12 +41,12 @@ class ConnectorTypeController extends Controller
             'Remarks'=>''
         ]);
         ConnectorType::whereId($id)->update($validated_data);
-        return redirect('/connectorindex');
+        return redirect('/connector');
     }
     public function destroy($id)
     {
         $data=ConnectorType::findorFail($id);
         $data->delete();
-        return redirect('/connectorindex');
+        return redirect('/connector');
     }
 }

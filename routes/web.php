@@ -73,11 +73,19 @@ Route::get('/server', 'ServerController@index');
 Route::post('/remoteStartCharging', 'ServerController@remoteStart');
 Route::post('/remoteStopCharging', 'ServerController@remoteStop');
 
-Route::get('/connectorindex','ConnectorTypeController@index');
-Route::get('/connector','ConnectorTypeController@create');
+// dashboard starts
+Route::get('/connector','ConnectorTypeController@index');
+Route::get('/addconnector','ConnectorTypeController@create');
 Route::post('saveconnector','ConnectorTypeController@store');
-Route::get('/connector/edit/{id}','ConnectorTypeController@edit');
+Route::get('/connector/edit/{id}','ConnectorTypeController@show');
 Route::post('/connector/update/{id}','ConnectorTypeController@update');
 Route::get('/connector/delete/{id}','ConnectorTypeController@destroy');
+Route::get('/addCP','ChargePointController@create');
+Route::get('/CP','ChargePointController@index');
+Route::post('saveCP','ChargePointController@store');
+Route::get('/CP/edit/{id}','ChargePointController@show');
+Route::post('/CP/update/{id}','ChargePointController@update');
+Route::get('/CP/delete/{id}','ChargePointController@destroy');
+// dashboard ends
 
 

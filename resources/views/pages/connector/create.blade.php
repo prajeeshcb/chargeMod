@@ -15,7 +15,7 @@
     Connector Type
   </div>
   <div class="col-8">
-    <select name="Type">
+    <select name="Type" style="width:100%">
       <option value="CCS">CCS</option>
       <option value="Chademo">Chademo</option>
       <option value="GB/T">GB/T</option>
@@ -27,7 +27,7 @@
     Remarks
   </div>
   <div class="col-8"> 
-    <textarea name="Remarks"></textarea>
+    <textarea name="Remarks" style="width:100%"></textarea>
   </div>
 </div><br>
 <div class="row">
