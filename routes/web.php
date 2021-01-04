@@ -73,7 +73,7 @@ Route::get('/server', 'ServerController@index');
 Route::post('/remoteStartCharging', 'ServerController@remoteStart');
 Route::post('/remoteStopCharging', 'ServerController@remoteStop');
 
-// dashboard starts
+// db tables starts
 Route::get('/connector','ConnectorTypeController@index');
 Route::get('/addconnector','ConnectorTypeController@create');
 Route::post('saveconnector','ConnectorTypeController@store');
@@ -86,6 +86,12 @@ Route::post('saveCP','ChargePointController@store');
 Route::get('/CP/edit/{id}','ChargePointController@show');
 Route::post('/CP/update/{id}','ChargePointController@update');
 Route::get('/CP/delete/{id}','ChargePointController@destroy');
-// dashboard ends
+Route::get('/reservation','ReservationController@index');
+Route::get('/addreservation','ReservationController@create');
+Route::post('savereservation','ReservationController@store');
+Route::get('/reservation/edit/{id}','ReservationController@show');
+Route::post('/reservation/update/{id}','ReservationController@update');
+Route::get('/reservation/delete/{id}','ReservationController@destroy');
+// db tables ends
 
 

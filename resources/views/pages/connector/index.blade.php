@@ -10,7 +10,7 @@
 <table class="table table-bordered">
  <thead class="thead-dark">
     <tr>
-        <th>No</th>
+        <th>ID</th>
         <th>Types</th>
         <th>Remarks</th>
         <th colspan="2">Actions</th>

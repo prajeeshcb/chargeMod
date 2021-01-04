@@ -2,7 +2,7 @@
 @section('title', 'Connector')
 
 @section('header')
-    <h1 class="page-title">Edit Connector Details</h1>
+    <h1 class="page-title">Edit ChargePoint Details</h1>
 
 @endsection
 @section('content')  

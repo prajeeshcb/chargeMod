@@ -18,6 +18,7 @@ class CreateReservationsTable extends Migration
             $table->string('User_ID');
             $table->integer('CS_ID');
             $table->integer('CP_ID');
+            $table->integer('Connector_ID');
             $table->dateTime('Reserve_Date');
             $table->dateTime('Reserve_Time_From');
             $table->dateTime('Reserve_Time_End');

@@ -15,11 +15,7 @@
     Connector Type
   </div>
   <div class="col-8">
-    <select name="Type" style="width:100%">
-      <option value="CCS">CCS</option>
-      <option value="Chademo">Chademo</option>
-      <option value="GB/T">GB/T</option>
-    </select>
+    <input type="text" name="Type" style="width:100%">
   </div>
 </div><br>
 <div class="row">
