@@ -2,7 +2,7 @@
 @section('title', 'Connector')
 
 @section('header')
-    <h1 class="page-title">List of Connectors</h1>
+    <h1 class="page-title">Connectors</h1>
 @endsection
 @section('content')
 @csrf

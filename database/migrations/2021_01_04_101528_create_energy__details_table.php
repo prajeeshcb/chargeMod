@@ -14,7 +14,7 @@ class CreateEnergyDetailsTable extends Migration
     public function up()
     {
         Schema::create('energy__details', function (Blueprint $table) {
-            $table->ID();
+            $table->id();
             $table->string('Energy_Unit');
             $table->integer('Total_Unit');
             $table->string('Energy_Provider');

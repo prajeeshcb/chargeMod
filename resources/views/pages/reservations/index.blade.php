@@ -1,8 +1,8 @@
 @extends('layouts.app')
-@section('title', 'Connector')
+@section('title', 'Reservations')
 
 @section('header')
-    <h1 class="page-title">List of Reservations</h1>
+    <h1 class="page-title">Reservations</h1>
 @endsection
 @section('content')
 @csrf
@@ -10,22 +10,20 @@
 <table class="table table-bordered">
  <thead class="thead-dark">
     <tr>
-        <th>ID</th>
-        <th>User_ID</th>
-        <th>CS_ID</th>
-        <th>CP_ID</th>
-        <th>Connector_ID</th>
-        <th>Reserve_Date</th>
-        <th>Reserve_Time_From</th>
-        <th>Reserve_Time_End</th>
-        <th>Reservation_ID</th>
-        <th>User_Present_Loc</th>
+        <th>User ID</th>
+        <th>ChargingStation ID</th>
+        <th>ChargingPoint ID</th>
+        <th>Connector ID</th>
+        <th>Reserved Date</th>
+        <th>Reservation Startingtime</th>
+        <th>Reservation Endingtime</th>
+        <th>Reservation ID</th>
+        <th>User Present Location</th>
         <th colspan="2">Actions</th>
     </tr>
  </thead>
     @foreach($data as $key => $value)
     <tr>
-        <td>{{$value->id}}</td>
         <td>{{ $value->User_ID }}</td>
         <td>{{ $value->CS_ID }}</td>
         <td>{{ $value->CP_ID }}</td>

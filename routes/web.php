@@ -92,6 +92,24 @@ Route::post('savereservation','ReservationController@store');
 Route::get('/reservation/edit/{id}','ReservationController@show');
 Route::post('/reservation/update/{id}','ReservationController@update');
 Route::get('/reservation/delete/{id}','ReservationController@destroy');
+Route::get('/transaction','TransactionController@index');
+Route::get('/addtransaction','TransactionController@create');
+Route::post('savetransaction','TransactionController@store');
+Route::get('/transaction/edit/{id}','TransactionController@show');
+Route::post('/transaction/update/{id}','TransactionController@update');
+Route::get('/transaction/delete/{id}','TransactionController@destroy');
+Route::get('/energydetails','EnergyDetailsController@index');
+Route::get('/addenergydetails','EnergyDetailsController@create');
+Route::post('saveenergydetails','EnergyDetailsController@store');
+Route::get('/energydetails/edit/{id}','EnergyDetailsController@show');
+Route::post('/energydetails/update/{id}','EnergyDetailsController@update');
+Route::get('/energydetails/delete/{id}','EnergyDetailsController@destroy');
+Route::get('/user','UserController@index');
+Route::get('/adduser','UserController@create');
+Route::post('saveuser','UserController@store');
+Route::get('/user/edit/{id}','UserController@show');
+Route::post('/user/update/{id}','UserController@update');
+Route::get('/user/delete/{id}','UserController@deactivate');
 // db tables ends
 
 

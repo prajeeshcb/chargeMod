@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMeterValuesTable extends Migration
+class CreateTransactionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,16 @@ class CreateMeterValuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('meter_values', function (Blueprint $table) {
+        Schema::create('transaction', function (Blueprint $table) {
             $table->ID();
             $table->integer('Connector_ID');
             $table->integer('CP_ID');
-            $table->dateTime('Date');
+            $table->integer('CS_ID');
+            $table->string('User_ID');
             $table->string('Reservation_ID');
-            $table->integer('Meter_Values');
+            $table->dateTime('Trans_DateTime');
+            $table->integer('Trans_Meter_Start');
+            $table->integer('Trans_Meter_Stop');
             $table->timestamps();
         });
     }
@@ -31,6 +34,6 @@ class CreateMeterValuesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('meter_values');
+        Schema::dropIfExists('transaction_data');
     }
 }
