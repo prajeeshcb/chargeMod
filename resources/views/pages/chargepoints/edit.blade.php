@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Connector')
+@section('title', 'Chargepoint')
 
 @section('header')
     <h1 class="page-title">Edit ChargePoint Details</h1>

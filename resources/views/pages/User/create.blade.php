@@ -1,84 +1,87 @@
 @extends('layouts.app')
-@section('title', 'Reservations')
+@section('title', 'users')
 
 @section('header')
-    <h1 class="page-title">Edit reservations</h1>
+    <h1 class="page-title">New User</h1>
 
 @endsection
 @section('content')
 @csrf
-<form method="POST" action="/reservation/update/{{ $data->id }}">
+<form method="POST" action="/saveuser">
 <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
 <div class="row">
         <div class="col-2">
-            User ID
+            Type of User
         </div>
         <div class="col-8">
-            <input type="text" name="User_ID" style="width:100%" value="{{ $data->User_ID}}">
+           <select name="User_Type">
+            <option value="1">1(EV User)</option>
+            <option value="2">2(Fleet User)</option>
+           </select>
         </div>
     </div><br>
     <div class="row">
         <div class="col-2">
-            Charging Station ID
+            Name of User
         </div>
         <div class="col-8">
-            <input type="number" name="CS_ID" style="width:100%" value="{{ $data->CS_ID}}">
+            <input type="string" name="User_Name" style="width:100%">
         </div>
     </div><br>
     <div class="row">
         <div class="col-2">
-            Charging Point ID
+          Mobile Number of User
         </div>
         <div class="col-8">
-            <input type="number" name="CP_ID" style="width:100%" value="{{ $data->CP_ID}}">
+            <input type="number" name="User_Mobile" style="width:100%">
         </div>
     </div><br>
     <div class="row">
         <div class="col-2">
-            Connector ID
+            Username for login
         </div>
         <div class="col-8">
-            <input type="number" name="Connector_ID" style="width:100%" value="{{ $data->Connector_ID}}">
+            <input type="text" name="Username" style="width:100%">
         </div>
     </div><br>
     <div class="row">
         <div class="col-2">
-            Reservation Date
+            Password
         </div>
         <div class="col-8">
-            <input type="datetime" name="Reserve_Date" style="width:100%" value="{{$data->Reserve_Date}}">
+            <input type="text" name="User_Password" style="width:100%">
         </div>
     </div><br>
     <div class="row">
         <div class="col-2">
-            Reservation Starting Time
+           Address For Contact
         </div>
         <div class="col-8">
-            <input type="datetime" name="Reserve_Time_From" style="width:100%" value="{{ $data->Reserve_Time_From}}">
+           <textarea name="User_Address"style="width:100%"></textarea>
         </div>
     </div><br>
     <div class="row">
         <div class="col-2">
-            Reservation Ending Time
+            Pincode
         </div>
         <div class="col-8">
-            <input type="datetime" name="Reserve_Time_End" style="width:100%" value="{{ $data->Reserve_Time_End}}">
+            <input type="text" name="User_Pin" style="width:100%">
         </div>
     </div><br>
     <div class="row">
         <div class="col-2">
-            Reservation ID
+            State
         </div>
         <div class="col-8">
-            <input type="text" name="Reservation_ID" style="width:100%" value="{{ $data->Reservation_ID}}">
+            <input type="text" name="User_State" style="width:100%">
         </div>
     </div><br>
     <div class="row">
         <div class="col-2">
-            User Present Location
+        District
         </div>
         <div class="col-8">
-            <input type="number" step="0.01" name="User_Present_Loc" style="width:100%" value="{{ $data->User_Present_Loc}}">
+            <input type="text" name="User_District" style="width:100%">
         </div>
     </div><br>
     <div class="row">

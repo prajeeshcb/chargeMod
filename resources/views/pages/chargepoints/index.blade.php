@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Connector')
+@section('title', 'Chargepoint')
 
 @section('header')
     <h1 class="page-title">Chargepoints</h1>
@@ -11,20 +11,20 @@
 <table class="table table-bordered">
 <thead class="thead-dark">
     <tr>
-        <th>CP_ID</th>
-        <th>CP_Name</th>
-        <th>CP_State</th>
-        <th>CP_District</th>
-        <th>CP_Loc</th>
-        <th>CP_Connector_Type</th>
-        <th>CB_Serial_No</th>
-        <th>CP_Serial_No</th>
-        <th>CP_Firmware_Ver</th>
-        <th>CP_Meter_Serial_No</th>
-        <th>CP_Meter_Type</th>
-        <th>Station_Phone</th>
-        <th>Station_Email</th>
-        <th>CP_Status</th>
+        <th>ChargingPoint ID</th>
+        <th>ChargingPoint Name</th>
+        <th>ChargingPoint State</th>
+        <th>ChargingPoint District</th>
+        <th>ChargingPoint Location</th>
+        <th>ChargingPoint Connector Type</th>
+        <th>ChargeBox Serial No</th>
+        <th>ChargingPoint Serial No</th>
+        <th>ChargingPoint Firmware Version</th>
+        <th>ChargingPoint Meter Serial-No</th>
+        <th>ChargingPoint Meter Type</th>
+        <th>Station Phone</th>
+        <th>Station Email</th>
+        <th>ChargingPoint Status</th>
         <th colspan="2">Actions</th>
     </tr>
     </thead>
