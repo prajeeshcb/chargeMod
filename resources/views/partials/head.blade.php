@@ -50,6 +50,7 @@
 <link rel="stylesheet" href="{{ asset('/assets/fonts/font-awesome/font-awesome.min.css', config('app.asset_secure')) }}">
 <link rel="stylesheet" href="{{ asset('/assets/fonts/brand-icons/brand-icons.min.css', config('app.asset_secure')) }}">
 <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 @show
 
 <!--[if lt IE 9]>
