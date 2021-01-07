@@ -2062,17 +2062,17 @@ __webpack_require__.r(__webpack_exports__);
 
       switch (msg.title) {
         case "BootNotificationResponse":
-          BootNotificationResponse(msg);
-          console.log('booottt');
+          BootNotificationResponse(msg); // console.log('booottt');
+
           break;
 
         case "AuthenticateResponse":
-          console.log('authentication');
+          // console.log('authentication');
           authenticationResponse(msg);
           break;
 
         case "StartTransactionResponse":
-          console.log('StartTransaction');
+          // console.log('StartTransaction');
           StartTransactionResponse(msg);
           flag = 1;
           setInterval(function () {
@@ -2107,7 +2107,7 @@ __webpack_require__.r(__webpack_exports__);
       function BootNotificationResponse(msg) {
         if (msg.payload.status == "Accepted") {
           document.getElementById("auth").disabled = false;
-          document.getElementById("start").disabled = true;
+          document.getElementById("boot").disabled = true;
         } else {
           setInterval(function () {
             return bootNotification();
@@ -2118,7 +2118,7 @@ __webpack_require__.r(__webpack_exports__);
       function authenticationResponse(msg) {
         if (msg.payload.status == "Accepted") {
           alert("Successfully authenticated.You can now start charging");
-          document.getElementById("disable").disabled = false;
+          document.getElementById("start").disabled = false;
           document.getElementById("auth").disabled = true;
         } else {
           alert("Invalid IdTag");
@@ -2126,8 +2126,8 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       function StartTransactionResponse(msg) {
-        document.getElementById("enable").disabled = false;
-        document.getElementById("disable").disabled = true;
+        document.getElementById("stop").disabled = false;
+        document.getElementById("start").disabled = true;
         document.getElementById("userid").value = "1";
         document.getElementById("tagid").value = this.IdTag;
         document.getElementById("status").value = "start";
@@ -2136,7 +2136,10 @@ __webpack_require__.r(__webpack_exports__);
         document.getElementById("battery").value = "zczczc";
       }
 
-      function StopTransactionResponse(msg) {}
+      function StopTransactionResponse(msg) {
+        document.getElementById("start").disabled = false;
+        document.getElementById("stop").disabled = true;
+      }
     };
 
     this.connection.onreadystate = function (event) {
@@ -2194,7 +2197,9 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     startCharging: function startCharging() {
-      alert('kkk');
+      var _this = this;
+
+      // alert('kkk');
       var msgId = Math.floor(100000 + Math.random() * 900000);
       var metadata = {
         msgType: 2,
@@ -2210,6 +2215,13 @@ __webpack_require__.r(__webpack_exports__);
         }
       };
       this.connection.send(JSON.stringify(metadata));
+      this.flag = 1;
+      this.interval1 = setInterval(function () {
+        return _this.heartBeat();
+      }, 6000);
+      this.interval2 = setInterval(function () {
+        return _this.meterValues();
+      }, 10000);
     },
     meterValues: function meterValues() {
       if (this.flag == 1) {
@@ -2275,6 +2287,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       };
       this.connection.send(JSON.stringify(metadata));
+      this.flag = 0;
     }
   }
 });
@@ -44123,7 +44136,7 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-primary",
-              attrs: { id: "start" },
+              attrs: { id: "boot" },
               on: {
                 click: function($event) {
                   return _vm.bootNotification()
@@ -44202,7 +44215,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { id: "disable", disabled: "" },
+                    attrs: { id: "start", disabled: "" },
                     on: { click: _vm.startCharging }
                   },
                   [_vm._v("Start Charging")]
@@ -44212,7 +44225,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-primary",
-                    attrs: { id: "enable", disabled: "" },
+                    attrs: { id: "stop", disabled: "" },
                     on: { click: _vm.stopCharging }
                   },
                   [_vm._v("Stop Charging")]
