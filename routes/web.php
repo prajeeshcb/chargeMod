@@ -110,6 +110,7 @@ Route::post('saveuser','UserController@store');
 Route::get('/user/edit/{id}','UserController@show');
 Route::post('/user/update/{id}','UserController@update');
 Route::get('/user/delete/{id}','UserController@deactivate');
+Route::get('/stations','StationsController@index');
 // db tables ends
 
 
