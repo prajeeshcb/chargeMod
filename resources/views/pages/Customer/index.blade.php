@@ -37,8 +37,8 @@
         <td>{{ $value->User_State}}</td>
         <td>{{ $value->User_District}}</td>
         <td>{{ $value->Status}}</td>
-        <td><a href="/user/edit/{{ $value->User_ID}}">Edit</a></td>
-        <td><a href="/user/delete/{{ $value->User_ID}}">Deactivate</a></td>
+        <td><a href="/customer/edit/{{ $value->User_ID}}">Edit</a></td>
+        <td><a href="/customer/delete/{{ $value->User_ID}}">Deactivate</a></td>
     </tr>
     @endforeach
 </table>
@@ -46,7 +46,7 @@
 <div class='row'>
     <div class="col-10"></div>
     <div class="col-2">
-        <a href="/adduser">Add New User</a>
+        <a href="/addcustomer">Add New User</a>
     </div>
 </div>
 @endsection

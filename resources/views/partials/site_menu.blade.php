@@ -46,7 +46,7 @@
     </a>
   </li>
   <li class="site-menu-item" data-prefix="">
-  	<a class="animsition-link" href="{{ url('/user') }}">
+  	<a class="animsition-link" href="{{ url('/customer') }}">
         <i class="fa fa-users" aria-hidden="true"></i>
          <span class="site-menu-title" style="margin-left: 10px;">
          	Users

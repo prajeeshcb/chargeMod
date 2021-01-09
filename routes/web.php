@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Events\WebsocketDemoEvent;
+use App\Http\Controllers\CustomerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -104,12 +105,12 @@ Route::post('saveenergydetails','EnergyDetailsController@store');
 Route::get('/energydetails/edit/{id}','EnergyDetailsController@show');
 Route::post('/energydetails/update/{id}','EnergyDetailsController@update');
 Route::get('/energydetails/delete/{id}','EnergyDetailsController@destroy');
-Route::get('/user','UserController@index');
-Route::get('/adduser','UserController@create');
-Route::post('saveuser','UserController@store');
-Route::get('/user/edit/{id}','UserController@show');
-Route::post('/user/update/{id}','UserController@update');
-Route::get('/user/delete/{id}','UserController@deactivate');
+Route::get('/customer','CustomerController@index');
+Route::get('/addcustomer','CustomerController@create');
+Route::post('savecustomer','CustomerController@store');
+Route::get('/customer/edit/{id}','CustomerController@show');
+Route::post('/customer/update/{id}','CustomerController@update');
+Route::get('/customer/delete/{id}','CustomerController@deactivate');
 Route::get('/stations','StationsController@index');
 // db tables ends
 
