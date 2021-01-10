@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <button v-on:click="bootNotification()" class="btn btn-primary" id="start" >Boot</button> 
+                <button v-on:click="bootNotification()" class="btn btn-primary" id="boot" >Boot</button> 
             </div>
         </div>
     </div>
@@ -21,8 +21,8 @@
                             <button type="submit" v-on:click="Authenticate()" class="btn btn-primary" id="auth" disabled>Authenticate</button>
                         </div>
                         <div class="col-3">
-                           <button v-on:click="startCharging" class="btn btn-primary" id="disable"  disabled>Start Charging</button> 
-                           <button v-on:click="stopCharging" class="btn btn-primary" id="enable" disabled >Stop Charging</button>
+                           <button v-on:click="startCharging" class="btn btn-primary" id="start"  disabled>Start Charging</button> 
+                           <button v-on:click="stopCharging" class="btn btn-primary" id="stop" disabled >Stop Charging</button>
                         </div>
                         
                     </div>
@@ -157,16 +157,16 @@
       switch (msg.title) {
           case "BootNotificationResponse":
               BootNotificationResponse(msg);
-              console.log('booottt');
+              // console.log('booottt');
               break;
 
           case "AuthenticateResponse":
-              console.log('authentication');
+              // console.log('authentication');
               authenticationResponse(msg);
               break;
 
            case "StartTransactionResponse":
-              console.log('StartTransaction');
+              // console.log('StartTransaction');
               StartTransactionResponse(msg);
               flag = 1;
               setInterval(() => heartBeat(), 6000);
@@ -184,7 +184,7 @@
               break;
 
             case "StopTransactionResponse":
-              console.log('StopTransaction');
+               console.log('StopTransaction');
               StopTransactionResponse(msg);
               flag = 0;
               break;
@@ -198,7 +198,7 @@
             if(msg.payload.status=="Accepted")
             {
               document.getElementById("auth").disabled = false;
-              document.getElementById("start").disabled=true;
+              document.getElementById("boot").disabled=true;
             }
             else {
               setInterval(() => bootNotification(), 6000);
@@ -210,7 +210,7 @@
             if(msg.payload.status=="Accepted")
             {
               alert("Successfully authenticated.You can now start charging");
-              document.getElementById("disable").disabled=false;
+              document.getElementById("start").disabled=false;
               document.getElementById("auth").disabled=true;
             }
             else {
@@ -220,8 +220,8 @@
 
         function StartTransactionResponse(msg) {
 
-          document.getElementById("enable").disabled = false;
-          document.getElementById("disable").disabled = true;
+          document.getElementById("stop").disabled = false;
+          document.getElementById("start").disabled = true;
           document.getElementById("userid").value= "1";
           document.getElementById("tagid").value= this.IdTag;
           document.getElementById("status").value= "start";
@@ -231,7 +231,8 @@
         }
 
         function StopTransactionResponse(msg) {
-
+          document.getElementById("start").disabled=false;
+          document.getElementById("stop").disabled=true;
         }
 
     }
@@ -297,7 +298,7 @@
         }
     },
     startCharging() {
-      alert('kkk');
+      // alert('kkk');
         var msgId = Math.floor(100000 + Math.random() * 900000);
         var metadata = {
                           msgType: 2,
@@ -313,6 +314,9 @@
                           }
                         };
         this.connection.send(JSON.stringify(metadata));    
+        this.flag = 1;
+        this.interval1 = setInterval(() => this.heartBeat(), 6000);
+        this.interval2 = setInterval(() => this.meterValues(), 10000);
     },
     meterValues() {
       if(this.flag == 1) {
@@ -378,6 +382,7 @@
                         }
                       };
       this.connection.send(JSON.stringify(metadata));
+      this.flag = 0;
     }
 
   }

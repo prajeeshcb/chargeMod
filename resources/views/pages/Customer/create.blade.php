@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'users')
+@section('title', 'user')
 
 @section('header')
     <h1 class="page-title">New User</h1>
@@ -7,7 +7,7 @@
 @endsection
 @section('content')
 @csrf
-<form method="POST" action="/saveuser">
+<form method="POST" action="/savecustomer">
 <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
 <div class="row">
         <div class="col-2">
@@ -92,4 +92,5 @@
   </div>
 </form>
 @endsection
+
 

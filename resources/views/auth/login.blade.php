@@ -35,5 +35,5 @@
         </div>
         <button type="submit" class="btn btn-primary btn-block btn-lg mt-40">Sign in</button>
     </form>
-{{--    <p>Still no account? Please go to <a href="{{ route('register') }}">Sign up</a></p>--}}
+ <p>Still no account? Please go to <a href="{{ route('register') }}">Sign up</a></p>
 @endsection

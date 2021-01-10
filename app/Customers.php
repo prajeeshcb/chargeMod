@@ -6,8 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-class User extends Authenticatable
+class Customers extends Authenticatable
 {
     use Notifiable;
     // use SoftDeletes;
@@ -16,7 +15,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $table='Users';
+    protected $table='customers';
     protected $primaryKey='User_ID';
     protected $fillable = ['User_Type','User_Name','User_Mobile','Username','User_Password','User_Address','User_Pin','User_State','User_District','Status'];
     // protected $dates = ['deleted_at'];

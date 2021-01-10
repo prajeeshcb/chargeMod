@@ -7,7 +7,7 @@
 @endsection
 @section('content')
 @csrf
-<form method="POST" action="/user/update/{{ $data->User_ID}}">
+<form method="POST" action="/customer/update/{{ $data->User_ID}}">
 <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
 <div class="row">
         <div class="col-2">
