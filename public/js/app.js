@@ -2062,8 +2062,8 @@ __webpack_require__.r(__webpack_exports__);
 
       switch (msg.title) {
         case "BootNotificationResponse":
-          BootNotificationResponse(msg); // console.log('booottt');
-
+          BootNotificationResponse(msg);
+          console.log('booottt');
           break;
 
         case "AuthenticateResponse":

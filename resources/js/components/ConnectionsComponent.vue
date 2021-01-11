@@ -157,7 +157,7 @@
       switch (msg.title) {
           case "BootNotificationResponse":
               BootNotificationResponse(msg);
-              // console.log('booottt');
+              console.log('booottt');
               break;
 
           case "AuthenticateResponse":
