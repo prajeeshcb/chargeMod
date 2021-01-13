@@ -10,7 +10,8 @@
 <div class="panel">
     <div class="panel-body">
         <form method="POST" action="{{ url('/saveCP') }}">
-            <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
+            <!-- <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>"> -->
+            @csrf
             <div class="row form-group">
                 <div class="col-2">
                     <label class="col-form-label">ChargePoint Name</label>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\ConnectorType;
 class ConnectorTypeController extends Controller
 {
+    
     public function index()
     {
         $data=ConnectorType::all();

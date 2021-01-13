@@ -70,5 +70,6 @@
          	Settings
          </span>         
          <span class="site-menu-arrow"></span>
+    </a>
   </li>
 </ul>

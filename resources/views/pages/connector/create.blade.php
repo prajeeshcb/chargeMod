@@ -10,8 +10,9 @@
 @csrf
 <div class="panel">
   <div class="panel-body">
-    <form method="POST" action="{{ url('/saveconnector')}}">
-      <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
+    <form method="POST" action="{{URL::to('/saveconnector')}}" role="form" enctype="multipart/form-data" >
+      <!-- <input type = "hidden" name = "_token" value = "{{ csrf_token()}}"> -->
+      @csrf
       <div class="row form-group">
         <div class="col-2">
           <label class="col-form-label">Connector Type</label>
