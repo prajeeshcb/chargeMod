@@ -1,11 +1,11 @@
 <?php
 
 namespace App;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-class Customers 
+use Illuminate\Database\Eloquent\Model;
+class Customers extends Model
 {
-    use Notifiable;
+    
     // use SoftDeletes;
     /**
      * The attributes that are mass assignable.
