@@ -37,11 +37,8 @@
     </a>
   </li>
   <li class="site-menu-item" data-prefix="">
-<<<<<<< HEAD
   	<a class="animsition-link" href="{{ url('/transaction') }}">
-=======
   	<a class="animsition-link" href="">
->>>>>>> c4bf6065208f7b9b10273ceef7e693552326af80
         <i class="fa fa-list" aria-hidden="true"></i>
          <span class="site-menu-title" style="margin-left: 10px;">
          	Charging Activity
@@ -74,5 +71,6 @@
          	Settings
          </span>         
          <span class="site-menu-arrow"></span>
+         </a>
   </li>
 </ul>
