@@ -52,7 +52,7 @@
                             <td>{{$value->CP_Meter_Type}}</td>
                             <td>{{$value->Station_Phone}}</td>
                             <td>{{$value->Station_Email}}</td>
-                            <td>{{$value->CP_Status}}</td>
+                            <!-- <td>{{$value->CP_Status}}</td> -->
                             <td><a href="/CP/edit/{{ $value->CP_ID }}">Edit</a></td>
                             <td><a href="/CP/delete/{{ $value->CP_ID }}">Delete</a></td>
                         </tr>

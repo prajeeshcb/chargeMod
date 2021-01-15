@@ -29,6 +29,7 @@ class CustomerController extends Controller
             'User_District'=>'required',
         ]);
         $data=new Customers();
+        $data->User_ID=$this->getUserID();
         $data->User_Type=$request->User_Type;
         $data->User_Name=$request->User_Name;
         $data->User_Mobile=$request->User_Mobile;
@@ -42,30 +43,48 @@ class CustomerController extends Controller
         $data->save();
         return redirect('/customer');
     }
-    // public function show($id)
-    // {
-    //     $data=Customers::where('User_ID',$id)->first();
-    //     return view('pages/Customer/edit',compact('data'));
-    // }
-    // public function update(Request $request,$id)
-    // {
-    //     $validated_data=$this->validate($request,[
-    //         'User_Type'=>'',
-    //         'User_Name'=>'',
-    //         'User_Mobile'=>'',
-    //         'Username'=>'',
-    //         'User_Password'=>'',
-    //         'User_Address'=>'',
-    //         'User_Pin'=>'',
-    //         'User_State'=>'',
-    //         'User_District'=>'',
-    //     ]);
-    //     Customers::where('User_ID',$id)->update($validated_data);
-    //     return redirect('/customer');
-    // }
-    // public function deactivate($id)
-    // {
-    //     Customers::where('User_ID', $id)->update(array('Status' => 'Deactive'));
-    //     return redirect('/customer');
-    // }
+    public function getUserID(){
+        do{
+            $rand = $this->generateRandomString(6);
+         }while(!empty(Customers::where('User_ID',$rand)->first()));
+          return $rand;
+       }
+
+
+
+   public function generateRandomString($length) {
+       $characters = '0123456789';
+       $charactersLength = strlen($characters);
+       $randomString = '';
+       for ($i = 0; $i < $length; $i++) {
+           $randomString .= $characters[rand(0, $charactersLength - 1)];
+       }
+       return $randomString;
+    }
+    public function show($id)
+    {
+        $data=Customers::where('User_ID',$id)->first();
+        return view('pages/Customer/edit',compact('data'));
+    }
+    public function update(Request $request,$id)
+    {
+        $validated_data=$this->validate($request,[
+            'User_Type'=>'',
+            'User_Name'=>'',
+            'User_Mobile'=>'',
+            'Username'=>'',
+            'User_Password'=>'',
+            'User_Address'=>'',
+            'User_Pin'=>'',
+            'User_State'=>'',
+            'User_District'=>'',
+        ]);
+        Customers::where('User_ID',$id)->update($validated_data);
+        return redirect('/customer');
+    }
+    public function deactivate($id)
+    {
+        Customers::where('User_ID', $id)->update(array('Status' => 'Deactive'));
+        return redirect('/customer');
+    }
 }

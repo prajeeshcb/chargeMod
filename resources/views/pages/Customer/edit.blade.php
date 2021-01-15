@@ -7,6 +7,30 @@
 @endsection
 @section('content')
 @csrf
+<div class="col-lg-10">
+    <div role="alert" class="alert alert-success alert-dismissible">
+        <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+        <strong>Success! </strong>{{ Session::get('message') }}
+    </div>
+</div>
+<div class="clearfix"></div>
+@endif
+<!-- Main content -->
+          
+@if($errors->any())
+    <div class="col-xs-12">  
+        <div role="alert" class="alert alert-danger alert-dismissible" style="margin-top: 25px;">
+            <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+            <strong>Whoops!</strong> There were some problems with your input.
+            <br/>
+            <ul>
+                @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+@endif
 <form method="POST" action="/customer/update/{{ $data->User_ID}}">
 <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
 <div class="row">

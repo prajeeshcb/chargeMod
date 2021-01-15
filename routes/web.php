@@ -115,6 +115,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
-// db tables ends
+
 
 

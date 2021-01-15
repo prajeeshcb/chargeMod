@@ -30,8 +30,7 @@ class ChargePointController extends Controller
             'CP_Meter_Serial_No'=>'required',
             'CP_Meter_Type'=>'required',
             'Station_Phone'=>'required',
-            'Station_Email'=>'required',
-            'CP_Status'=>'required'
+            'Station_Email'=>'required' 
         ]);
         $data=new ChargePoint();
         $data->CP_Name=$request->CP_Name;
@@ -46,7 +45,7 @@ class ChargePointController extends Controller
         $data->CP_Meter_Type=$request->CP_Meter_Type;
         $data->Station_Phone=$request->Station_Phone;
         $data->Station_Email=$request->Station_Email;
-        $data->CP_Status=$request->CP_Status;
+        $data->CP_Status="0";
         $data->save();
         return redirect('/CP');
     }
