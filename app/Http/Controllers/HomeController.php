@@ -56,8 +56,7 @@ class HomeController extends Controller
     }*/
     public function test(Request $request)
     {
-        $test=$request->Type;
-        console.log($test);
+        console.log("HIIIIIIIII");
     }
 }
 

@@ -108,14 +108,6 @@
                 </div>
             </div>
             <div class="row form-group">
-                <div class="col-3">
-                    <label class="col-form-label">ChargePoint Status</label>
-                </div>
-                <div class="col-8">
-                    <input type="number" name="CP_Status" class="form-control" style="width:100%" value="{{$data->CP_Status}}">
-                </div>
-            </div>
-            <div class="row form-group">
                 <div class="col-3"></div>
                 <div class="col-8">
                     <input type="submit" name="submit" class="btn btn-primary" value="Update">
