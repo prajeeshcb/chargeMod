@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\ChargePoint;
 class ChargePointController extends Controller
 {
+    
     public function index()
     {
         $data=ChargePoint::all();

@@ -70,6 +70,6 @@
          	Settings
          </span>         
          <span class="site-menu-arrow"></span>
-         </a>
+    </a>
   </li>
 </ul>

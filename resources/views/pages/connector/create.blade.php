@@ -8,10 +8,36 @@
 @endsection
 @section('content')
 @csrf
+@if(session()->has('message'))
+<div class="col-lg-10">
+    <div role="alert" class="alert alert-success alert-dismissible">
+        <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+        <strong>Success! </strong>{{ Session::get('message') }}
+    </div>
+</div>
+<div class="clearfix"></div>
+@endif
+<!-- Main content -->
+          
+@if($errors->any())
+    <div class="col-xs-12">  
+        <div role="alert" class="alert alert-danger alert-dismissible" style="margin-top: 25px;">
+            <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
+            <strong>Whoops!</strong> There were some problems with your input.
+            <br/>
+            <ul>
+                @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+@endif
 <div class="panel">
   <div class="panel-body">
-    <form method="POST" action="{{ url('/saveconnector')}}">
-      <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
+    <form method="POST" action="{{URL::to('/saveconnector')}}" role="form" enctype="multipart/form-data" >
+      <!-- <input type = "hidden" name = "_token" value = "{{ csrf_token()}}"> -->
+      @csrf
       <div class="row form-group">
         <div class="col-2">
           <label class="col-form-label">Connector Type</label>

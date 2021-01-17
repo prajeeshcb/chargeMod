@@ -1,13 +1,11 @@
 <?php
 
 namespace App;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
-
 class Customers extends Model
 {
-    use Notifiable;
+    
     // use SoftDeletes;
 
     //   @var array
