@@ -129,7 +129,6 @@
 </template>
 
 <script>
-
  export default {
 
   name: 'App',
@@ -195,6 +194,7 @@
         }
 
         function BootNotificationResponse(msg) {
+          
             if(msg.payload.status=="Accepted")
             {
               document.getElementById("auth").disabled = false;

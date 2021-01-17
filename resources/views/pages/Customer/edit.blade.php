@@ -14,10 +14,12 @@
             Type of User
         </div>
         <div class="col-8">
-           <select name="User_Type">
+           <!-- <select name="User_Type">
             <option value="1" {{ $data->User_Type == 1 ? 'selected' : '' }}>1(EV User)</option>
             <option value="2" {{ $data->User_Type == 2 ? 'selected' : '' }}>2(Fleet User)</option>
-           </select>
+           </select> -->
+           <input type=radio name="User_Type" value="1" {{ $data->User_Type == '1' ? 'checked' : ''}}>1(EV User)
+           <input type=radio name="User_Type" value="2" {{ $data->User_Type == '2' ? 'checked' : ''}}>2(Fleet User)
         </div>
     </div><br>
     <div class="row">
@@ -33,7 +35,7 @@
           Mobile Number of User
         </div>
         <div class="col-8">
-            <input type="number" name="User_Mobile" style="width:100%" value="{{ $data->User_Mobile}}">
+            <input type="tel" name="User_Mobile" pattern="[0-9]{3} [0-9]{3} [0-9]{4}" style="width:100%" value="{{ $data->User_Mobile}}">
         </div>
     </div><br>
     <div class="row">

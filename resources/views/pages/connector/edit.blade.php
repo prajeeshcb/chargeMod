@@ -16,7 +16,11 @@
           <label class="col-form-label">Connector Type</label>
         </div>
         <div class="col-8">
-          <input type="text" name="Type" class="form-control" value="{{$data->Type}}">
+          <select name="Type">
+            <option value="CSS" {{$data->Type == "CSS" ? 'selected': ''}}>CSS</option>
+            <option value="Chademo" {{$data->Type == "Chademo" ? 'selected': ''}}>Chademo</option>
+            <option value="GB/T"{{$data->Type == "GB/T" ? 'selected': ''}}>GB/T</option>
+           </select>
         </div>
       </div>
       <div class="row form-group">

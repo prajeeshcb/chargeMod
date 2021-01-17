@@ -112,7 +112,7 @@ Route::get('/customer/edit/{id}','CustomerController@show');
 Route::post('/customer/update/{id}','CustomerController@update');
 Route::get('/customer/delete/{id}','CustomerController@deactivate');
 Route::get('/stations','StationsController@index');
-Route::post('test','HomeController@test');
+Route::get('/messages','StationMessageController@index');
 // db tables ends
 
 

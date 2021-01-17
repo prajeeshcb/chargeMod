@@ -55,7 +55,7 @@
     </a>
   </li>
   <li class="site-menu-item" data-prefix="">
-  	<a class="animsition-link" href="">
+  	<a class="animsition-link" href="{{ url('/messages') }}">
         <i class="fa fa-users" aria-hidden="true"></i>
          <span class="site-menu-title" style="margin-left: 10px;">
          	Station Device Messages

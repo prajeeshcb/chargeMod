@@ -3,8 +3,8 @@
     "UniqueId": "746832",
     "title": "BootNotificationResponse",
     "payload": {
-        "status": "Rejected",
-        "currenTime": "2020-12-12T02:58:57.8892785Z",
+        "status": "Accepted",
+        "currenTime": "2021-01-16T09:54:51.419Z",
         "interval": "2"
     }
 }

@@ -25,7 +25,7 @@ class CreateChargePointsTable extends Migration
             $table->string('CP_Firmware_Ver');
             $table->string('CP_Meter_Serial_No');
             $table->string('CP_Meter_Type');
-            $table->integer('Station_Phone');
+            $table->string('Station_Phone');
             $table->string('Station_Email');
             $table->integer('CP_Status');
             $table->timestamps();

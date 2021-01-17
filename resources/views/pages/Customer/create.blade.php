@@ -14,10 +14,8 @@
             Type of User
         </div>
         <div class="col-8">
-           <select name="User_Type">
-            <option value="1">1(EV User)</option>
-            <option value="2">2(Fleet User)</option>
-           </select>
+           <input  type="radio" name="User_Type" value="1">1(EV User)
+           <input  type="radio" name="User_Type" value="2">2(Fleet User)
         </div>
     </div><br>
     <div class="row">
@@ -33,7 +31,7 @@
           Mobile Number of User
         </div>
         <div class="col-8">
-            <input type="number" name="User_Mobile" style="width:100%">
+            <input type="tel" name="User_Mobile" placeholder="888 888 8888" pattern="[0-9]{3} [0-9]{3} [0-9]{4}"  style="width:100%">
         </div>
     </div><br>
     <div class="row">

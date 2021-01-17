@@ -17,7 +17,11 @@
           <label class="col-form-label">Connector Type</label>
         </div>
         <div class="col-8">
-          <input type="text" name="Type" class="form-control" style="width:100%">
+          <select name="Type" style="width:100%">
+            <option value="CSS">CSS</option>
+            <option value="Chademo">Chademo</option>
+            <option value="GB/T">GB/T</option>
+          </select> 
         </div>
       </div>
       <div class="row form-group">

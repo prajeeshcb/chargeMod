@@ -1,0 +1,20 @@
+{
+    "MessageTypeId": "2",
+    "UniqueId": "342337",
+    "title": "MeterValues",
+    "data": {
+        "connectorId": "0",
+        "transactionId": "32434",
+        "meterValue": {
+            "timeStamp": "2021-01-16T09:50:59.053Z",
+            "sampledValue": {
+                "context": "other",
+                "format": "signedData",
+                "measurand": "Power offered",
+                "phase": "LI",
+                "location": "EV",
+                "unit": "Kwh"
+            }
+        }
+    }
+}

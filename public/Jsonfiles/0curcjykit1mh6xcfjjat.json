@@ -1,0 +1,10 @@
+{
+    "MessageTypeId": "2",
+    "UniqueId": "678534",
+    "title": "StartTransaction",
+    "connectorId": "1",
+    "idTag": "170443",
+    "meterStart": "2222",
+    "reservationId": "32434",
+    "timestamp": "2021-01-16T09:50:59.053Z"
+}

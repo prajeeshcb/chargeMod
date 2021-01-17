@@ -96,7 +96,7 @@
                     <label class="col-form-label">Station Phone Number</label>
                 </div>
                 <div class="col-8">
-                    <input type="number" name="Station_Phone" class="form-control" style="width:100%">
+                    <input type="tel" name="Station_Phone" placeholder="888 888 8888" pattern="[0-9]{3} [0-9]{3} [0-9]{4}" class="form-control" style="width:100%">
                 </div>
             </div>
             <div class="row form-group">
@@ -104,7 +104,7 @@
                     <label class="col-form-label">Station Email</label>
                 </div>
                 <div class="col-8">
-                    <input type="text" name="Station_Email" class="form-control" style="width:100%">
+                    <input type="email" name="Station_Email" class="form-control" style="width:100%">
                 </div>
             </div>
             <div class="row form-group">

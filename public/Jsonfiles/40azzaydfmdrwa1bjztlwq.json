@@ -1,0 +1,21 @@
+{
+    "MessageTypeId": "2",
+    "UniqueId": "754557",
+    "title": "StopTransaction",
+    "idTag": "170443",
+    "meterStop": "103",
+    "timeStamp": "2021-01-16T09:50:59.053Z",
+    "transactionId": "23345",
+    "reason": "UnlockConnectorEVSide",
+    "transactionData": {
+        "sampledValue": {
+            "value": "wsdf",
+            "context": "other",
+            "format": "SignedData",
+            "measurand": "Power.Offered",
+            "phase": "L1",
+            "location": "EV",
+            "unit": "kWh"
+        }
+    }
+}

@@ -54,9 +54,6 @@ class HomeController extends Controller
     {
         return view('chats');
     }*/
-    public function test(Request $request)
-    {
-        console.log("HIIIIIIIII");
-    }
+  
 }
 
