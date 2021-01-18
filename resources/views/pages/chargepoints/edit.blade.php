@@ -73,7 +73,12 @@
                     <label class="col-form-label">ChargePoint Connector Type</label>
                 </div>
                 <div class="col-8">
-                    <input type="number" name="CP_Connector_Type" class="form-control" style="width:100%" value="{{$data->CP_Connector_Type}}">
+                    <select name="CP_Connector_Type">
+                        @foreach($connector as $con)
+                        <option value="{{$con['id'] }}" {{ $con['id'] == $data->CP_Connector_Type ? 'selected' : '' }}>
+                        {{$con['Type'] }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="row form-group">

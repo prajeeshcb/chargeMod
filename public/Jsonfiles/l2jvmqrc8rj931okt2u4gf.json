@@ -1,0 +1,10 @@
+{
+    "MessageTypeId": "3",
+    "UniqueId": "746832",
+    "title": "BootNotificationResponse",
+    "payload": {
+        "status": "Accepted",
+        "currenTime": "2020-12-12T02:58:57.8892785Z",
+        "interval": "2"
+    }
+}
