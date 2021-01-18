@@ -128,7 +128,7 @@
                     <label class="col-form-label">Station Phone Number</label>
                 </div>
                 <div class="col-8">
-                    <input type="tel" name="Station_Phone" placeholder="888 888 8888" pattern="[0-9]{3} [0-9]{3} [0-9]{4}" class="form-control" style="width:100%">
+                    <input type="tel" name="Station_Phone" placeholder="888 888 8888" pattern="[6-9]{1}[0-9]{9}"  class="form-control" style="width:100%">
                 </div>
             </div>
             <div class="row form-group">

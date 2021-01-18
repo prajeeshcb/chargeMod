@@ -126,7 +126,7 @@
                     <label class="col-form-label">Station Phone Number</label>
                 </div>
                 <div class="col-8">
-                    <input type="tell" name="Station_Phone" pattern="[0-9]{3} [0-9]{3} [0-9]{4}" class="form-control" style="width:100%" value="{{$data->Station_Phone}}">
+                    <input type="tell" name="Station_Phone" pattern="[6-9]{1}[0-9]{9}" class="form-control" style="width:100%" value="{{$data->Station_Phone}}">
                 </div>
             </div>
             <div class="row form-group">
