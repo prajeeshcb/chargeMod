@@ -72,7 +72,7 @@
             Password
         </div>
         <div class="col-8">
-            <input type="text" name="User_Password" style="width:100%">
+            <input type="password" name="User_Password" style="width:100%">
         </div>
     </div><br>
     <div class="row">
