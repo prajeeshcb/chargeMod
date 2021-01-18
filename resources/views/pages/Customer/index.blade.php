@@ -46,8 +46,8 @@
                         <td>{{ $value->User_State}}</td>
                         <td>{{ $value->User_District}}</td>
                         <td>{{ $value->Status}}</td>
-                        <td><a href="/customer/edit/{{ $value->User_ID}}">Edit</a></td>
-                        <td><a href="/customer/delete/{{ $value->User_ID}}">Deactivate</a></td>
+                        <td><a href="/customer/edit/{{ $value->User_ID}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                        <td><a href="/customer/delete/{{ $value->User_ID}}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                     </tr>
                     @endforeach
                 </table>

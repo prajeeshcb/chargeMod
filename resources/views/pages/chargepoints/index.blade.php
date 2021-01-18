@@ -53,8 +53,8 @@
                             <td>{{$value->Station_Phone}}</td>
                             <td>{{$value->Station_Email}}</td>
                             <!-- <td>{{$value->CP_Status}}</td> -->
-                            <td><a href="/CP/edit/{{ $value->CP_ID }}">Edit</a></td>
-                            <td><a href="/CP/delete/{{ $value->CP_ID }}">Delete</a></td>
+                            <td><a href="/CP/edit/{{ $value->CP_ID }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                            <td><a href="/CP/delete/{{ $value->CP_ID }}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                         </tr>
                         @endforeach
                     </tbody>

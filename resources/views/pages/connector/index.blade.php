@@ -25,15 +25,18 @@
                         <th colspan="2">Actions</th>
                     </tr>
                  </thead>
+                 <tbody>
                     @foreach($data as $key => $value)
                     <tr>
                         <td>{{$value->id}}</td>
                         <td>{{ $value->Type }}</td>
                         <td>{{ $value->Remarks }}</td>
-                        <td><a href="/connector/edit/{{ $value->id }}">Edit</a></td>
-                        <td><a href="/connector/delete/{{ $value->id }}">Delete</a></td>
+                        <td><a href="/connector/edit/{{ $value->id }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                        <td><a href="/connector/delete/{{ $value->id }}"><i class="fa fa-trash" aria-hidden="true"></i>
+</a></td>
                     </tr>
                     @endforeach
+                </tbody>
                 </table>
             </div>
         </div>
