@@ -22,11 +22,16 @@ class ConnectorTypeController extends Controller
             'Type'=>'required',
             'Remarks'=>'required'
         ]);
-        $data=new ConnectorType();
-        $data->Type=$request->Type;
-        $data->Remarks=$request->Remarks;
-        $data->save();
-        return redirect('/connector');
+        if(ConnectorType::where('Type', $request->Type)->exists()){
+            return redirect('/addconnector')->with('error','already exists');
+        }
+        else{
+                $data=new ConnectorType();
+                $data->Type=$request->Type;
+                $data->Remarks=$request->Remarks;
+                $data->save();
+                return redirect('/connector')->with('success','Added Successfully');
+            }
 
     }
     public function show($id)
@@ -41,13 +46,14 @@ class ConnectorTypeController extends Controller
             'Type'=>'',
             'Remarks'=>''
         ]);
+        
         ConnectorType::whereId($id)->update($validated_data);
-        return redirect('/connector');
+        return redirect('/connector')->with('success','Updated Successfully');
     }
     public function destroy($id)
     {
         $data=ConnectorType::findorFail($id);
         $data->delete();
-        return redirect('/connector');
+        return redirect('/connector')->with('success','Deleted Successfully');;
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ChargePoint;
-use App\ConnectorType;
 class ChargePointController extends Controller
 {
     
@@ -49,7 +48,7 @@ class ChargePointController extends Controller
         $data->Station_Email=$request->Station_Email;
         $data->CP_Status="0";
         $data->save();
-        return redirect('/CP');
+        return redirect('/CP')->with('success','Added Successfully');;
     }
     public function show($id)
     {
@@ -76,12 +75,17 @@ class ChargePointController extends Controller
             'CP_Status'=>''
         ]);
       ChargePoint::where('CP_ID',$id)->update($validated_data);
-      return redirect('/CP');
+      return redirect('/CP')->with('success','Updated Successfully');;
     }
     public function destroy($id)
     {
         $data=ChargePoint::where('CP_ID',$id)->first();
         $data->delete();
-        return redirect('/CP');
+        return redirect('/CP')->with('success','Deleted Successfully');;
+    }
+    public function details($id)
+    {
+        $data=ChargePoint::where('CP_ID',$id)->first();
+        return view('pages/chargepoints/details',compact('data'));
     }
 }

@@ -41,7 +41,7 @@ class CustomerController extends Controller
         $data->User_District=$request->User_District;
         $data->Status="Active";
         $data->save();
-        return redirect('/customer');
+        return redirect('/customer')->with('success','Added Successfully');;
     }
     public function getUserID(){
         do{
@@ -80,11 +80,11 @@ class CustomerController extends Controller
             'User_District'=>'',
         ]);
         Customers::where('User_ID',$id)->update($validated_data);
-        return redirect('/customer');
+        return redirect('/customer')->with('success','Updated Successfully');;
     }
     public function deactivate($id)
     {
         Customers::where('User_ID', $id)->update(array('Status' => 'Deactive'));
-        return redirect('/customer');
+        return redirect('/customer')->with('success','Deactivated Successfully');;
     }
 }

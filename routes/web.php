@@ -87,6 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/CP/edit/{id}','ChargePointController@show');
 	Route::post('/CP/update/{id}','ChargePointController@update');
 	Route::get('/CP/delete/{id}','ChargePointController@destroy');
+	Route::get('/CP/details/{id}','ChargePointController@details');
 	Route::get('/reservation','ReservationController@index');
 	Route::get('/addreservation','ReservationController@create');
 	Route::post('savereservation','ReservationController@store');
@@ -112,7 +113,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::post('/customer/update/{id}','CustomerController@update');
 	Route::get('/customer/delete/{id}','CustomerController@deactivate');
 	Route::get('/stations','StationsController@index');
-
+	
 });
 
 
@@ -137,6 +138,7 @@ Route::post('saveCP','ChargePointController@store');
 Route::get('/CP/edit/{id}','ChargePointController@show');
 Route::post('/CP/update/{id}','ChargePointController@update');
 Route::get('/CP/delete/{id}','ChargePointController@destroy');
+Route::get('/CP/details/{id}','ChargePointController@details');
 Route::get('/reservation','ReservationController@index');
 Route::get('/addreservation','ReservationController@create');
 Route::post('savereservation','ReservationController@store');

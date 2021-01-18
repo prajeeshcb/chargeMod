@@ -19,12 +19,11 @@
                 <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                  <thead class="thead-dark">
                     <tr>
+                        <th>Sl No</th>
                         <th>User ID</th>
-                        <th>User Type</th>
                         <th>Name of User</th>
                         <th>Mobile No</th>
                         <th>Username</th>
-                        <th>Password</th>
                         <th>Address</th>
                         <th>Pin Code</th>
                         <th>State</th>
@@ -35,19 +34,18 @@
                   </thead>
                     @foreach($data as $key => $value)
                     <tr>
+                        <td>{{$key+1}}</td>
                         <td>{{$value->User_ID}}</td>
-                        <td>{{ $value->User_Type}}</td>
                         <td>{{ $value->User_Name}}</td>
                         <td>{{ $value->User_Mobile}}</td>
                         <td>{{ $value->Username}}</td>
-                        <td>{{ $value->User_Password}}</td>
                         <td>{{ $value->User_Address}}</td>
                         <td>{{ $value->User_Pin}}</td>
                         <td>{{ $value->User_State}}</td>
                         <td>{{ $value->User_District}}</td>
                         <td>{{ $value->Status}}</td>
                         <td><a href="/customer/edit/{{ $value->User_ID}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-                        <td><a href="/customer/delete/{{ $value->User_ID}}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                        <td><a href="/customer/delete/{{ $value->User_ID}}" onclick="return confirm('Are you sure you want to deactivate this user')"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                     </tr>
                     @endforeach
                 </table>

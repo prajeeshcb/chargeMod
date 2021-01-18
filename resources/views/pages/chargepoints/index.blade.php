@@ -19,42 +19,29 @@
                 <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                     <thead class="thead-dark">
                         <tr>
-                            <th>ChargingPoint ID</th>
-                            <th>ChargingPoint Name</th>
-                            <th>ChargingPoint State</th>
-                            <th>ChargingPoint District</th>
-                            <th>ChargingPoint Location</th>
-                            <th>ChargingPoint Connector Type</th>
-                            <th>ChargeBox Serial No</th>
-                            <th>ChargingPoint Serial No</th>
-                            <th>ChargingPoint Firmware Version</th>
-                            <th>ChargingPoint Meter Serial-No</th>
-                            <th>ChargingPoint Meter Type</th>
+                            <th>Sl No</th>
+                            <th>CP Name</th>
+                            <th>CP State</th>
+                            <th>CP District</th>
+                            <th>CP Location</th>
                             <th>Station Phone</th>
                             <th>Station Email</th>
-                            <th>ChargingPoint Status</th>
-                            <th colspan="2">Actions</th>
+                            <th colspan="3">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($data as $key => $value)
                         <tr>
-                            <td>{{$value->CP_ID}}</td>
+                            <td>{{$key+1}}</td>
                             <td>{{ $value->CP_Name}}</td>
                             <td>{{ $value->CP_State}}</td>
                             <td>{{$value->CP_District}}</td>
                             <td>{{$value->CP_Loc}}</td>
-                            <td>{{$value->CP_Connector_Type}}</td>
-                            <td>{{$value->CB_Serial_No}}</td>
-                            <td>{{$value->CP_Serial_No}}</td>
-                            <td>{{$value->CP_Firmware_Ver}}</td>
-                            <td>{{$value->CP_Meter_Serial_No}}</td>
-                            <td>{{$value->CP_Meter_Type}}</td>
                             <td>{{$value->Station_Phone}}</td>
                             <td>{{$value->Station_Email}}</td>
                             <!-- <td>{{$value->CP_Status}}</td> -->
                             <td><a href="/CP/edit/{{ $value->CP_ID }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-                            <td><a href="/CP/delete/{{ $value->CP_ID }}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                            <td><a href="/CP/delete/{{ $value->CP_ID }}" onclick="return confirm('Are you sure you want to delete this CP')"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                         </tr>
                         @endforeach
                     </tbody>

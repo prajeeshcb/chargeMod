@@ -19,7 +19,7 @@
                 <table class="table table-hover dataTable table-striped w-full" data-plugin="dataTable">
                  <thead class="thead-dark">
                     <tr>
-                        <th>ID</th>
+                        <th>Sl No</th>
                         <th>Types</th>
                         <th>Remarks</th>
                         <th colspan="2">Actions</th>
@@ -28,11 +28,11 @@
                  <tbody>
                     @foreach($data as $key => $value)
                     <tr>
-                        <td>{{$value->id}}</td>
+                        <td>{{$key+1}}</td>
                         <td>{{ $value->Type }}</td>
                         <td>{{ $value->Remarks }}</td>
                         <td><a href="/connector/edit/{{ $value->id }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-                        <td><a href="/connector/delete/{{ $value->id }}"><i class="fa fa-trash" aria-hidden="true"></i>
+                        <td><a href="/connector/delete/{{ $value->id }}" onclick="return confirm('Are you sure you want to delete this Connector')"><i class="fa fa-trash" aria-hidden="true"></i>
 </a></td>
                     </tr>
                     @endforeach
