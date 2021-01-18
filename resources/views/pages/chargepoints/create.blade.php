@@ -75,10 +75,15 @@
                 </div>
                 <div class="col-8">
                     <select name="CP_Connector_Type" class="form-control" style="width:100%" required>
-                        <option value="1">CSS</option>
-                        <option value="2">Chademo</option>
-                        <option value="3">GB/T</option>
-          </select> 
+                        @if(count($connector)>0)
+                            <option> select</option>
+                            @foreach($connector as $con)
+                            <option value="{{ $con['id']}}">{{ $con['Type']}}</option>
+                            @endforeach
+                        @else
+                            <option>Connector not found</option>
+                        @endif
+                    </select> 
                 </div>
             </div>
             <div class="row form-group">

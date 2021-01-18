@@ -74,9 +74,14 @@
                 </div>
                 <div class="col-8">
                     <select name="CP_Connector_Type" class="form-control" style="width:100%" required>
-                        <option value="1" {{$data->CP_Connector_Type == "1" ? 'selected': ''}}>CSS</option>
-                        <option value="2" {{$data->CP_Connector_Type == "2" ? 'selected': ''}}>Chademo</option>
-                        <option value="3"{{$data->CP_Connector_Type == "3" ? 'selected': ''}}>GB/T</option>
+                        @if(count($connector)>0)
+                            @foreach($connector as $con)
+                            <option value="{{ $con['id']}}" {{ $con->id== $data->id ? 'selected':''}}>{{ $con['Type']}}</option>
+                            @endforeach
+                        @else
+                            <option>Connector not found</option>
+                        @endif
+
                     </select>
                 </div>
             </div>

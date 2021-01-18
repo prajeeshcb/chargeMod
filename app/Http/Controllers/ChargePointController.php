@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ChargePoint;
+use App\ConnectorType;
 class ChargePointController extends Controller
 {
     

@@ -22,7 +22,8 @@ class ConnectorTypeController extends Controller
             'Type'=>'required',
             'Remarks'=>'required'
         ]);
-        if(ConnectorType::where('Type', $request->Type)->exists()){
+        $connector = str_replace(' ', '', $request->Type);
+        if(ConnectorType::where('Type', $connector)->exists()){
             return redirect('/addconnector')->with('error','already exists');
         }
         else{
