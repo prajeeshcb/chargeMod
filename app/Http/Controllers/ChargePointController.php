@@ -14,7 +14,8 @@ class ChargePointController extends Controller
     }
     public function create()
     {
-        return view('pages/chargepoints/create');
+        $connector = ConnectorType::get();
+        return view('pages/chargepoints/create', compact('connector'));
     }
     public function store(Request $request)
     {
@@ -52,7 +53,8 @@ class ChargePointController extends Controller
     public function show($id)
     {
         $data=ChargePoint::where('CP_ID',$id)->first();
-        return view('pages/chargepoints/edit',compact('data'));
+        $connector = ConnectorType::get();
+        return view('pages/chargepoints/edit',compact('data', 'connector'));
     }
     public function update(Request $request,$id)
     {

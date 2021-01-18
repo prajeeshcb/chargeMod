@@ -74,11 +74,17 @@
                     <label class="col-form-label">ChargePoint Connector Type</label>
                 </div>
                 <div class="col-8">
-                    <select name="CP_Connector_Type" class="form-control" style="width:100%" required>
-                        <option value="1">CSS</option>
-                        <option value="2">Chademo</option>
-                        <option value="3">GB/T</option>
-          </select> 
+                <select name="CP_Connector_Type">
+                    @if(count($connector)>0)
+                        @foreach($connector as $con)
+                        <option> Select</option>
+                        <option value="{{$con['id'] }}" >
+                        {{$con['Type'] }}</option>
+                        @endforeach
+                    @else
+                        <option>connector not exist</option>
+                    @endif
+                    </select>
                 </div>
             </div>
             <div class="row form-group">
