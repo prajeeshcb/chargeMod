@@ -75,11 +75,15 @@
                 </div>
                 <div class="col-8">
                     <select name="CP_Connector_Type">
+                    @if(count($connector)>0)
                         @foreach($connector as $con)
                         <option> Select</option>
                         <option value="{{$con['id'] }}" >
                         {{$con['Type'] }}</option>
                         @endforeach
+                    @else
+                        <option>connector not exist</option>
+                    @endif
                     </select>
                 </div>
             </div>

@@ -32,6 +32,8 @@
         </div>
     </div>
 @endif
+<div class="panel">
+    <div class="panel-body">
 <form method="POST" action="/savecustomer">
 <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
 <div class="row">
@@ -114,6 +116,8 @@
   </div>
   </div>
 </form>
+</div>
+</div>
 @endsection
 
 
