@@ -22,7 +22,9 @@ class CustomerController extends Controller
             'User_Name'=>'required',
             'User_Mobile'=>'required',
             'Username'=>'required',
-            'User_Password'=>'required',
+            // 'User_Password'=>'required',
+            'User_Password' => 'required_with:confirm_password|same:confirm_password',
+            'confirm_password' => 'required',
             'User_Address'=>'required',
             'User_Pin'=>'required',
             'User_State'=>'required',
@@ -86,5 +88,14 @@ class CustomerController extends Controller
     {
         Customers::where('User_ID', $id)->update(array('Status' => 'Deactive'));
         return redirect('/customer')->with('success','Deactivated Successfully');;
+    }
+    public function search_user()
+    {
+        $search = \Request::get('search');
+        $data = Customers::where('User_Name','like','%'.$search.'%')
+            ->orderBy('User_Name')
+            ->paginate(20);
+
+        return view('pages/Customer/index')->with('data',$data);
     }
 }

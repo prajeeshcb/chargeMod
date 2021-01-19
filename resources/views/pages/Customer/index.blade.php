@@ -12,6 +12,17 @@
 @endsection
 @section('content')
 @csrf
+<form method="get" action="{{ url('/searchuser') }}" role="search">
+<div class="row">
+<div class="col-md-8">
+    <input type="text" class="form-control" name="search" placeholder="Search..." >
+</div>
+<div class="col-md-2">
+   <button type="btn btn-primary" type="submit"><i class="fa fa-search"  aria-hidden="true"></i></button>
+</div>
+</div> 
+</form>  
+
 <div class="row">
     <div class="col-12">
         <div class="panel">

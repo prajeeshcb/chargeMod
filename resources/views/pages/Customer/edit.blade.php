@@ -36,7 +36,7 @@
 <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
 <div class="row">
         <div class="col-2">
-            Type of User
+            Type 
         </div>
         <div class="col-8">
            <input type=radio name="User_Type" required="required" value="1" {{ $data->User_Type == '1' ? 'checked' : ''}}>1(EV User)
@@ -45,7 +45,7 @@
     </div><br>
     <div class="row">
         <div class="col-2">
-            Name of User
+            Name 
         </div>
         <div class="col-8">
             <input type="string" name="User_Name" style="width:100%" value="{{ $data->User_Name}}"  required>
@@ -53,7 +53,7 @@
     </div><br>
     <div class="row">
         <div class="col-2">
-          Mobile Number of User
+          Mobile Number 
         </div>
         <div class="col-8">
             <input type="tel" name="User_Mobile" pattern="[6-9]{1}[0-9]{9}"  style="width:100%" value="{{ $data->User_Mobile}}"  required>

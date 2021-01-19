@@ -72,7 +72,7 @@
             Password
         </div>
         <div class="col-8">
-            <input type="password" id="User_Password" name="User_Password"  class="form-control" style="width:100%" onkeyup='check();' required>
+            <input type="password" id="User_Password" name="User_Password"  class="form-control" style="width:100%" required>
         </div>
     </div><br>
     <div class="row">
@@ -80,8 +80,8 @@
            Confirm Password
         </div>
         <div class="col-8">
-        <input type="password" name="confirm_password" id="confirm_password" class="form-control" style="width:100%" onkeyup='check();' required/> 
-        <span id='message'></span>
+        <input type="password" name="confirm_password" id="confirm_password" class="form-control" style="width:100%" required/> 
+        <span id="message"></span>
         </div>
     </div><br>
     <div class="row">
@@ -119,7 +119,7 @@
     <div class="row">
   <div class="col-2"></div>
   <div class="col-8">
-    <input type="submit" name="submit" class="btn btn-primary" value="submit" id="submit" disabled>
+    <input type="submit" name="submit" class="btn btn-primary" value="submit" id="submit" onclick='check();'>
   </div>
   </div>
 </form>
@@ -130,7 +130,6 @@ var check = function() {
     document.getElementById('confirm_password').value) {
     document.getElementById('message').style.color = 'green';
     document.getElementById('message').innerHTML = 'matching';
-    document.getElementById('submit').disabled=false;
   } else {
     document.getElementById('message').style.color = 'red';
     document.getElementById('message').innerHTML = 'not matching';

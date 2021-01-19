@@ -1,8 +1,0 @@
-{
-    "MessagetypeId": "3",
-    "UniqueId": "334741",
-    "title": "HeartBeatResponse",
-    "payload": {
-        "currentTime": "2013-02-01T15:09:18Z"
-    }
-}

@@ -86,7 +86,16 @@ class ChargePointController extends Controller
     }
     public function details($id)
     {
-        $data=ChargePoint::where('CP_ID',$id)->first();
+        $data=ChargePoint::with('getconnector')->where('CP_ID',$id)->first();
         return view('pages/chargepoints/details',compact('data'));
+    }
+    public function search_CP()
+    {
+        $search = \Request::get('search');
+        $data = ChargePoint::where('CP_Name','like','%'.$search.'%')
+            ->orderBy('CP_Name')
+            ->paginate(20);
+
+        return view('pages/chargepoints/index')->with('data',$data);  
     }
 }

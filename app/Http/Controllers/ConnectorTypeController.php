@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\ConnectorType;
 class ConnectorTypeController extends Controller
 {
-    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    } 
     public function index()
     {
         $data=ConnectorType::all();
@@ -56,5 +59,14 @@ class ConnectorTypeController extends Controller
         $data=ConnectorType::findorFail($id);
         $data->delete();
         return redirect('/connector')->with('success','Deleted Successfully');;
+    }
+    public function search_connector()
+    {
+        $search = \Request::get('search');
+        $data = ConnectorType::where('Type','like','%'.$search.'%')
+            ->orderBy('Type')
+            ->paginate(20);
+
+        return view('pages/connector/index')->with('data',$data);
     }
 }

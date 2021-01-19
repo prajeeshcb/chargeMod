@@ -36,7 +36,7 @@
 <input type = "hidden" name = "_token" value = "<?php echo csrf_token(); ?>">
 <div class="row">
         <div class="col-2">
-            Type of User
+            Type 
         </div>
         <div class="col-8">
            <input  type="radio" name="User_Type" value="1"  required="required">1(EV User)
@@ -45,7 +45,7 @@
     </div><br>
     <div class="row">
         <div class="col-2">
-            Name of User
+            Name 
         </div>
         <div class="col-8">
             <input type="string" name="User_Name" style="width:100%"  class="form-control" required>
@@ -53,7 +53,7 @@
     </div><br>
     <div class="row">
         <div class="col-2">
-          Mobile Number of User
+          Mobile Number 
         </div>
         <div class="col-8">
             <input type="tel" name="User_Mobile" pattern="[6-9]{1}[0-9]{9}"  class="form-control" style="width:100%" required>
@@ -119,22 +119,9 @@
     <div class="row">
   <div class="col-2"></div>
   <div class="col-8">
-    <input type="submit" name="submit" class="btn btn-primary" value="submit" id="submit" disabled>
+    <input type="submit" name="submit" class="btn btn-primary" value="submit" id="submit">
   </div>
   </div>
 </form>
 @endsection
-<script>
-var check = function() {
-  if (document.getElementById('User_Password').value ==
-    document.getElementById('confirm_password').value) {
-    document.getElementById('message').style.color = 'green';
-    document.getElementById('message').innerHTML = 'matching';
-    document.getElementById('submit').disabled=false;
-  } else {
-    document.getElementById('message').style.color = 'red';
-    document.getElementById('message').innerHTML = 'not matching';
-  }
-}
-</script>
 
