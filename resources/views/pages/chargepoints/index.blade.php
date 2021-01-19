@@ -39,7 +39,7 @@
                             <td>{{$value->CP_Loc}}</td>
                             <td>{{$value->Station_Phone}}</td>
                             <td>{{$value->Station_Email}}</td>
-                            <!-- <td>{{$value->CP_Status}}</td> -->
+                            <td><a href="/CP/details/{{ $value->CP_ID }}">More</td>
                             <td><a href="/CP/edit/{{ $value->CP_ID }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
                             <td><a href="/CP/delete/{{ $value->CP_ID }}" onclick="return confirm('Are you sure you want to delete this CP')"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                         </tr>

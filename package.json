@@ -13,7 +13,7 @@
         "axios": "^0.21.1",
         "bootstrap": "^4.0.0",
         "cheerio": "latest",
-        "cross-env": "^7.0.2",
+        "cross-env": "^7.0.3",
         "express": "latest",
         "jquery": "^3.2",
         "laravel-mix": "^5.0.1",
@@ -21,17 +21,17 @@
         "mysql": "file:node_modules/mysql",
         "request": "latest",
         "resolve-url-loader": "^3.1.2",
-        "sass": "^1.20.1",
+        "sass": "^1.32.4",
         "sass-loader": "^8.0.0",
         "vue": "^2.6.12",
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "@popperjs/core": "^2.5.4",
-        "laravel-echo": "^1.9.0",
+        "@popperjs/core": "^2.6.0",
+        "laravel-echo": "^1.10.0",
         "popper.js": "^1.16.1",
-        "pusher-js": "^7.0.1",
-        "socket.io": "^3.0.3",
+        "pusher-js": "^7.0.2",
+        "socket.io": "^3.1.0",
         "vue-fragment": "^1.5.1"
     },
     "optionalDependencies": {
