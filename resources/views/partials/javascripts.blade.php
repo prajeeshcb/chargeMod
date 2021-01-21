@@ -43,6 +43,7 @@
 @stack('js_vendor')
 
         <!-- Scripts -->
+<script src="{{ asset('/assets/datatables-bs4/js/dataTables.bootstrap4.js', config('app.asset_secure')) }}"></script>
 <script src="{{ asset('/assets/js/Component.js', config('app.asset_secure')) }}"></script>
 <script src="{{ asset('/assets/js/Plugin.js', config('app.asset_secure')) }}"></script>
 <script src="{{ asset('/assets/js/Base.js', config('app.asset_secure')) }}"></script>

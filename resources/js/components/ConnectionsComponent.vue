@@ -147,12 +147,12 @@
   },
   created: function() {
     console.log("Starting connection to WebSocket Server")
-    this.connection = new WebSocket('ws://localhost:5001')
+    this.connection = new WebSocket('ws://localhost:6001')
 
 
     this.connection.onmessage = function(event) {
       var msg = JSON.parse(event.data);
-
+      alert(msg);
       switch (msg.title) {
           case "BootNotificationResponse":
               BootNotificationResponse(msg);
@@ -242,8 +242,8 @@
     }
 
     this.connection.onopen = function(event) {
-      console.log(event)
       console.log("Successfully connected to the websocket server...")
+      alert("Successfully connected to the websocket server...");
     }
     this.connection.onerror = function(event) {
       alert("There is an error between the client and the server.")
@@ -270,6 +270,8 @@
                         meterSerialNumber:"mtr001"
                       }
                     };
+
+        this.payloads.push(JSON.stringify(metadata));
         this.connection.send(JSON.stringify(metadata));
     },
     Authenticate(){
@@ -292,7 +294,7 @@
                               idTag:IdTag
                             }
                           };
-
+          this.payloads.push(JSON.stringify(metadata));
           this.connection.send(JSON.stringify(metadata));
           
         }
@@ -313,6 +315,7 @@
                               status:"1"
                           }
                         };
+        this.payloads.push(JSON.stringify(metadata));
         this.connection.send(JSON.stringify(metadata));    
         this.flag = 1;
         this.interval1 = setInterval(() => this.heartBeat(), 6000);
@@ -341,6 +344,7 @@
                               }
                             }
                         };
+                        this.payloads.push(JSON.stringify(metadata));
         this.connection.send(JSON.stringify(metadata));
       }
     },
@@ -353,6 +357,7 @@
                           title:"HeartBeatRequest",
                           payload:""
                         };
+                        this.payloads.push(JSON.stringify(metadata));
         this.connection.send(JSON.stringify(metadata));
       }
     },
@@ -381,6 +386,7 @@
                           }
                         }
                       };
+      this.payloads.push(JSON.stringify(metadata));
       this.connection.send(JSON.stringify(metadata));
       this.flag = 0;
     }

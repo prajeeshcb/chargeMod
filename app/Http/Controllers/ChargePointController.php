@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ChargePoint;
+use App\MMsgFile;
 use App\ConnectorType;
 class ChargePointController extends Controller
 {
@@ -98,4 +99,6 @@ class ChargePointController extends Controller
 
         return view('pages/chargepoints/index')->with('data',$data);  
     }
+
+    
 }
