@@ -88,7 +88,7 @@
                     <strong>Payload </strong>
                 </div>
                  <div class="card-body">
-                    <ul style="height:170px; overflow-x:scroll">
+                    <ul style="height:170px; overflow-y:scroll">
                         
                         <div class="row">
                         <div class='col-12' v-for="(payload, index) in payloads" :key="index">
@@ -147,12 +147,13 @@
   },
   created: function() {
     console.log("Starting connection to WebSocket Server")
-    this.connection = new WebSocket('ws://localhost:6001')
+    this.connection = new WebSocket('ws://localhost:7001')
 
 
     this.connection.onmessage = function(event) {
+    //alert(JSON.parse(event.data));
       var msg = JSON.parse(event.data);
-      alert(msg);
+
       switch (msg.title) {
           case "BootNotificationResponse":
               BootNotificationResponse(msg);
@@ -255,24 +256,28 @@
     bootNotification() {
       var msgId = Math.floor(100000 + Math.random() * 900000);
       var metadata = {
-                      msgType: 2,
-                      uniqueId:msgId,
-                      title: "BootNotificationRequest",
-                      payload: {
-                        chargePointVendor: 33242,
-                        chargePointModel: "CP001",
-                        chargePointSerialNumber: "CPS001",
-                        chargeBoxSerialNumber: "CBS001",
-                        firmwareVersion :"v1",
-                        iccd :"10001",
-                        imsi:"10002",
-                        meterType:"type1",
-                        meterSerialNumber:"mtr001"
+                      MessageTypeId:"2",
+                    UniqueId:"746832",
+                    title:"BootNotificationRequest",
+                    payload:{
+                        chargePointVendor:"Point1",
+                        chargePointModel:"Model1",
+                        chargePointSerialNumber:"CP1234",
+                        chargeBoxSerialNumber:"CB1234",
+                        firmwareVersion:"v1",
+                        iccid:"1111",
+                        imsi:"2222",
+                        meterType:"metertype1",
+                        meterSerialNumber:"MTR1234"
                       }
                     };
-
-        this.payloads.push(JSON.stringify(metadata));
+        var req = JSON.stringify(metadata);
+        this.payloads.push ({
+                        type: 'BootNotification Request',
+                        data:req
+                    });
         this.connection.send(JSON.stringify(metadata));
+        
     },
     Authenticate(){
         var msgId = Math.floor(100000 + Math.random() * 900000);
@@ -285,16 +290,19 @@
         {
           // this.payloads.legnth=0;
           var id_Tag = this.IdTag;
-
           var metadata = {
                             msgType: 2,
                             uniqueId:msgId,
                             title: "AuthenticateRequest",
                             payload: {
-                              idTag:IdTag
+                              idTag:id_Tag
                             }
                           };
-          this.payloads.push(JSON.stringify(metadata));
+           var req = JSON.stringify(metadata);
+           this.payloads.push ({
+                        type: 'Authentication Request',
+                        data:req
+                    });
           this.connection.send(JSON.stringify(metadata));
           
         }
@@ -315,7 +323,11 @@
                               status:"1"
                           }
                         };
-        this.payloads.push(JSON.stringify(metadata));
+          var req = JSON.stringify(metadata);
+          this.payloads.push ({
+                        type: 'StartTransaction Request',
+                        data:req
+                    });
         this.connection.send(JSON.stringify(metadata));    
         this.flag = 1;
         this.interval1 = setInterval(() => this.heartBeat(), 6000);
@@ -344,7 +356,11 @@
                               }
                             }
                         };
-                        this.payloads.push(JSON.stringify(metadata));
+        var req = JSON.stringify(metadata);
+        this.payloads.push ({
+                        type: 'MeterValue Request',
+                        data:req
+                    });
         this.connection.send(JSON.stringify(metadata));
       }
     },
@@ -357,7 +373,11 @@
                           title:"HeartBeatRequest",
                           payload:""
                         };
-                        this.payloads.push(JSON.stringify(metadata));
+          var req = JSON.stringify(metadata);
+        this.payloads.push ({
+                        type: 'HeartBeat Request',
+                        data:req
+                    });
         this.connection.send(JSON.stringify(metadata));
       }
     },
@@ -386,7 +406,11 @@
                           }
                         }
                       };
-      this.payloads.push(JSON.stringify(metadata));
+       var req = JSON.stringify(metadata);
+        this.payloads.push ({
+                        type: 'StopTransaction Request',
+                        data:req
+                    });
       this.connection.send(JSON.stringify(metadata));
       this.flag = 0;
     }

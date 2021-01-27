@@ -1,90 +1,6 @@
-/*var express = require('express');
-var app     = express();
-app.listen('8080');
 
-console.log('Your node server start....');
-
-exports = module.exports = app;*/
-
-/*var server = require('ws').Server;
-var s = new server({port:8080});
-s.on('connection', function(ws) {
-    console.log('connected');
-    ws.on('message', function(message) {
-        console.log('Received:', +message);
-        ws.send(message);
-
-    });
-    ws.on('close', function(message) {
-        console.log('connection closeddd');
-        ws.send(message);
-
-    });
-    console.log('one more charge point connected')
-});*/
-
-/*const express = require('express');
-const WebSocket = require('ws');
-
-const app = express();
-const port = 8080;
-
-app.get('/', function(req, res, next) {
-  return res.send('Hello World!');
-});
-
-const wss = new WebSocket.Server({ server: app });
-
-wss.on('connection', function connection(ws) {
-    console.log('connected');
-  ws.on('message', function incoming(message) {
-    console.log('received: %s', message);
-  });
-s});
-
-wss.on('close', function(message) {
-        console.log('connection closeddd');
-        ws.send(message);
-
-    });
-
-app.listen(port, function(err) {
-  if (err) {
-    throw err;
-  }const express = require('express');
-const WebSocket = require('ws');
-
-const app = express();
-const port = 8080;
-
-app.get('/', function(req, res, next) {
-  return res.send('Hello World!');
-});
-
-const wss = new WebSocket.Server({ server: app });
-
-wss.on('connection', function connection(ws) {
-    console.log('connected');
-  ws.on('message', function incoming(message) {
-    console.log('received: %s', message);
-  });
-s});
-
-wss.on('close', function(message) {
-        console.log('connection closeddd');
-        ws.send(message);
-
-    });
-
-app.listen(port, function(err) {
-  if (err) {
-    throw err;
-  }
-  console.log(`listening on port ${port}!`);
-});
-  console.log(`listening on port ${port}!`);
-});*/
 var mysql = require('mysql');
+const fsPromises = require("fs").promises;
 var fs = require('fs');
 const express = require('express');
 const WebSocket = require('ws');
@@ -92,13 +8,35 @@ const http = require('http');
 const  axios  = require('axios');
 
 const app = express();
-const port = 5001;
+const port = 7001;
 
 const server = http.createServer(app);
 
 app.get('/', function(req, res, next) {
-    return res.send('Hello Workkld!');
+    return res.send('Hello Workked!');
 });
+
+const dir = '../public/Jsonfiles'
+
+try {
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir)
+  }
+} catch (err) {
+  console.error(err)
+}
+
+(async () => {
+  try {
+    const { fd } = await fsPromises.open("../public/Jsonfiles", "r");
+    fs.fchmod(fd, 0o777, err => {
+      if (err) throw err;
+      console.log("File permission change succcessful");
+    });
+  } catch (error) {
+    console.log(error);
+  }
+})();
 
 const wss = new WebSocket.Server({ server });
 
@@ -111,24 +49,25 @@ wss.on('connection', function connection(ws) {
         }*/
         switch (msg.title) {
           case "BootNotificationRequest":
-            var data = BootNotification();
-            ws.send(data);
+            var res = BootNotification(msg);
+            console.log(res);
+            ws.send(res);
             console.log('boot');
             break;
           case "AuthenticateRequest":
             console.log('authentication');
-            var data = authentication();
+            var data = authentication(msg);
             ws.send(data);
             break;
            case "StartTransactionRequest":
             console.log('StartTransaction');
             
-            var data = StartTransaction();
+            var data = StartTransaction(msg);
             ws.send(data);
             break;
            case "MeterValuesRequest":
             console.log('MeterValues');
-            var data = MeterValues();
+            var data = MeterValues(msg);
             ws.send(data);
             break;
             case "HeartBeatRequest":
@@ -138,7 +77,7 @@ wss.on('connection', function connection(ws) {
             break;
             case "StopTransactionRequest":
             console.log('StopTransaction');
-            var data = StopTransaction();
+            var data = StopTransaction(msg);
             ws.send(data);
             break;
             default:
@@ -147,8 +86,8 @@ wss.on('connection', function connection(ws) {
         }
     });
     var date = new Date();
-    function BootNotification(){
-        var data={
+    function BootNotification(msg){
+        /*var data={
                     MessageTypeId:"2",
                     UniqueId:"746832",
                     title:"BootNotification",
@@ -163,43 +102,78 @@ wss.on('connection', function connection(ws) {
                         meterType:"metertype1",
                         meterSerialNumber:"MTR1234"
                         }
-                  };
-                  // console.log(data.data.chargeBoxSerialNumber);
+                  };*/
+          var data = msg;
         var bootrequest=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        fs.writeFile('../public/Jsonfiles/'+bootrequest+'.json', JSON.stringify(data, null, 4), function(err){
+        fs.writeFile('../public/Jsonfiles/'+bootrequest+'.json', JSON.stringify(msg, null, 4), function(err){
           console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
           }); 
-        var cbserialno=data.data.chargeBoxSerialNumber;
-        var cpserialno=data.data.chargePointSerialNumber;
+        var con = mysql.createConnection({
+          host: "localhost",
+          user: "root",
+          password: "",
+          database: "larasocket"
+        });
+        let req_file = {
+                cp_id :'1',
+                type : '0',
+                file_path :'../public/Jsonfiles/'+bootrequest+'.json',
+                created_at: date,
+                updated_at: date
+          };
+          con.query('INSERT INTO msg_files SET ?', req_file, function(error, results, fields) {
+              if (error) throw error;
+              console.log("request"+results.insertId);
+          });
+          //var data = msg;
+        var cbserialno=data.payload.chargeBoxSerialNumber;
+        var cpserialno=data.payload.chargePointSerialNumber;
+        console.log(cbserialno);
         var cpstatus="0";
         var con = mysql.createConnection({
           host: "localhost",
           user: "root",
           password: "",
-          database: "laravel"
+          database: "larasocket"
         });
         var queryString = "SELECT * FROM chargepoint WHERE CB_Serial_No= ? AND CP_Serial_No= ? AND CP_Status= ?;"
         var filter = [cbserialno,cpserialno,cpstatus];
-
+        //var cp = "SELECT CP_ID FROM chargepoint WHERE CB_Serial_No= ? AND CP_Serial_No= ? AND CP_Status= ?;"
         con.query(queryString, filter, function(err, results) {
           //  console.log(results);
           if(results == "")
           {
             console.log('Rejected');
             var metadata = { 
-              MessageTypeId:"3",
-              UniqueId:"746832",
-              title:"BootNotificationResponse",
-              payload:{
-                    status:"Rejected",
-                    currenTime:date,
-                    interval:"2"
-                }
-            };
+                              MessageTypeId:"3",
+                              UniqueId:"746832",
+                              title:"BootNotificationResponse",
+                              payload:{
+                                    status:"Rejected",
+                                    currenTime:date,
+                                    interval:"2"
+                                }
+                            };
             var bootresponse=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             fs.writeFile('../public/Jsonfiles/'+bootresponse+'.json', JSON.stringify(metadata, null, 4), function(err){
-            console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
-        });
+              console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
+            });
+
+            let file = {
+              cp_id :'1',
+              type : '1',
+              file_path :'../public/Jsonfiles/'+bootresponse+'.json',
+              created_at: date,
+              updated_at: date
+            };
+
+            con.query('INSERT INTO msg_files SET ?', file, function(error, results, fields) {
+              if (error) throw error;
+              console.log(results.insertId);
+            });
+
+            console.log(metadata);
+            //return JSON.stringify(metadata);
           }
           else {
             console.log('Accepted');
@@ -209,23 +183,39 @@ wss.on('connection', function connection(ws) {
               console.log('Updated');
             });
             var metadata = { 
-              MessageTypeId:"3",
-              UniqueId:"746832",
-              title:"BootNotificationResponse",
-              payload:{
-                    status:"Accepted",
-                    currenTime:date,
-                    interval:"2"
-                }
-            };
+                        MessageTypeId:"3",
+                        UniqueId:"746832",
+                        title:"BootNotificationResponse",
+                        payload:{
+                              status:"Accepted",
+                              currenTime:date,
+                              interval:"2"
+                          }
+                      };
             var bootresponse=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             fs.writeFile('../public/Jsonfiles/'+bootresponse+'.json', JSON.stringify(metadata, null, 4), function(err){
             console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
             });
-           
+
+
+            let file = {
+              cp_id :'1',
+              type : '1',
+              file_path :'../public/Jsonfiles/'+bootresponse+'.json',
+              created_at: date,
+              updated_at: date
+            };
+
+            con.query('INSERT INTO msg_files SET ?', file, function(error, results, fields) {
+              if (error) throw error;
+              console.log(results.insertId);
+            });
+            console.log(metadata);
+           //return JSON.stringify(metadata);
           }
         });
-        var metadata = { 
+        //return JSON.stringify(metadata);
+        /*var metadata = { 
                           MessageTypeId:"3",
                           UniqueId:"746832",
                           title:"BootNotificationResponse",
@@ -236,27 +226,47 @@ wss.on('connection', function connection(ws) {
                             }
                         };
 
-        return JSON.stringify(metadata);
-        // //ws.send(JSON.stringify(metadata));
+        
+        return JSON.stringify(metadata);*/
         
     }
     function authentication() {
-        var data={
-                    MessageTypeId:"2",
-                    UniqueId:"456378",
-                    title:"Authorize",
-                    idTag:"170443"
-                 };
+        /*var data={
+                    msgType: 2,
+                    uniqueId:msgId,
+                    title: "AuthenticateRequest",
+                    payload: {
+                      idTag:IdTag
+                    }
+                  };*/
+        var data = msg;
         var authrequest=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         fs.writeFile('../public/Jsonfiles/'+authrequest+'.json', JSON.stringify(data, null, 4), function(err){
           console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
+        });
+        var con = mysql.createConnection({
+          host: "localhost",
+          user: "root",
+          password: "",
+          database: "larasocket"
+        });
+        let req_file = {
+                cp_id :'1',
+                type : '0',
+                file_path :'../public/Jsonfiles/'+authrequest+'.json',
+                created_at: date,
+                updated_at: date
+          };
+          con.query('INSERT INTO msg_files SET ?', req_file, function(error, results, fields) {
+              if (error) throw error;
+              console.log("request"+results.insertId);
           });
-          var idtag=data.idTag;
+          var idtag=data.payload.idTag;
           var con = mysql.createConnection({
             host: "localhost",
             user: "root",
             password: "",
-            database: "laravel"
+            database: "larasocket"
           });
           var sql = 'SELECT * FROM customers WHERE User_ID = ' + mysql.escape(idtag);
           con.query(sql, function (err, result) {
@@ -276,8 +286,21 @@ wss.on('connection', function connection(ws) {
             };
               var authresponse=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
               fs.writeFile('../public/Jsonfiles/'+authresponse+'.json', JSON.stringify(metadata, null, 4), function(err){
-              console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
+                console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
               });
+              let file = {
+                cp_id :'1',
+                type : '1',
+                file_path :'../public/Jsonfiles/'+authresponse+'.json',
+                created_at: date,
+                updated_at: date
+              };
+
+              con.query('INSERT INTO msg_files SET ?', file, function(error, results, fields) {
+                if (error) throw error;
+                console.log(results.insertId);
+              });
+              return JSON.stringify(metadata);
             }
             else {
                     console.log('Accepted');
@@ -293,12 +316,25 @@ wss.on('connection', function connection(ws) {
                   };
                     var authresponse=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
                     fs.writeFile('../public/Jsonfiles/'+authresponse+'.json', JSON.stringify(metadata, null, 4), function(err){
-                    console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
+                      console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
                     });
+                    let file = {
+                        cp_id :'1',
+                        type : '1',
+                        file_path :'../public/Jsonfiles/'+authresponse+'.json',
+                        created_at: date,
+                        updated_at: date
+                    };
+
+                    con.query('INSERT INTO msg_files SET ?', file, function(error, results, fields) {
+                      if (error) throw error;
+                      console.log(results.insertId);
+                    });
+              return JSON.stringify(metadata);
   
             }
           });
-        var metadata = {
+        /*var metadata = {
                             MessageTypeId:"3",
                             Uniqueid:"456378",
                             title:"AuthenticateResponse",
@@ -309,30 +345,50 @@ wss.on('connection', function connection(ws) {
                             }
                         };
       
-        return JSON.stringify(metadata);
+        return JSON.stringify(metadata);*/
     }
     function StartTransaction() {
-        var data={
+        /*var data={
                     MessageTypeId:"2",
                     UniqueId:"678534",
                     title:"StartTransaction",
+                    payload:{
                             connectorId: "1",
                             idTag: "170443",
                             meterStart: "2222",
                             reservationId:"32434",
                             timestamp:date
+                    }
                           
-                  };
+                  };*/
+          var data = msg;
         var startrequest=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         fs.writeFile('../public/Jsonfiles/'+startrequest+'.json', JSON.stringify(data, null, 4), function(err){
           console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
+        });
+        var con = mysql.createConnection({
+          host: "localhost",
+          user: "root",
+          password: "",
+          database: "larasocket"
+        });
+        let req_file = {
+                cp_id :'1',
+                type : '0',
+                file_path :'../public/Jsonfiles/'+startrequest+'.json',
+                created_at: date,
+                updated_at: date
+          };
+          con.query('INSERT INTO msg_files SET ?', req_file, function(error, results, fields) {
+              if (error) throw error;
+              console.log("request"+results.insertId);
           });
-          var connectorid=data.connectorId;
+          var connectorid=data.payload.connectorId;
           var con = mysql.createConnection({
             host: "localhost",
             user: "root",
             password: "",
-            database: "laravel"
+            database: "larasocket"
           });
         var sql = 'SELECT * FROM connectortype WHERE id = ' + mysql.escape(connectorid);
         con.query(sql, function (err, result) {
@@ -341,23 +397,36 @@ wss.on('connection', function connection(ws) {
           {
             console.log('Invalid')
             var metadata = {
-              MessageTypeId:"3",
-              UniqueId:"678534",
-              title:"StartTransactionResponse",
-              IdTagInfo:{
-                expiryDate:"2021-3-8T3.00PM",
-                parentIdTag:"170443",
-                status:"Invalid"
-        },
-    transactionId:"2468"
-              
-                          };
+                MessageTypeId:"3",
+                UniqueId:"678534",
+                title:"StartTransactionResponse",
+                IdTagInfo:{
+                  expiryDate:"2021-3-8T3.00PM",
+                  parentIdTag:"170443",
+                  status:"Invalid"
+                },
+                transactionId:"2468"
+                
+            };
           
             var startresponse=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             fs.writeFile('../public/Jsonfiles/'+startresponse+'.json', JSON.stringify(metadata, null, 4), function(err){
               console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
             });
-           }
+            let file = {
+                cp_id :'1',
+                type : '1',
+                file_path :'../public/Jsonfiles/'+startresponse+'.json',
+                created_at: date,
+                updated_at: date
+              };
+
+              con.query('INSERT INTO msg_files SET ?', file, function(error, results, fields) {
+                if (error) throw error;
+                console.log(results.insertId);
+              });
+              return JSON.stringify(metadata);
+            }
            else {
             console.log('Accepted')
                   var metadata = {
@@ -374,11 +443,24 @@ wss.on('connection', function connection(ws) {
                           
                   var startresponse=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
                   fs.writeFile('../public/Jsonfiles/'+startresponse+'.json', JSON.stringify(metadata, null, 4), function(err){
-                  console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
+                    console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
                   }); 
+                  let file = {
+                    cp_id :'1',
+                    type : '1',
+                    file_path :'../public/Jsonfiles/'+startresponse+'.json',
+                    created_at: date,
+                    updated_at: date
+                  };
+
+                  con.query('INSERT INTO msg_files SET ?', file, function(error, results, fields) {
+                    if (error) throw error;
+                    console.log(results.insertId);
+                  });
+              return JSON.stringify(metadata);
            }
         });
-        var metadata = {
+        /*var metadata = {
                             MessageTypeId:"3",
                             UniqueId:"678534",
                             title:"StartTransactionResponse",
@@ -390,15 +472,15 @@ wss.on('connection', function connection(ws) {
                             transactionId:"2468"
                           
                         };
-        return JSON.stringify(metadata);
+        return JSON.stringify(metadata);*/
     }
     function MeterValues(){
-        var data={
+        /*var data={
                     MessageTypeId:"2",
                     UniqueId:"342337",
                     title:"MeterValues",
                     data:{
-                            connectorId:"0",
+                            connectorId:"1",
                             transactionId:"32434",
                             meterValue:{
                                           timeStamp:date,
@@ -413,19 +495,37 @@ wss.on('connection', function connection(ws) {
                                         }
                             
                           }
-                  };
+                  };*/
+        var data = msg;
         var meterrequest=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         fs.writeFile('../public/Jsonfiles/'+meterrequest+'.json', JSON.stringify(data, null, 4), function(err){
           console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
-          });
-        var connectorid=data.data.connectorId;
+        });
         var con = mysql.createConnection({
           host: "localhost",
           user: "root",
           password: "",
-          database: "laravel"
+          database: "larasocket"
         });
-        if(connectorid == "0")
+        let req_file = {
+                cp_id :'1',
+                type : '0',
+                file_path :'../public/Jsonfiles/'+meterrequest+'.json',
+                created_at: date,
+                updated_at: date
+          };
+          con.query('INSERT INTO msg_files SET ?', req_file, function(error, results, fields) {
+              if (error) throw error;
+              console.log("request"+results.insertId);
+          });
+        var connectorid=data.payload.connectorId;
+        var con = mysql.createConnection({
+          host: "localhost",
+          user: "root",
+          password: "",
+          database: "larasocket"
+        });
+        if(connectorid == "1")
         {
           con.connect(function(err) {
             //Insert a record in the "transcations" table:
@@ -453,6 +553,19 @@ wss.on('connection', function connection(ws) {
           fs.writeFile('../public/Jsonfiles/'+metervalueresponse+'.json', JSON.stringify(metadata, null, 4), function(err){
             console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
           });
+          let file = {
+                cp_id :'1',
+                type : '1',
+                file_path :'../public/Jsonfiles/'+metervalueresponse+'.json',
+                created_at: date,
+                updated_at: date
+              };
+
+              con.query('INSERT INTO msg_files SET ?', file, function(error, results, fields) {
+                if (error) throw error;
+                console.log(results.insertId);
+              });
+          return JSON.stringify(metadata);
         }
         else {
             con.connect(function(err) {
@@ -481,30 +594,61 @@ wss.on('connection', function connection(ws) {
           fs.writeFile('../public/Jsonfiles/'+metervalueresponse+'.json', JSON.stringify(metadata, null, 4), function(err){
             console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
           });
+          let file = {
+                cp_id :'1',
+                type : '1',
+                file_path :'../public/Jsonfiles/'+metervalueresponse+'.json',
+                created_at: date,
+                updated_at: date
+              };
+
+              con.query('INSERT INTO msg_files SET ?', file, function(error, results, fields) {
+                if (error) throw error;
+                console.log(results.insertId);
+              });
+            return JSON.stringify(metadata);
         }
-        var metadata =  {
+        /*var metadata =  {
                             MessagetypeId:"3",
                             UniqueId:"342337",
                             title:"MeterValuesResponse",
                             payload:[]
-                        };
+                        };*/
        
         // var metervalueresponse=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         // fs.writeFile('../public/Jsonfiles/'+metervalueresponse+'.json', JSON.stringify(metadata, null, 4), function(err){
-	    	// console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
+        // console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
         // });
-         return JSON.stringify(metadata);
+         /*return JSON.stringify(metadata);*/
     }
     function HeartBeat() {
-        var data={
+        /*var data={
                     MessageTypeId:"2",
                     UniqueId:"334741",
                     title:"Heartbeat",
                     data:[]
-                  };
+                  };*/
+        var data = msg;
         var heartbeatrequest=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         fs.writeFile('../public/Jsonfiles/'+heartbeatrequest+'.json', JSON.stringify(data, null, 4), function(err){
           console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
+          });
+        var con = mysql.createConnection({
+          host: "localhost",
+          user: "root",
+          password: "",
+          database: "larasocket"
+        });
+        let req_file = {
+                cp_id :'1',
+                type : '0',
+                file_path :'../public/Jsonfiles/'+heartbeatrequest+'.json',
+                created_at: date,
+                updated_at: date
+          };
+          con.query('INSERT INTO msg_files SET ?', req_file, function(error, results, fields) {
+              if (error) throw error;
+              console.log("request"+results.insertId);
           });
         var metadata =  {
                             MessagetypeId:"3",
@@ -518,12 +662,24 @@ wss.on('connection', function connection(ws) {
        
         var heartbeatresponse=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         fs.writeFile('../public/Jsonfiles/'+heartbeatresponse+'.json', JSON.stringify(metadata, null, 4), function(err){
-	    	console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
+          console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
         });
+        let file = {
+                cp_id :'1',
+                type : '1',
+                file_path :'../public/Jsonfiles/'+heartbeatresponse+'.json',
+                created_at: date,
+                updated_at: date
+              };
+
+              con.query('INSERT INTO msg_files SET ?', file, function(error, results, fields) {
+                if (error) throw error;
+                console.log(results.insertId);
+              });
          return JSON.stringify(metadata);
     }
     function StopTransaction() {
-      var data={
+      /*var data={
                   MessageTypeId:"2",
                   UniqueId:"754557",
                   title:"StopTransaction",
@@ -546,18 +702,36 @@ wss.on('connection', function connection(ws) {
                                   }
                           
                         
-                      };
+                      };*/
+      var data = msg;
       var stoprequest=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
       fs.writeFile('../public/Jsonfiles/'+stoprequest+'.json', JSON.stringify(data, null, 4), function(err){
         console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
       });
+      var con = mysql.createConnection({
+          host: "localhost",
+          user: "root",
+          password: "",
+          database: "larasocket"
+        });
+        let req_file = {
+                cp_id :'1',
+                type : '0',
+                file_path :'../public/Jsonfiles/'+stoprequest+'.json',
+                created_at: date,
+                updated_at: date
+          };
+          con.query('INSERT INTO msg_files SET ?', req_file, function(error, results, fields) {
+              if (error) throw error;
+              console.log("request"+results.insertId);
+          });
       var reason=data.reason;
       // var metervalue=data.meterStop;
       var con = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "",
-        database: "laravel"
+        database: "larasocket"
       });
       if(reason == "Local")
       {
@@ -581,23 +755,38 @@ wss.on('connection', function connection(ws) {
           MessageTypeId:"3",
           UniqueId:"754557",
           title:"StopTransactionResponse",
-          idTagInfo:{
-                      expiryDate:"2021-3-8T3.00PM",
-                      parentIdTag:"170443",
-                      status:"Accepted"
-          }
+            payload :{
+              idTagInfo:{
+                        expiryDate:"2021-3-8T3.00PM",
+                        parentIdTag:"170443",
+                        status:"Accepted"
+               }
+            }
           // Status:"2"
           };
-         var stopresonse=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        fs.writeFile('../public/Jsonfiles/'+stopresonse+'.json', JSON.stringify(metadata, null, 4), function(err){
-	    	console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
+         var stopresponse=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        fs.writeFile('../public/Jsonfiles/'+stoprepsonse+'.json', JSON.stringify(metadata, null, 4), function(err){
+          console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
         });
+        let file = {
+                cp_id :'1',
+                type : '1',
+                file_path :'../public/Jsonfiles/'+stopresponse+'.json',
+                created_at: date,
+                updated_at: date
+          };
+
+          con.query('INSERT INTO msg_files SET ?', file, function(error, results, fields) {
+            if (error) throw error;
+            console.log(results.insertId);
+          });
         var cpid="1";
         var queryString = "UPDAte chargepoint SET CP_Status = '0' WHERE CP_ID= ?;"
         var filter = [cpid];
         con.query(queryString, filter, function(err, results) {
           console.log('CP ready');
         });
+        return JSON.stringify(metadata);
       }
       else {
         if(reason == "UnlockConnectorEVSide")
@@ -629,9 +818,21 @@ wss.on('connection', function connection(ws) {
             }
             // Status:"2"
             };
-           var stopresonse=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-          fs.writeFile('../public/Jsonfiles/'+stopresonse+'.json', JSON.stringify(metadata, null, 4), function(err){
-          console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
+           var stopresponse=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+          fs.writeFile('../public/Jsonfiles/'+stopresponse+'.json', JSON.stringify(metadata, null, 4), function(err){
+            console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
+          });
+          let file = {
+                cp_id :'1',
+                type : '1',
+                file_path :'../public/Jsonfiles/'+stopresponse+'.json',
+                created_at: date,
+                updated_at: date
+          };
+
+          con.query('INSERT INTO msg_files SET ?', file, function(error, results, fields) {
+            if (error) throw error;
+            console.log(results.insertId);
           });
         var cpid="1";
         var queryString = "UPDAte chargepoint SET CP_Status = '0' WHERE CP_ID= ?;"
@@ -640,8 +841,9 @@ wss.on('connection', function connection(ws) {
           console.log('CP ready');
         });
         }
+        return JSON.stringify(metadata);
       }
-        var metadata = {
+        /*var metadata = {
                             MessageTypeId:"3",
                             UniqueId:"754557",
                             title:"StopTransactionResponse",
@@ -652,9 +854,9 @@ wss.on('connection', function connection(ws) {
                             }
                             // Status:"2"
                         };
-        return JSON.stringify(metadata);
+        return JSON.stringify(metadata);*/
     }
-    ws.send('something from server');
+    //ws.send('something from server');
 });
 
 wss.on('close', function(message) {
