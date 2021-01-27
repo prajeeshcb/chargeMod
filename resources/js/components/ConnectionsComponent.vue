@@ -1,9 +1,33 @@
 <template>
-<span>  
+<span> 
+    <div class="row ">
+        <div class="col-12">
+            <div class="card">
+                <div  class="card-body row">
+                  <div class="form-group col-5">
+                    <div class="input-group">
+                      <label class="col-form-label text-md-right">CB Serial No</label>
+                      <input id="cbserial_no" type="text" class="form-control" name="cbserial_no" v-model="cbserial_no">
+                    </div>
+                  </div>
+                  <div class="form-group col-5">
+                    <div class="input-group">
+                      <label class="col-form-label text-md-right">CP Serial No</label>
+                      <input id="cpserial_no" type="text" class="form-control" name="cpserial_no" v-model="cpserial_no">
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <button v-on:click="bootNotification()" class="btn btn-primary btn-lg" id="boot" >Boot</button>
+                  </div>
+                </div>
+                
+            </div> 
+         </div>
+      </div> 
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <button v-on:click="bootNotification()" class="btn btn-primary" id="boot" >Boot</button> 
+                 
             </div>
         </div>
     </div>
@@ -41,18 +65,18 @@
                                 <input id="userid" type="text" class="form-control" name="TagID"  disabled="disabled">
                               </div>
                         </div>
-                        <div class="form-group">
+                        <!--<div class="form-group">
                             <div class="input-group">
                                <label>Tag ID</label>
                                 <input id="tagid" type="text" class="form-control" name="TagID" disabled="disabled">
                               </div>
-                        </div>
-                        <div class="form-group">
+                        </div>-->
+                        <!--<div class="form-group">
                             <div class="input-group">
                                <label>Status</label>
                                 <input id="status" type="text" class="form-control" name="TagID"  disabled="disabled">
                               </div>
-                        </div>
+                        </div>-->
                 </div>
             </div>
         </div>
@@ -61,22 +85,28 @@
                 <div class="card-body">
                         <div class="form-group">
                             <div class="input-group">
+                               <label>Tag ID</label>
+                                <input id="tagid" type="text" class="form-control" name="TagID" disabled="disabled">
+                              </div>
+                        </div>
+                        <!--<div class="form-group">
+                            <div class="input-group">
                                <label>Vehicle name</label>
                                 <input id="vehicle" type="text" class="form-control" name="TagID"  disabled="disabled">
                               </div>
-                        </div>
-                        <div class="form-group">
+                        </div>-->
+                        <!--<div class="form-group">
                             <div class="input-group">
                                <label>Charging PIN ID</label>
                                 <input id="chargepin" type="text" class="form-control" name="TagID"  disabled="disabled">
                               </div>
-                        </div>
-                        <div class="form-group">
+                        </div>-->
+                        <!--<div class="form-group">
                             <div class="input-group">
                                <label>Battery</label>
                                 <input id="battery" type="text" class="form-control" name="TagID"  disabled="disabled">
                               </div>
-                        </div>
+                        </div>-->
                 </div>
             </div>
         </div>
@@ -255,6 +285,9 @@
   methods :{
     bootNotification() {
       var msgId = Math.floor(100000 + Math.random() * 900000);
+      var cpserial_no = this.cpserial_no;
+      var cbserial_no = this.cbserial_no;
+      alert(cbserial_no);
       var metadata = {
                       MessageTypeId:"2",
                     UniqueId:"746832",
@@ -262,8 +295,8 @@
                     payload:{
                         chargePointVendor:"Point1",
                         chargePointModel:"Model1",
-                        chargePointSerialNumber:"CP1234",
-                        chargeBoxSerialNumber:"CB1234",
+                        chargePointSerialNumber:cpserial_no,
+                        chargeBoxSerialNumber:cbserial_no,
                         firmwareVersion:"v1",
                         iccid:"1111",
                         imsi:"2222",
