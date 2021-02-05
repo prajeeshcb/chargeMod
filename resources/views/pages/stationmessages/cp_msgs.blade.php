@@ -22,7 +22,7 @@
                         </div>
                         <div class="col-md-4 text-center">
                             <h4 class="card-title">Status</h4>
-                            @if ($cp->CP_Status == 1)
+                            @if ($cp->status == 1)
                                 <span class="badge badge-success">Active</span>
                             @else
                                 <span class="badge badge-danger">Inactive</span>
@@ -65,12 +65,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($connector as $pin)
+                        @foreach($cp_connectors as $pin)
                             <tr>
                                 <td>{{ $pin->Type }}</td>
                                 <td>{{ $pin->Remarks }}</td>
                                 <td>
-                                    Active
+                                    @if($pin->status==1)
+                                    <span class="badge" style="background-color: green;color:white;">Active</span>
+                                    @else
+                                    <span class="badge" style="background-color: red;color:white;">Inactive</span>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -100,9 +104,9 @@
                             <td>{{ $value->id }}</td>
                             <td>{{ $value->created_at }}</td>
                             <td><a href="{{URL::to('/CP/messages/'.$value->CP_ID)}}">{{ $value->CP_Name }}</a></td>
-                            @if($value->CP_Status==1)
+                            @if($value->status==1)
                             <td><span class="badge" style="background-color: green;color:white;">Active</span></td>
-                            @else if($value->CP_Status!=1)
+                            @elseif($value->status!=1)
                             <td><span class="badge" style="background-color: red;color:white;">Inactive</span></td>
                             @endif
                             @if($value->type==0)

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\ChargePoint;
 use App\MMsgFile;
 use App\ConnectorType;
+use App\CPConnector;
 class ChargePointController extends Controller
 {
     
@@ -26,7 +27,7 @@ class ChargePointController extends Controller
             'CP_State'=>'required',
             'CP_District'=>'required',
             'CP_Loc'=>'required',
-            'CP_Connector_Type'=>'required',
+            //'CP_Connector_Type'=>'required',
             'CB_Serial_No'=>'required',
             'CP_Serial_No'=>'required',
             'CP_Firmware_Ver'=>'required',
@@ -35,21 +36,32 @@ class ChargePointController extends Controller
             'Station_Phone'=>'required',
             'Station_Email'=>'required' 
         ]);
-        $data=new ChargePoint();
-        $data->CP_Name=$request->CP_Name;
-        $data->CP_State=$request->CP_State;
-        $data->CP_District=$request->CP_District;
-        $data->CP_Loc=$request->CP_Loc;
-        $data->CP_Connector_Type=$request->CP_Connector_Type;
-        $data->CB_Serial_No=$request->CB_Serial_No;
-        $data->CP_Serial_No=$request->CP_Serial_No;
-        $data->CP_Firmware_Ver=$request->CP_Firmware_Ver;
-        $data->CP_Meter_Serial_No=$request->CP_Meter_Serial_No;
-        $data->CP_Meter_Type=$request->CP_Meter_Type;
-        $data->Station_Phone=$request->Station_Phone;
-        $data->Station_Email=$request->Station_Email;
-        $data->CP_Status="0";
-        $data->save();
+        $chargepoint=new ChargePoint();
+        $chargepoint->CP_Name=$request->CP_Name;
+        $chargepoint->CP_State=$request->CP_State;
+        $chargepoint->CP_District=$request->CP_District;
+        $chargepoint->CP_Loc=$request->CP_Loc;
+        //$data->CP_Connector_Type=$request->CP_Connector_Type;
+        $chargepoint->CB_Serial_No=$request->CB_Serial_No;
+        $chargepoint->CP_Serial_No=$request->CP_Serial_No;
+        $chargepoint->CP_Firmware_Ver=$request->CP_Firmware_Ver;
+        $chargepoint->CP_Meter_Serial_No=$request->CP_Meter_Serial_No;
+        $chargepoint->CP_Meter_Type=$request->CP_Meter_Type;
+        $chargepoint->Station_Phone=$request->Station_Phone;
+        $chargepoint->Station_Email=$request->Station_Email;
+        //$chargepoint->CP_Status="0";
+        $chargepoint->save();
+
+        if ($request->has('charging_pin_id')) {
+            for ($x = 0; $x < count($request->charging_pin_id); $x++) {
+                $store = ['connector_type' => $request->charging_pin_id[$x],
+                    'cp_id' => $chargepoint->CP_ID,
+                    //'relay_switch_number' => $request->relay_switch_number[$x],
+                    'status' => 0 
+                ];
+                CPConnector::create($store);
+            }
+        }
         return redirect('/CP')->with('success','Added Successfully');;
     }
     public function show($id)
@@ -88,7 +100,11 @@ class ChargePointController extends Controller
     public function details($id)
     {
         $data=ChargePoint::with('getconnector')->where('CP_ID',$id)->first();
-        return view('pages/chargepoints/details',compact('data'));
+        $connector = CPConnector::leftJoin('connectortype','connectortype.id', '=', 'cp_connector.connector_type')
+                ->select('cp_connector.status','connectortype.Type')
+                ->where('cp_id', $id)
+                ->get();
+        return view('pages/chargepoints/details',compact('data', 'connector'));
     }
     public function search_CP()
     {

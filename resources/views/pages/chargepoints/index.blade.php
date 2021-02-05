@@ -12,16 +12,19 @@
 @endsection
 @section('content')
 @csrf
-<form method="get" action="{{ url('/searchCP') }}" role="search">
 <div class="row">
-<div class="col-md-8">
-    <input type="text" class="form-control" name="search" placeholder="Search..." >
-</div>
-<div class="col-md-2">
-   <button type="btn btn-primary" type="submit"><i class="fa fa-search"  aria-hidden="true"></i></button>
-</div>
+    <form method="get" action="{{ url('/searchCP') }}" role="search">
+        <div class="col-8">
+            <input type="text" class="form-control" name="search" placeholder="Search..." >
+        </div>
+        <div class="col-2">
+            <button type="btn btn-primary" type="submit">
+                <i class="fa fa-search"  aria-hidden="true"></i>
+            </button>
+        </div>
+    </form> 
 </div> 
-</form>  
+ 
 
 <div class="row">
     <div class="col-12">
@@ -50,9 +53,9 @@
                             <td>{{$value->CP_Loc}}</td>
                             <td>{{$value->Station_Phone}}</td>
                             <td>{{$value->Station_Email}}</td>
-                            <td><a href="/CP/details/{{ $value->CP_ID }}">More</td>
-                            <td><a href="/CP/edit/{{ $value->CP_ID }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
-                            <td><a href="/CP/delete/{{ $value->CP_ID }}" onclick="return confirm('Are you sure you want to delete this CP')"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                            <td><a href="/CP/details/{{ $value->CP_ID }}" data-toggle="tooltip" title="View"><i class="fa fa-eye" aria-hidden="true" ></i></td>
+                            <td><a href="/CP/edit/{{ $value->CP_ID }}" data-toggle="tooltip" title="Edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
+                            <td><a href="/CP/delete/{{ $value->CP_ID }}" onclick="return confirm('Are you sure you want to delete this CP')" data-toggle="tooltip" title="Delete"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                         </tr>
                         @endforeach
                     </tbody>

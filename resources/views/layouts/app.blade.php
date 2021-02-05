@@ -10,7 +10,7 @@
 <![endif]-->
 
 @include('partials.site_navbar')
-@include('partials.site_menubar')
+@include('partials.site_menu')
 {{--@include('partials.site_gridmenu')--}}
 
 @section('body')

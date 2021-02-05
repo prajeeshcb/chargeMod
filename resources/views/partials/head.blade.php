@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="{{ asset('/assets/css/site.min.css', config('app.asset_secure')) }}">
 <link rel="stylesheet" href="{{ asset('/assets/skins/orange.min.css ', config('app.asset_secure')) }}">
 
+
 <!-- Plugins -->
 @section('css_vendor')
 <link rel="stylesheet" href="{{ asset('/assets/vendor/animsition/animsition.css', config('app.asset_secure')) }}">
@@ -41,7 +42,6 @@
 <link rel="stylesheet" href="{{ asset('/assets/vendor/ladda/ladda.min.css', config('app.asset_secure')) }}">
 <link rel="stylesheet" href="{{ asset('/assets/vendor/alertify/alertify.css', config('app.asset_secure')) }}">
 <link rel="stylesheet" href="{{ asset('/assets/vendor/bootstrap-datepicker/bootstrap-datepicker.css', config('app.asset_secure')) }}">
-<link rel="stylesheet" href="{{ asset('/assets/datatables-bs4/css/dataTables.bootstrap4.css', config('app.asset_secure')) }}">
 @show
 @stack('css')
 

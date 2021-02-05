@@ -19,7 +19,7 @@ class CreateChargePointsTable extends Migration
             $table->string('CP_State');
             $table->string('CP_District');
             $table->float('CP_Loc');
-            $table->integer('CP_Connector_Type');
+            //$table->integer('CP_Connector_Type');
             $table->string('CB_Serial_No');
             $table->string('CP_Serial_No');
             $table->string('CP_Firmware_Ver');
@@ -27,7 +27,7 @@ class CreateChargePointsTable extends Migration
             $table->string('CP_Meter_Type');
             $table->string('Station_Phone');
             $table->string('Station_Email');
-            $table->integer('CP_Status');
+            //$table->integer('CP_Status');
             $table->timestamps();
         });
     }

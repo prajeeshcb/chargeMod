@@ -15,15 +15,15 @@ class CreateReservationsTable extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->ID();
-            $table->string('User_ID');
-            $table->integer('CS_ID');
-            $table->integer('CP_ID');
-            $table->integer('Connector_ID');
-            $table->dateTime('Reserve_Date');
-            $table->dateTime('Reserve_Time_From');
-            $table->dateTime('Reserve_Time_End');
-            $table->string('Reservation_ID');
-            $table->float('User_Present_Loc');
+            $table->string('user_id');
+            $table->integer('cs_id');
+            $table->integer('ctype_digit(text)');
+            $table->integer('connector_id');
+            $table->dateTime('reserve_date');
+            $table->dateTime('reserve_time_from');
+            $table->dateTime('reserve_time_end');
+            $table->string('reservation_id');
+            $table->float('user_present_loc');
             $table->timestamps();
         });
     }

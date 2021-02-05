@@ -4,19 +4,37 @@
         <div class="col-12">
             <div class="card">
                 <div  class="card-body row">
-                  <div class="form-group col-5">
+                  <div class="form-group col-2">
+                    <div class="input-group">
+                      <label class="col-form-label text-md-right">Charge point</label>
+                      <select v-model="chargepoint" class="custom-select" id="cp_select" v-on:click="getChargepoints()" @change='getConnectors()'>
+                        <option v-bind:value="chargepoint.CP_ID" v-for="(chargepoint, index) in chargepoints">{{ chargepoint.CP_Name }} . 
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group col-2">
+                    <div class="input-group">
+                      <label class="col-form-label text-md-right">Connector</label>
+                      <select v-model="connector" class="custom-select" id="connector_select">
+                        <option v-bind:value="connector.id" v-for="(connector, index) in connectors">{{ connector.Type }} . 
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group col-3">
                     <div class="input-group">
                       <label class="col-form-label text-md-right">CB Serial No</label>
                       <input id="cbserial_no" type="text" class="form-control" name="cbserial_no" v-model="cbserial_no">
                     </div>
                   </div>
-                  <div class="form-group col-5">
+                  <div class="form-group col-3">
                     <div class="input-group">
                       <label class="col-form-label text-md-right">CP Serial No</label>
                       <input id="cpserial_no" type="text" class="form-control" name="cpserial_no" v-model="cpserial_no">
                     </div>
                   </div>
-                  <div class="col-2">
+                  <div class="col-1">
                     <button v-on:click="bootNotification()" class="btn btn-primary btn-lg" id="boot" >Boot</button>
                   </div>
                 </div>
@@ -172,7 +190,11 @@
                 status:'',
                 users:'',
                 IdTag:'',
-      connection: null
+      connection: null,
+      chargepoint: 0,
+                chargepoints: [],
+                connector: 0,
+                connectors: []
     }
   },
   created: function() {
@@ -230,6 +252,10 @@
             {
               document.getElementById("auth").disabled = false;
               document.getElementById("boot").disabled=true;
+              document.getElementById("cbserial_no").disabled=true;
+              document.getElementById("cpserial_no").disabled=true;
+              document.getElementById("cp_select").disabled=true;
+              document.getElementById("connector_select").disabled=true;
             }
             else {
               setInterval(() => bootNotification(), 6000);
@@ -264,6 +290,15 @@
         function StopTransactionResponse(msg) {
           document.getElementById("start").disabled=false;
           document.getElementById("stop").disabled=true;
+          document.getElementById("boot").disabled=false;
+          document.getElementById("cbserial_no").disabled=false;
+          document.getElementById("cpserial_no").disabled=false;
+          document.getElementById("cp_select").disabled=false;
+          document.getElementById("connector_select").disabled=false;
+          document.getElementById("cbserial_no").value=" ";
+          document.getElementById("cpserial_no").value=" ";
+          document.getElementById("cp_select").value=" ";
+          document.getElementById("connector_select").value=" ";
         }
 
     }
@@ -283,17 +318,37 @@
 
   },
   methods :{
+    getChargepoints: function(){
+              axios.get('/getChargepoints')
+              .then(function (response) {
+                 this.chargepoints = response.data;
+                 console.log(response.data);
+              }.bind(this));
+
+    },
+    getConnectors: function() {
+                axios.get('/getConnectors',{
+                 params: {
+                   cp_id: this.chargepoint
+                 }
+              }).then(function(response){
+                    this.connectors = response.data;
+                }.bind(this));
+    },
     bootNotification() {
       var msgId = Math.floor(100000 + Math.random() * 900000);
       var cpserial_no = this.cpserial_no;
       var cbserial_no = this.cbserial_no;
+      var vendor = this.chargepoint;
+      var connector = this.connector;
       alert(cbserial_no);
       var metadata = {
                       MessageTypeId:"2",
                     UniqueId:"746832",
                     title:"BootNotificationRequest",
                     payload:{
-                        chargePointVendor:"Point1",
+                        chargePointVendor:vendor,
+                        connector:connector,
                         chargePointModel:"Model1",
                         chargePointSerialNumber:cpserial_no,
                         chargeBoxSerialNumber:cbserial_no,
@@ -309,6 +364,7 @@
                         type: 'BootNotification Request',
                         data:req
                     });
+        
         this.connection.send(JSON.stringify(metadata));
         
     },
@@ -323,12 +379,17 @@
         {
           // this.payloads.legnth=0;
           var id_Tag = this.IdTag;
+          var cp = this.chargepoint;
+          var connector = this.connector;
           var metadata = {
                             msgType: 2,
                             uniqueId:msgId,
                             title: "AuthenticateRequest",
                             payload: {
-                              idTag:id_Tag
+                              idTag:id_Tag,
+                              chargepoint:cp,
+                              connector:connector
+
                             }
                           };
            var req = JSON.stringify(metadata);
@@ -343,13 +404,16 @@
     startCharging() {
       // alert('kkk');
         var msgId = Math.floor(100000 + Math.random() * 900000);
+        var cp = this.chargepoint;
+        var connector = this.connector;
         var metadata = {
                           msgType: 2,
                           uniqueId:msgId,
                           title: "StartTransactionRequest",
                           payload: {
                               user_id:"12",
-                              connectorId: "11111",
+                              chargepoint: cp,
+                              connectorId: connector,
                               idTag: "567890",
                               meterStart: "2222",
                               reservationId:"32434",
@@ -369,12 +433,15 @@
     meterValues() {
       if(this.flag == 1) {
         var msgId = Math.floor(100000 + Math.random() * 900000);
+        var cp = this.chargepoint;
+        var connector = this.connector;
         var metadata = {
                           msgType:"2",
                           UniqueId:msgId,
                           title:"MeterValuesRequest",
                           payload:{
-                              connectorId: "1111",
+                              connectorId: connector,
+                              chargepoint:cp,
                               transactionId: "94", 
                               meterValue:{
                                 timeStamp:"02-10-2020", 
@@ -400,11 +467,15 @@
     heartBeat() {
       if(this.flag == 1) {
         var msgId = Math.floor(100000 + Math.random() * 900000);
+        var cp = this.chargepoint;
+        var connector = this.connector;
         var metadata = {
                           msgType:"2",
                           UniqueId:334741, 
                           title:"HeartBeatRequest",
-                          payload:""
+                          payload:{
+                            chargepoint: cp
+                          }
                         };
           var req = JSON.stringify(metadata);
         this.payloads.push ({
@@ -417,11 +488,15 @@
     stopCharging() {
       alert("Do you want to stop charging");
       var msgId = Math.floor(100000 + Math.random() * 900000);
+      var cp = this.chargepoint;
+      var connector = this.connector;
       var metadata = {
                         msgType:"2",
                         UniqueId:msgId,
                         title:"StopTransactionRequest",
                         payload:{
+                          chargepoint:cp,
+                          connector:connector,
                           idTag: "567890",
                           meterStop: "3333",
                           transactionId:"32434",

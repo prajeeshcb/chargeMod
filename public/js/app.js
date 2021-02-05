@@ -2085,6 +2085,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'App',
   data: function data() {
@@ -2097,16 +2145,20 @@ __webpack_require__.r(__webpack_exports__);
       status: '',
       users: '',
       IdTag: '',
-      connection: null
+      connection: null,
+      chargepoint: 0,
+      chargepoints: [],
+      connector: 0,
+      connectors: []
     };
   },
   created: function created() {
     console.log("Starting connection to WebSocket Server");
-    this.connection = new WebSocket('ws://localhost:6001');
+    this.connection = new WebSocket('ws://localhost:7001');
 
     this.connection.onmessage = function (event) {
+      //alert(JSON.parse(event.data));
       var msg = JSON.parse(event.data);
-      alert(msg);
 
       switch (msg.title) {
         case "BootNotificationResponse":
@@ -2156,6 +2208,10 @@ __webpack_require__.r(__webpack_exports__);
         if (msg.payload.status == "Accepted") {
           document.getElementById("auth").disabled = false;
           document.getElementById("boot").disabled = true;
+          document.getElementById("cbserial_no").disabled = true;
+          document.getElementById("cpserial_no").disabled = true;
+          document.getElementById("cp_select").disabled = true;
+          document.getElementById("connector_select").disabled = true;
         } else {
           setInterval(function () {
             return bootNotification();
@@ -2187,6 +2243,15 @@ __webpack_require__.r(__webpack_exports__);
       function StopTransactionResponse(msg) {
         document.getElementById("start").disabled = false;
         document.getElementById("stop").disabled = true;
+        document.getElementById("boot").disabled = false;
+        document.getElementById("cbserial_no").disabled = false;
+        document.getElementById("cpserial_no").disabled = false;
+        document.getElementById("cp_select").disabled = false;
+        document.getElementById("connector_select").disabled = false;
+        document.getElementById("cbserial_no").value = " ";
+        document.getElementById("cpserial_no").value = " ";
+        document.getElementById("cp_select").value = " ";
+        document.getElementById("connector_select").value = " ";
       }
     };
 
@@ -2204,25 +2269,50 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    getChargepoints: function getChargepoints() {
+      axios.get('/getChargepoints').then(function (response) {
+        this.chargepoints = response.data;
+        console.log(response.data);
+      }.bind(this));
+    },
+    getConnectors: function getConnectors() {
+      axios.get('/getConnectors', {
+        params: {
+          cp_id: this.chargepoint
+        }
+      }).then(function (response) {
+        this.connectors = response.data;
+      }.bind(this));
+    },
     bootNotification: function bootNotification() {
       var msgId = Math.floor(100000 + Math.random() * 900000);
+      var cpserial_no = this.cpserial_no;
+      var cbserial_no = this.cbserial_no;
+      var vendor = this.chargepoint;
+      var connector = this.connector;
+      alert(cbserial_no);
       var metadata = {
-        msgType: 2,
-        uniqueId: msgId,
+        MessageTypeId: "2",
+        UniqueId: "746832",
         title: "BootNotificationRequest",
         payload: {
-          chargePointVendor: 33242,
-          chargePointModel: "CP001",
-          chargePointSerialNumber: "CPS001",
-          chargeBoxSerialNumber: "CBS001",
+          chargePointVendor: vendor,
+          connector: connector,
+          chargePointModel: "Model1",
+          chargePointSerialNumber: cpserial_no,
+          chargeBoxSerialNumber: cbserial_no,
           firmwareVersion: "v1",
-          iccd: "10001",
-          imsi: "10002",
-          meterType: "type1",
-          meterSerialNumber: "mtr001"
+          iccid: "1111",
+          imsi: "2222",
+          meterType: "metertype1",
+          meterSerialNumber: "MTR1234"
         }
       };
-      this.payloads.push(JSON.stringify(metadata));
+      var req = JSON.stringify(metadata);
+      this.payloads.push({
+        type: 'BootNotification Request',
+        data: req
+      });
       this.connection.send(JSON.stringify(metadata));
     },
     Authenticate: function Authenticate() {
@@ -2234,15 +2324,23 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         // this.payloads.legnth=0;
         var id_Tag = this.IdTag;
+        var cp = this.chargepoint;
+        var connector = this.connector;
         var metadata = {
           msgType: 2,
           uniqueId: msgId,
           title: "AuthenticateRequest",
           payload: {
-            idTag: IdTag
+            idTag: id_Tag,
+            chargepoint: cp,
+            connector: connector
           }
         };
-        this.payloads.push(JSON.stringify(metadata));
+        var req = JSON.stringify(metadata);
+        this.payloads.push({
+          type: 'Authentication Request',
+          data: req
+        });
         this.connection.send(JSON.stringify(metadata));
       }
     },
@@ -2251,20 +2349,27 @@ __webpack_require__.r(__webpack_exports__);
 
       // alert('kkk');
       var msgId = Math.floor(100000 + Math.random() * 900000);
+      var cp = this.chargepoint;
+      var connector = this.connector;
       var metadata = {
         msgType: 2,
         uniqueId: msgId,
         title: "StartTransactionRequest",
         payload: {
           user_id: "12",
-          connectorId: "11111",
+          chargepoint: cp,
+          connectorId: connector,
           idTag: "567890",
           meterStart: "2222",
           reservationId: "32434",
           status: "1"
         }
       };
-      this.payloads.push(JSON.stringify(metadata));
+      var req = JSON.stringify(metadata);
+      this.payloads.push({
+        type: 'StartTransaction Request',
+        data: req
+      });
       this.connection.send(JSON.stringify(metadata));
       this.flag = 1;
       this.interval1 = setInterval(function () {
@@ -2277,12 +2382,15 @@ __webpack_require__.r(__webpack_exports__);
     meterValues: function meterValues() {
       if (this.flag == 1) {
         var msgId = Math.floor(100000 + Math.random() * 900000);
+        var cp = this.chargepoint;
+        var connector = this.connector;
         var metadata = {
           msgType: "2",
           UniqueId: msgId,
           title: "MeterValuesRequest",
           payload: {
-            connectorId: "1111",
+            connectorId: connector,
+            chargepoint: cp,
             transactionId: "94",
             meterValue: {
               timeStamp: "02-10-2020",
@@ -2297,31 +2405,47 @@ __webpack_require__.r(__webpack_exports__);
             }
           }
         };
-        this.payloads.push(JSON.stringify(metadata));
+        var req = JSON.stringify(metadata);
+        this.payloads.push({
+          type: 'MeterValue Request',
+          data: req
+        });
         this.connection.send(JSON.stringify(metadata));
       }
     },
     heartBeat: function heartBeat() {
       if (this.flag == 1) {
         var msgId = Math.floor(100000 + Math.random() * 900000);
+        var cp = this.chargepoint;
+        var connector = this.connector;
         var metadata = {
           msgType: "2",
           UniqueId: 334741,
           title: "HeartBeatRequest",
-          payload: ""
+          payload: {
+            chargepoint: cp
+          }
         };
-        this.payloads.push(JSON.stringify(metadata));
+        var req = JSON.stringify(metadata);
+        this.payloads.push({
+          type: 'HeartBeat Request',
+          data: req
+        });
         this.connection.send(JSON.stringify(metadata));
       }
     },
     stopCharging: function stopCharging() {
       alert("Do you want to stop charging");
       var msgId = Math.floor(100000 + Math.random() * 900000);
+      var cp = this.chargepoint;
+      var connector = this.connector;
       var metadata = {
         msgType: "2",
         UniqueId: msgId,
         title: "StopTransactionRequest",
         payload: {
+          chargepoint: cp,
+          connector: connector,
           idTag: "567890",
           meterStop: "3333",
           transactionId: "32434",
@@ -2339,7 +2463,11 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       };
-      this.payloads.push(JSON.stringify(metadata));
+      var req = JSON.stringify(metadata);
+      this.payloads.push({
+        type: 'StopTransaction Request',
+        data: req
+      });
       this.connection.send(JSON.stringify(metadata));
       this.flag = 0;
     }
@@ -44198,25 +44326,206 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("span", [
-    _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "row " }, [
       _c("div", { staticClass: "col-12" }, [
         _c("div", { staticClass: "card" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary",
-              attrs: { id: "boot" },
-              on: {
-                click: function($event) {
-                  return _vm.bootNotification()
-                }
-              }
-            },
-            [_vm._v("Boot")]
-          )
+          _c("div", { staticClass: "card-body row" }, [
+            _c("div", { staticClass: "form-group col-2" }, [
+              _c("div", { staticClass: "input-group" }, [
+                _c("label", { staticClass: "col-form-label text-md-right" }, [
+                  _vm._v("Charge point")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.chargepoint,
+                        expression: "chargepoint"
+                      }
+                    ],
+                    staticClass: "custom-select",
+                    attrs: { id: "cp_select" },
+                    on: {
+                      click: function($event) {
+                        return _vm.getChargepoints()
+                      },
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.chargepoint = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        function($event) {
+                          return _vm.getConnectors()
+                        }
+                      ]
+                    }
+                  },
+                  _vm._l(_vm.chargepoints, function(chargepoint, index) {
+                    return _c(
+                      "option",
+                      { domProps: { value: chargepoint.CP_ID } },
+                      [
+                        _vm._v(
+                          _vm._s(chargepoint.CP_Name) +
+                            " . \n                        "
+                        )
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-2" }, [
+              _c("div", { staticClass: "input-group" }, [
+                _c("label", { staticClass: "col-form-label text-md-right" }, [
+                  _vm._v("Connector")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.connector,
+                        expression: "connector"
+                      }
+                    ],
+                    staticClass: "custom-select",
+                    attrs: { id: "connector_select" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.connector = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  _vm._l(_vm.connectors, function(connector, index) {
+                    return _c("option", { domProps: { value: connector.id } }, [
+                      _vm._v(
+                        _vm._s(connector.Type) + " . \n                        "
+                      )
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-3" }, [
+              _c("div", { staticClass: "input-group" }, [
+                _c("label", { staticClass: "col-form-label text-md-right" }, [
+                  _vm._v("CB Serial No")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.cbserial_no,
+                      expression: "cbserial_no"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "cbserial_no",
+                    type: "text",
+                    name: "cbserial_no"
+                  },
+                  domProps: { value: _vm.cbserial_no },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.cbserial_no = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-3" }, [
+              _c("div", { staticClass: "input-group" }, [
+                _c("label", { staticClass: "col-form-label text-md-right" }, [
+                  _vm._v("CP Serial No")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.cpserial_no,
+                      expression: "cpserial_no"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    id: "cpserial_no",
+                    type: "text",
+                    name: "cpserial_no"
+                  },
+                  domProps: { value: _vm.cpserial_no },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.cpserial_no = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-1" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary btn-lg",
+                  attrs: { id: "boot" },
+                  on: {
+                    click: function($event) {
+                      return _vm.bootNotification()
+                    }
+                  }
+                },
+                [_vm._v("Boot")]
+              )
+            ])
+          ])
         ])
       ])
     ]),
+    _vm._v(" "),
+    _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12" }, [
@@ -44306,17 +44615,17 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(0),
+    _vm._m(1),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-6" }, [
         _c("div", { staticClass: "card" }, [
-          _vm._m(1),
+          _vm._m(2),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c(
               "ul",
-              { staticStyle: { height: "170px", "overflow-x": "scroll" } },
+              { staticStyle: { height: "170px", "overflow-y": "scroll" } },
               [
                 _c(
                   "div",
@@ -44342,11 +44651,19 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(2)
+      _vm._m(3)
     ])
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-12" }, [_c("div", { staticClass: "card" })])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -44369,38 +44686,6 @@ var staticRenderFns = [
                   }
                 })
               ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("div", { staticClass: "input-group" }, [
-                _c("label", [_vm._v("Tag ID")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "tagid",
-                    type: "text",
-                    name: "TagID",
-                    disabled: "disabled"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("div", { staticClass: "input-group" }, [
-                _c("label", [_vm._v("Status")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "status",
-                    type: "text",
-                    name: "TagID",
-                    disabled: "disabled"
-                  }
-                })
-              ])
             ])
           ])
         ])
@@ -44411,44 +44696,12 @@ var staticRenderFns = [
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "form-group" }, [
               _c("div", { staticClass: "input-group" }, [
-                _c("label", [_vm._v("Vehicle name")]),
+                _c("label", [_vm._v("Tag ID")]),
                 _vm._v(" "),
                 _c("input", {
                   staticClass: "form-control",
                   attrs: {
-                    id: "vehicle",
-                    type: "text",
-                    name: "TagID",
-                    disabled: "disabled"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("div", { staticClass: "input-group" }, [
-                _c("label", [_vm._v("Charging PIN ID")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "chargepin",
-                    type: "text",
-                    name: "TagID",
-                    disabled: "disabled"
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("div", { staticClass: "input-group" }, [
-                _c("label", [_vm._v("Battery")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    id: "battery",
+                    id: "tagid",
                     type: "text",
                     name: "TagID",
                     disabled: "disabled"

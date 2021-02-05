@@ -6,98 +6,100 @@
 
 @endsection
 @section('content')  
-@csrf
-@if(session()->has('message'))
-<div class="col-lg-10">
-    <div role="alert" class="alert alert-success alert-dismissible">
-        <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
-        <strong>Success! </strong>{{ Session::get('message') }}
+<div class="card">
+    <!-- <div class="card-header">
+        <h4>ChargePoint Info</h4>
+    </div> -->
+    <div class="card-body">
+        <div class="hed" style="padding: 2px;">
+            <h3>ChargePoint Info</h3>
+        </div>
+        <table class="table table-hover dataTable table-striped w-full">
+            <tr>
+                <th>Name </th>
+                <td>: {{$data->CP_Name}}</td>
+                <th style="border-left:1px solid #e4eaec;;">District & State</th>
+                <td>: {{$data->CP_District}}, {{$data->CP_District}}</td>
+            </tr>
+            <tr>
+                <th>Contact Number </th>
+                <td>: {{$data->Station_Phone}}</td>
+                <th style="border-left:1px solid #e4eaec;;">Email</th>
+                <td>: {{$data->Station_Email}}</td>
+            </tr>
+            <tr><th colspan="4" style="padding-left: 360px;">Technical Info</th></tr>
+            <tr>
+                <th>ChargeBox Serial Number </th>
+                <td>: {{$data->CB_Serial_No}}</td>
+                <th style="border-left:1px solid #e4eaec;;">ChargePoint Serial Number</th>
+                <td>: {{$data->CP_Serial_No}}</td>
+            </tr>
+            <tr>
+                <th>Firmware Version </th>
+                <td>: {{$data->CP_Firmware_Ver}}</td>
+                <th style="border-left:1px solid #e4eaec;;">Meter Serial Number</th>
+                <td>: {{$data->CP_Meter_Serial_No}}</td>
+            </tr>
+            <tr>
+                <th>Meter Type </th>
+                <td>: {{$data->CP_Meter_Type}}</td>
+                <th style="border-left:1px solid #e4eaec;;">Meter Serial Number</th>
+                <td>: {{$data->CP_Meter_Serial_No}}</td>
+            </tr>
+        </table>
+        
     </div>
 </div>
-<div class="clearfix"></div>
-@endif
-<!-- Main content -->
-          
-@if($errors->any())
-    <div class="col-xs-12">  
-        <div role="alert" class="alert alert-danger alert-dismissible" style="margin-top: 25px;">
-            <button aria-label="Close" data-dismiss="alert" class="close" type="button"><span aria-hidden="true">×</span></button>
-            <strong>Whoops!</strong> There were some problems with your input.
-            <br/>
-            <ul>
-                @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <h4>Connectors</h4>
+                <table class="table table-hover dataTable table-striped w-full">
+                    <tr>
+                        <th>Sl No</th>
+                        <th>Connector</th>
+                        <th>Status</th>
+                    </tr>
+                    <?php $i=1; ?>
+                    @foreach($connector as $con)
+                    <tr>
+                        <td>{{ $i++}}</td>
+                        <td>{{ $con['Type'] }}</td>
+                        @if($con['status']=='1')
+                        <td> <span class="badge badge-success">Active</span></td>
+                        @else 
+                        <td><span class="badge badge-danger">Inactive</span></td>
+                        @endif
+                    </tr>
+                    @endforeach
+                </table>
+            </div>
         </div>
     </div>
-@endif
-<div class="panel">
-    <div class="panel-body">
-        
-            <div class="row form-group">
-                <div class="col-12">
-                    <label class="col-form-label">ChargePoint Name : {{$data->CP_Name}}</label>
-                </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <h4>Location</h4>
+                <div id="googleMap" style="width:100%;height:400px;"></div>
             </div>
-            <div class="row form-group">
-                <div class="col-12">
-                    <label class="col-form-label">ChargePoint State : {{$data->CP_State}}</label>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-12">
-                    <label class="col-form-label">ChargePoint District : {{$data->CP_District}}</label>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-12">
-                    <label class="col-form-label">ChargePoint Location : {{$data->CP_Loc}}</label>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-12">
-                    <label class="col-form-label">ChargePoint Connector Type : {{$data->CP_Connector_Type}}</label>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-12">
-                    <label class="col-form-label">ChargeBox Serial Number : {{$data->CB_Serial_No}}</label>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-12">
-                    <label class="col-form-label">ChargePoint Serial Number : {{$data->CP_Serial_No}}</label>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-12">
-                    <label class="col-form-label">ChargePoint Firmware Version : {{$data->CP_Firmware_Ver}}</label>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-12">
-                    <label class="col-form-label">ChargePoint Meter Serial Number : {{$data->CP_Meter_Serial_No}}</label>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-12">
-                    <label class="col-form-label">ChargePoint Meter Type : {{$data->CP_Meter_Type}}</label>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-12">
-                    <label class="col-form-label">Station Phone Number : {{$data->Station_Phone}}</label>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-12">
-                    <label class="col-form-label">Station Email : {{$data->Station_Email}}</label>
-                </div>
-               
-            </div>
-        
+        </div>
     </div>
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+function myMap() {
+var mapProp= {
+  center:new google.maps.LatLng(51.508742,-0.120850),
+  zoom:5,
+};
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=myMap"></script>
+
+@endpush

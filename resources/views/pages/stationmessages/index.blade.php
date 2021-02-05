@@ -28,9 +28,9 @@
                             <td>{{ $value->id }}</td>
                             <td>{{ $value->created_at }}</td>
                             <td><a href="{{URL::to('/CP/messages/'.$value->CP_ID)}}">{{ $value->CP_Name }}</a></td>
-                            @if($value->CP_Status==1)
+                            @if($value->status==1)
                             <td><span class="badge" style="background-color: green;color:white;">Active</span></td>
-                            @else if($value->CP_Status!=1)
+                            @else 
                             <td><span class="badge" style="background-color: red;color:white;">Inactive</span></td>
                             @endif
                             @if($value->type==0)
