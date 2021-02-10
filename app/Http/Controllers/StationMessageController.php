@@ -14,7 +14,7 @@ class StationMessageController extends Controller
       $data = MsgFile::leftJoin('chargepoint', 'msg_files.cp_id', '=', 'chargepoint.CP_ID')
               ->leftJoin('cp_connector', 'msg_files.cp_id', '=', 'cp_connector.cp_id')
               ->select('chargepoint.CP_Name', 'cp_connector.status', 'chargepoint.CP_ID','msg_files.cp_id', 'msg_files.id', 'msg_files.type', 'msg_files.file_path', 'msg_files.created_at' )
-              ->orderBy('msg_files.id', 'desc')
+              //->orderBy('msg_files.id', 'desc')
               ->get();
         return view('pages/stationmessages/index')->with('data', $data);
     }

@@ -199,7 +199,7 @@
   },
   created: function() {
     console.log("Starting connection to WebSocket Server")
-    this.connection = new WebSocket('ws://localhost:7001')
+    this.connection = new WebSocket('ws://localhost:7000')
 
 
     this.connection.onmessage = function(event) {
@@ -288,12 +288,21 @@
         }
 
         function StopTransactionResponse(msg) {
+          if(msg.payload,status=="Accepted")
+          {
+            alert('jjj');
+          }
+          //
           document.getElementById("start").disabled=false;
           document.getElementById("stop").disabled=true;
           document.getElementById("boot").disabled=false;
+          
           document.getElementById("cbserial_no").disabled=false;
           document.getElementById("cpserial_no").disabled=false;
           document.getElementById("cp_select").disabled=false;
+
+           window.location.reload();
+
           document.getElementById("connector_select").disabled=false;
           document.getElementById("cbserial_no").value=" ";
           document.getElementById("cpserial_no").value=" ";
@@ -500,7 +509,7 @@
                           idTag: "567890",
                           meterStop: "3333",
                           transactionId:"32434",
-                          reason: "Emergency stop", 
+                          reason: "Local", 
                           transactionData: {
                             timeStamp:"02-10-2020", 
                             stampledValue:{

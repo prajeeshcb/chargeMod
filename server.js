@@ -8,7 +8,7 @@ const http = require('http');
 const  axios  = require('axios');
 
 const app = express();
-const port = 7001;
+const port = 7000;
 
 const server = http.createServer(app);
 
@@ -679,7 +679,7 @@ wss.on('connection', function connection(ws) {
       
       var data = msg;
       var chargepoint = data.payload.chargepoint;
-      var connector = data.payload.connectorId;
+      var connector = data.payload.connector;
       var stoprequest=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
       fs.writeFile('../public/Jsonfiles/'+stoprequest+'.json', JSON.stringify(data, null, 4), function(err){
         console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
@@ -701,7 +701,7 @@ wss.on('connection', function connection(ws) {
               if (error) throw error;
               console.log("request"+results.insertId);
           });
-      var reason=data.reason;
+      var reason=data.payload.reason;
       // var metervalue=data.meterStop;
       var con = mysql.createConnection({
         host: "localhost",
@@ -713,7 +713,7 @@ wss.on('connection', function connection(ws) {
       {
         con.connect(function(err) {
           //Insert a record in the "trnascations" table:
-          var sql = "INSERT INTO transaction (Connector_ID,CP_ID,CS_ID,User_ID,Reservation_ID,Trans_DateTime,Trans_Meter_Start,Trans_Meter_Stop) VALUES ('0','1','3459','170443','235265','2020-10-02 11-05-am','45','+103+')";
+          var sql = "INSERT INTO transaction (Connector_ID,CP_ID,CS_ID,User_ID,Reservation_ID,Trans_DateTime,Trans_Meter_Start,Trans_Meter_Stop) VALUES ('0','1','3459','170443','235265','"+datetime+"','45','103')";
           con.query(sql, function (err, result) {
             if (err) throw err;
             console.log("transactiondata inserted");
@@ -721,27 +721,34 @@ wss.on('connection', function connection(ws) {
         });
         con.connect(function(err) {
           //Insert a record in the "metervalue" table:
-          var sql = "INSERT INTO meter_values (Connector_ID,CP_ID,Date,Reservation_ID,Meter_Values) VALUES ('0','1','2020-10-02 11-05-am','235265','+103+')";
+          var sql = "INSERT INTO meter_values (Connector_ID,CP_ID,Date,Reservation_ID,Meter_Values) VALUES ('0','1','"+datetime+"','235265','103')";
           con.query(sql, function (err, result) {
             if (err) throw err;
             console.log("metervalue record inserted");
           });
         });
+
+        var cpstatus="1";
+        var queryString1 = "UPDAte cp_connector SET status = '0' WHERE cp_id= ? AND connector_type=? AND status=?;"
+        var filter1 = [chargepoint,connector,cpstatus];
+        con.query(queryString1, filter1, function(err, results) {
+          console.log('updated...CP ready');
+        });
+
+
         var metadata = {
           MessageTypeId:"3",
           UniqueId:"754557",
           title:"StopTransactionResponse",
             payload :{
-              idTagInfo:{
                         expiryDate:"2021-3-8T3.00PM",
                         parentIdTag:"170443",
                         status:"Accepted"
-               }
             }
           // Status:"2"
           };
          var stopresponse=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-        fs.writeFile('../public/Jsonfiles/'+stoprepsonse+'.json', JSON.stringify(metadata, null, 4), function(err){
+        fs.writeFile('../public/Jsonfiles/'+stopresponse+'.json', JSON.stringify(metadata, null, 4), function(err){
           console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
         });
         let file = {
@@ -756,13 +763,8 @@ wss.on('connection', function connection(ws) {
             if (error) throw error;
             console.log(results.insertId);
           });
-        var cpid="1";
-        var queryString = "UPDAte cp_connector SET status = '0' WHERE cp_id= ? AND connector_type=?;"
-        var filter = [chargepoint,connector];
-        con.query(queryString, filter, function(err, results) {
-          console.log('CP ready');
-        });
-        return JSON.stringify(metadata);
+        
+        ws.send(JSON.stringify(metadata));
       }
       else {
         if(reason == "UnlockConnectorEVSide")
@@ -787,7 +789,7 @@ wss.on('connection', function connection(ws) {
             MessageTypeId:"3",
             UniqueId:"754557",
             title:"StopTransactionResponse",
-            idTagInfo:{
+            payload:{
                         expiryDate:"2021-3-8T3.00PM",
                         parentIdTag:"170443",
                         status:"Accepted"
@@ -817,7 +819,7 @@ wss.on('connection', function connection(ws) {
           console.log('CP ready');
         });
         }
-        return JSON.stringify(metadata);
+        ws.send(JSON.stringify(metadata));
       }
         /*var metadata = {
                             MessageTypeId:"3",
