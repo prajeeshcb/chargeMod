@@ -103,6 +103,8 @@ wss.on('connection', function connection(ws) {
                         }
                   };*/
           var data = msg;
+          var chargepoint = data.payload.chargePointVendor;
+          var connector = data.payload.connector;
         var bootrequest=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         fs.writeFile('../public/Jsonfiles/'+bootrequest+'.json', JSON.stringify(msg, null, 4), function(err){
           console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
@@ -114,7 +116,8 @@ wss.on('connection', function connection(ws) {
           database: "larasocket"
         });
         let req_file = {
-                cp_id :'1',
+                cp_id :chargepoint,
+                connector_id: connector,
                 type : '0',
                 file_path :'../public/Jsonfiles/'+bootrequest+'.json',
                 created_at: date,
@@ -167,6 +170,7 @@ wss.on('connection', function connection(ws) {
 
               let file = {
                 cp_id :chargepoint,
+                connector_id: connector,
                 type : '1',
                 file_path :'../public/Jsonfiles/'+bootresponse+'.json',
                 created_at: date,
@@ -207,6 +211,7 @@ wss.on('connection', function connection(ws) {
 
               let file = {
                 cp_id :chargepoint,
+                connector_id: connector,
                 type : '1',
                 file_path :'../public/Jsonfiles/'+bootresponse+'.json',
                 created_at: date,
@@ -250,6 +255,7 @@ wss.on('connection', function connection(ws) {
         });
         let req_file = {
                 cp_id :chargepoint,
+                connector_id: connector,
                 type : '0',
                 file_path :'../public/Jsonfiles/'+authrequest+'.json',
                 created_at: date,
@@ -288,6 +294,7 @@ wss.on('connection', function connection(ws) {
               });
               let file = {
                 cp_id :chargepoint,
+                connector_id: connector,
                 type : '1',
                 file_path :'../public/Jsonfiles/'+authresponse+'.json',
                 created_at: date,
@@ -319,6 +326,7 @@ wss.on('connection', function connection(ws) {
                     });
                     let file = {
                         cp_id :chargepoint,
+                        connector_id: connector,
                         type : '1',
                         file_path :'../public/Jsonfiles/'+authresponse+'.json',
                         created_at: date,
@@ -365,6 +373,7 @@ wss.on('connection', function connection(ws) {
         });
         let req_file = {
                 cp_id :chargepoint,
+                connector_id: connector,
                 type : '0',
                 file_path :'../public/Jsonfiles/'+startrequest+'.json',
                 created_at: date,
@@ -406,6 +415,7 @@ wss.on('connection', function connection(ws) {
             });
             let file = {
                 cp_id :chargepoint,
+                connector_id: connector,
                 type : '1',
                 file_path :'../public/Jsonfiles/'+startresponse+'.json',
                 created_at: date,
@@ -438,6 +448,7 @@ wss.on('connection', function connection(ws) {
                   }); 
                   let file = {
                     cp_id :chargepoint,
+                    connector_id: connector,
                     type : '1',
                     file_path :'../public/Jsonfiles/'+startresponse+'.json',
                     created_at: date,
@@ -502,6 +513,7 @@ wss.on('connection', function connection(ws) {
         });
         let req_file = {
                 cp_id :chargepoint,
+                connector_id: connector,
                 type : '0',
                 file_path :'../public/Jsonfiles/'+meterrequest+'.json',
                 created_at: date,
@@ -548,6 +560,7 @@ wss.on('connection', function connection(ws) {
           });
           let file = {
                 cp_id :chargepoint,
+                connector_id: connector,
                 type : '1',
                 file_path :'../public/Jsonfiles/'+metervalueresponse+'.json',
                 created_at: date,
@@ -591,6 +604,7 @@ wss.on('connection', function connection(ws) {
           });
           let file = {
                 cp_id :chargepoint,
+                connector_id: connector,
                 type : '1',
                 file_path :'../public/Jsonfiles/'+metervalueresponse+'.json',
                 created_at: date,
@@ -625,7 +639,7 @@ wss.on('connection', function connection(ws) {
                   };*/
         var data = msg;
         var chargepoint = data.payload.chargepoint;
-        var connector = data.payload.connectorId;
+        var connector = data.payload.connector;
         var heartbeatrequest=Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         fs.writeFile('../public/Jsonfiles/'+heartbeatrequest+'.json', JSON.stringify(data, null, 4), function(err){
           console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
@@ -638,6 +652,7 @@ wss.on('connection', function connection(ws) {
         });
         let req_file = {
                 cp_id :chargepoint,
+                connector_id: connector,
                 type : '0',
                 file_path :'../public/Jsonfiles/'+heartbeatrequest+'.json',
                 created_at: date,
@@ -663,6 +678,7 @@ wss.on('connection', function connection(ws) {
         });
         let file = {
                 cp_id :chargepoint,
+                connector_id: connector,
                 type : '1',
                 file_path :'../public/Jsonfiles/'+heartbeatresponse+'.json',
                 created_at: date,
@@ -692,6 +708,7 @@ wss.on('connection', function connection(ws) {
         });
         let req_file = {
                 cp_id :chargepoint,
+                connector_id: connector,
                 type : '0',
                 file_path :'../public/Jsonfiles/'+stoprequest+'.json',
                 created_at: date,
@@ -753,6 +770,7 @@ wss.on('connection', function connection(ws) {
         });
         let file = {
                 cp_id :chargepoint,
+                connector_id: connector,
                 type : '1',
                 file_path :'../public/Jsonfiles/'+stopresponse+'.json',
                 created_at: date,
@@ -801,7 +819,8 @@ wss.on('connection', function connection(ws) {
             console.log('Json file generated succesfully .Check your project public/Jsonfiles folder');
           });
           let file = {
-                cp_id :'1',
+                cp_id :chargepoint,
+                connector_id: connector,
                 type : '1',
                 file_path :'../public/Jsonfiles/'+stopresponse+'.json',
                 created_at: date,
