@@ -30,7 +30,7 @@ class HomeController extends Controller
     public function getConnectors(Request $request)
     {
         $connectors = CPConnector::leftJoin('connectortype','cp_connector.connector_type', '=', 'connectortype.id')
-                            ->select('connectortype.id','connectortype.Type')
+                            ->select('cp_connector.id','connectortype.Type')
                             ->where('cp_id', $request->cp_id)
                             ->get();
 

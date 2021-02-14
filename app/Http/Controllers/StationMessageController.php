@@ -11,11 +11,14 @@ class StationMessageController extends Controller
 {
     public function index()
     {
-      $data = MsgFile::leftJoin('chargepoint', 'msg_files.cp_id', '=', 'chargepoint.CP_ID')
+      /*$data = MsgFile::leftJoin('chargepoint', 'msg_files.cp_id', '=', 'chargepoint.CP_ID')
               ->leftJoin('cp_connector', 'msg_files.cp_id', '=', 'cp_connector.cp_id')
               ->select('chargepoint.CP_Name', 'cp_connector.status', 'chargepoint.CP_ID','msg_files.cp_id', 'msg_files.id', 'msg_files.type', 'msg_files.file_path', 'msg_files.created_at' )
               //->orderBy('msg_files.id', 'desc')
-              ->get();
+              ->get();*/
+              $data = MsgFile::leftJoin('chargepoint', 'msg_files.cp_id', '=', 'chargepoint.CP_ID')
+                ->leftJoin('cp_connector', 'msg_files.connector_id', '=', 'cp_connector.id')
+                ->select('chargepoint.CP_Name', 'cp_connector.status', 'chargepoint.CP_ID','msg_files.cp_id', 'msg_files.id', 'msg_files.type', 'msg_files.file_path', 'msg_files.created_at' )->get();
         return view('pages/stationmessages/index')->with('data', $data);
     }
 
@@ -60,7 +63,7 @@ class StationMessageController extends Controller
                         ->where('cp_connector.cp_id', '=', $cp_id)
                         ->get();
         $msgs = MsgFile::leftJoin('chargepoint', 'msg_files.cp_id', '=', 'chargepoint.CP_ID')
-              ->leftJoin('cp_connector', 'msg_files.cp_id', '=', 'cp_connector.cp_id')
+              ->leftJoin('cp_connector', 'msg_files.connector_id', '=', 'cp_connector.id')
               ->select('chargepoint.CP_Name', 'cp_connector.status', 'chargepoint.CP_ID','msg_files.cp_id', 'msg_files.id', 'msg_files.type', 'msg_files.file_path', 'msg_files.created_at' )
               ->where('msg_files.cp_id', '=', $cp_id)
               //->where('msg_files.type', '=', 1)

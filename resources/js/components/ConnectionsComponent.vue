@@ -483,7 +483,8 @@
                           UniqueId:334741, 
                           title:"HeartBeatRequest",
                           payload:{
-                            chargepoint: cp
+                            chargepoint: cp,
+                            connector:connector
                           }
                         };
           var req = JSON.stringify(metadata);
